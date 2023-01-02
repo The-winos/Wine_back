@@ -1,0 +1,46 @@
+
+
+async function dropTables(){
+  try{
+    console.log("Starting to drop tables...");
+    await client.query(`
+    DROP TABLE IF EXISTS wines;
+    DROP TABLE IF EXISTS users;
+    DROP TYPE IF EXISTS audience_type;
+    `);
+    console.log("Finished dropping tables");
+  } catch(error){
+    console.log("Error dropping tables");
+    throw error;
+  }
+}
+
+async function createTables(){
+  try{
+    console.log("Starting to build tables...");
+    await client.query(`
+    CREATE TABLE users(
+      id SERIAL PRIMARY KEY,
+      username VARCHAR(255) UNIQUE NOT NULL,
+      password VARCHAR(255) NOT NULL,
+      name VARCHAR(255) NOT NULL,
+      admin BOOLEAN DEFAULT false,
+      email VARCHAR(255) UNIQUE NOT NULL,
+    );
+    CREATE TYPE wine_type AS ENUM ('Cabernet','Syrah','Zinfandel','Noir','Riesling','Gris','Sauvignon','Chardonnay','Blend');
+    CREATE TABLE wines(
+      id SERIAL PRIMARY KEY,
+      author TEXT REFERENCES user(username)
+      name TEXT NOT NULL,
+      price INTEGER,
+      image_url TEXT,
+      thoughts TEXT,
+      flavor wine_type
+    );
+    `);
+      console.log("Finished building tables");
+  }catch(error){
+console.error("Error building tables");
+throw error;
+  }
+}
