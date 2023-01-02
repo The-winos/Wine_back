@@ -1,0 +1,40 @@
+
+{
+  "name": "wine_back",
+  "version": "1.0.0",
+  "lockfileVersion": 2,
+  "requires": true,
+  "author": "",
+  "description": "",
+  "keywords": [],
+  "license": "ISC",
+  "main": "index.js",
+  "proxy": "http://localhost:4000",
+  "packages": {},
+  "browserslist": {
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ],
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ]
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4",
+    "supertest": "^6.2.1"
+  },
+  "scripts": {
+    "client:build": "react-scripts build",
+    "client:dev": "react-scripts start",
+    "db:build": "node ./db/init_db",
+    "postinstall": "npm run client:build",
+    "server:dev": "nodemon index.js",
+    "start": "node index.js",
+    "start:dev": "concurrently \"npm run client:build\" \"npm run client:dev\" \"npm run server:dev\"",
+    "test": "jest --runInBand"
+  }
+}
