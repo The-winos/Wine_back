@@ -1,7 +1,5 @@
-
-
-async function dropTables(){
-  try{
+async function dropTables() {
+  try {
     console.log("Starting to drop tables...");
     await client.query(`
     DROP TABLE IF EXISTS wines;
@@ -9,14 +7,14 @@ async function dropTables(){
     DROP TYPE IF EXISTS wine_type;
     `);
     console.log("Finished dropping tables");
-  } catch(error){
+  } catch (error) {
     console.log("Error dropping tables");
     throw error;
   }
 }
 
-async function createTables(){
-  try{
+async function createTables() {
+  try {
     console.log("Starting to build tables...");
     await client.query(`
     CREATE TABLE users(
@@ -27,7 +25,7 @@ async function createTables(){
       admin BOOLEAN DEFAULT false,
       email VARCHAR(255) UNIQUE NOT NULL,
     );
-    CREATE TYPE wine_type AS ENUM ('Cabernet','Syrah','Zinfandel','Noir','Merlot','Melbec','Tempranillo','Riesling','Grigio','Sauvignon','Chardonnay','Moscato','Blend');
+    CREATE TYPE wine_type AS ENUM ('Cabernet','Syrah','Zinfandel','Noir','Merlot','Malbec','Tempranillo','Riesling','Grigio','Sauvignon','Chardonnay','Moscato','Blend');
     CREATE TABLE wines(
       id SERIAL PRIMARY KEY,
       author TEXT REFERENCES user(username)
@@ -39,9 +37,9 @@ async function createTables(){
       flavor wine_type
     );
     `);
-      console.log("Finished building tables");
-  }catch(error){
-console.error("Error building tables");
-throw error;
+    console.log("Finished building tables");
+  } catch (error) {
+    console.error("Error building tables");
+    throw error;
   }
 }
