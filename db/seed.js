@@ -6,7 +6,7 @@ async function dropTables(){
     await client.query(`
     DROP TABLE IF EXISTS wines;
     DROP TABLE IF EXISTS users;
-    DROP TYPE IF EXISTS audience_type;
+    DROP TYPE IF EXISTS wine_type;
     `);
     console.log("Finished dropping tables");
   } catch(error){
@@ -27,14 +27,15 @@ async function createTables(){
       admin BOOLEAN DEFAULT false,
       email VARCHAR(255) UNIQUE NOT NULL,
     );
-    CREATE TYPE wine_type AS ENUM ('Cabernet','Syrah','Zinfandel','Noir','Riesling','Gris','Sauvignon','Chardonnay','Blend');
+    CREATE TYPE wine_type AS ENUM ('Cabernet','Syrah','Zinfandel','Noir','Merlot','Tempranillo','Riesling','Grigio','Sauvignon','Chardonnay','Blend');
     CREATE TABLE wines(
       id SERIAL PRIMARY KEY,
       author TEXT REFERENCES user(username)
-      name TEXT NOT NULL,
+      name TEXT UNIQUE NOT NULL,
       price INTEGER,
       image_url TEXT,
       thoughts TEXT,
+      region TEXT,
       flavor wine_type
     );
     `);
