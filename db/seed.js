@@ -1,3 +1,14 @@
+const {
+  createUser,
+  getUser,
+  getUserById,
+  getUserByUsername,
+  getAllUsers,
+  deleteUser,
+  updateUser,
+} = require("./users");
+const bcrypt = require("bcrypt");
+
 async function dropTables() {
   try {
     console.log("Starting to drop tables...");
@@ -42,6 +53,45 @@ async function createTables() {
     console.log("Finished building tables");
   } catch (error) {
     console.error("Error building tables");
+    throw error;
+  }
+}
+
+async function createInitialUsers() {
+  try {
+    console.log("Starting to create users");
+    await createUser({
+      username: "AmazingHuman",
+      password: "ABCD1234",
+      name: "Jenniffer",
+      state: "Florida",
+      admin: true,
+      email: "dumdum@dumdum.com",
+    });
+    await createUser({
+      username: "CuteGeek",
+      password: "ABCD1234",
+      name: "Jessy",
+      state: "Colorado",
+      admin: true,
+      email: "harry@potter.com",
+    });
+    console.log("Finished creating users");
+  } catch (error) {
+    console.error("error creating users");
+    throw error;
+  }
+}
+
+async function buildingDB(){
+  try {
+    client.connect();
+    await dropTables();
+    await createTables();
+    await createInitialUsers();
+
+  } catch (error) {
+    console.log("error during building");
     throw error;
   }
 }
