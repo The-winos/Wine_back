@@ -16,6 +16,7 @@ async function dropTables() {
 async function createTables() {
   try {
     console.log("Starting to build tables...");
+    //review line 32 - to get author AS username or ID ?? (review cart of fitness tracker)
     await client.query(`
     CREATE TABLE users(
       id SERIAL PRIMARY KEY,
@@ -28,7 +29,7 @@ async function createTables() {
     CREATE TYPE wine_type AS ENUM ('Cabernet','Syrah','Zinfandel','Noir','Merlot','Malbec','Tempranillo','Riesling','Grigio','Sauvignon','Chardonnay','Moscato','Blend');
     CREATE TABLE wines(
       id SERIAL PRIMARY KEY,
-      author TEXT REFERENCES user(username)
+      author TEXT REFERENCES user(username) 
       name TEXT UNIQUE NOT NULL,
       price INTEGER,
       image_url TEXT,
