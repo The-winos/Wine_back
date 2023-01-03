@@ -27,7 +27,7 @@ async function createTables(){
       admin BOOLEAN DEFAULT false,
       email VARCHAR(255) UNIQUE NOT NULL,
     );
-    CREATE TYPE wine_type AS ENUM ('Cabernet','Syrah','Zinfandel','Noir','Merlot','Tempranillo','Riesling','Grigio','Sauvignon','Chardonnay','Blend');
+    CREATE TYPE wine_type AS ENUM ('Cabernet','Syrah','Zinfandel','Noir','Merlot','Melbec','Tempranillo','Riesling','Grigio','Sauvignon','Chardonnay','Moscato','Blend');
     CREATE TABLE wines(
       id SERIAL PRIMARY KEY,
       author TEXT REFERENCES user(username)
