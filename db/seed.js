@@ -1,3 +1,6 @@
+const { client } = require("./client");
+const bcrypt = require("bcrypt");
+
 const {
   createUser,
   getUser,
@@ -7,7 +10,6 @@ const {
   deleteUser,
   updateUser,
 } = require("./users");
-const bcrypt = require("bcrypt");
 
 async function dropTables() {
   try {
@@ -39,23 +41,33 @@ async function createTables() {
       email VARCHAR(255) UNIQUE NOT NULL,
     );
     CREATE TYPE wine_type AS ENUM ('Cabernet','Syrah','Zinfandel','Noir','Merlot','Malbec','Tempranillo','Riesling','Grigio','Sauvignon','Chardonnay','Moscato','Blend');
+
     CREATE TABLE wines(
       id SERIAL PRIMARY KEY,
       author TEXT REFERENCES user(username)
       name TEXT UNIQUE NOT NULL,
-      price INTEGER,
-      image_url TEXT,
-      thoughts TEXT,
+      image_url TEXT NOT NULL,
       region TEXT,
       flavor wine_type
     );
     CREATE TABLE reviews (
-      review_id INTEGER PRIMARY KEY,
-      product_id INTEGER,
-      user_id INTEGER,
-      rating INTEGER,
-      review_text TEXT,
+     id SERIAL PRIMARY KEY,
+      user_id INTEGER REFERENCES users(id),
+      wines_id INTEGER REFERENCES wines(id),
+      rating TINYINT NOT NULL,
+      price INTEGER,
+      review_comment TEXT,
+      image_url TEXT NOT NULL,
       review_date DATE
+    );
+    CREATE TABLE badges (
+      id SERIAL PRIMARY KEY,
+      name REFERENCES user(username),
+      total_reviews INTEGER,
+      total_uploads INTEGER,
+      total_follows INTEGER,
+      total_followers INTEGER,
+      total_main_photos INTEGER,
     );
     `);
     console.log("Finished building tables");
@@ -102,3 +114,31 @@ async function buildingDB() {
     throw error;
   }
 }
+
+async function testDB() {
+  try {
+    console.log("Starting to test database...");
+
+    console.log("getting user by Id");
+    const userId = await getUserById(1);
+    console.log(userId, "this is user Id");
+
+    console.log("getting user by username");
+    const username = await getUserByUsername("CuteGeek");
+    console.log("result:", username);
+
+    console.log("testing getting all users");
+    const allUsers = await getAllUsers();
+    console.log("this is all users", allUsers);
+
+    console.log("Finished DB Tests");
+  } catch (error) {
+    console.log("Error during testDB");
+    throw error;
+  }
+}
+
+buildingDB()
+  .then(testDB)
+  .catch(console.error)
+  .finally(() => client.end());

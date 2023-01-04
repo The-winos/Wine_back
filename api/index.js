@@ -24,7 +24,6 @@ apiRouter.use(async (req, res, next) => {
     try {
       const { id } = jwt.verify(token, JWT_SECRET);
       if (id) {
-
         req.user = await getUserById(id);
         next();
       }
@@ -39,20 +38,8 @@ apiRouter.use(async (req, res, next) => {
   }
 });
 
-const addressRouter = require("./address");
-apiRouter.use("/address", addressRouter);
-
-const userRouter = require("./user");
-apiRouter.use("/user", userRouter);
-
-const productRouter = require("./product");
-apiRouter.use("/product", productRouter);
-
-const cartRouter = require("./cart");
-apiRouter.use("/cart", cartRouter);
-
-const cart_itemRouter = require("./cart_item");
-apiRouter.use("/cart_item", cart_itemRouter);
+// const userRouter = require("./user");
+// apiRouter.use("/user", userRouter);
 
 apiRouter.use((error, req, res, next) => {
   error.error == "Unauthorized" && res.status(401);
