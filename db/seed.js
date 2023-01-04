@@ -15,6 +15,8 @@ async function dropTables() {
   try {
     console.log("Starting to drop tables...");
     await client.query(`
+    DROP TABLE IF EXISTS badges;
+    DROP TABLE IF EXISTS reviews;
     DROP TABLE IF EXISTS wines;
     DROP TABLE IF EXISTS users;
     DROP TYPE IF EXISTS wine_type;
@@ -38,13 +40,13 @@ async function createTables() {
       name VARCHAR(255) NOT NULL,
       state VARCHAR(255) NOT NULL,
       admin BOOLEAN DEFAULT false,
-      email VARCHAR(255) UNIQUE NOT NULL,
+      email VARCHAR(255) UNIQUE NOT NULL
     );
     CREATE TYPE wine_type AS ENUM ('Cabernet','Syrah','Zinfandel','Noir','Merlot','Malbec','Tempranillo','Riesling','Grigio','Sauvignon','Chardonnay','Moscato','Blend');
 
     CREATE TABLE wines(
       id SERIAL PRIMARY KEY,
-      author TEXT REFERENCES user(username)
+      author_id INTEGER REFERENCES users(id),
       name TEXT UNIQUE NOT NULL,
       image_url TEXT NOT NULL,
       region TEXT,
@@ -54,7 +56,7 @@ async function createTables() {
      id SERIAL PRIMARY KEY,
       user_id INTEGER REFERENCES users(id),
       wines_id INTEGER REFERENCES wines(id),
-      rating TINYINT NOT NULL,
+      rating INTEGER NOT NULL,
       price INTEGER,
       review_comment TEXT,
       image_url TEXT NOT NULL,
@@ -62,12 +64,12 @@ async function createTables() {
     );
     CREATE TABLE badges (
       id SERIAL PRIMARY KEY,
-      name REFERENCES user(username),
+      author_id INTEGER REFERENCES users(id),
       total_reviews INTEGER,
       total_uploads INTEGER,
       total_follows INTEGER,
       total_followers INTEGER,
-      total_main_photos INTEGER,
+      total_main_photos INTEGER
     );
     `);
     console.log("Finished building tables");
