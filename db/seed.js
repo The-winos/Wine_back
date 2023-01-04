@@ -49,6 +49,14 @@ async function createTables() {
       region TEXT,
       flavor wine_type
     );
+    CREATE TABLE reviews (
+      review_id INTEGER PRIMARY KEY,
+      product_id INTEGER,
+      user_id INTEGER,
+      rating INTEGER,
+      review_text TEXT,
+      review_date DATE
+    );
     `);
     console.log("Finished building tables");
   } catch (error) {
@@ -83,13 +91,12 @@ async function createInitialUsers() {
   }
 }
 
-async function buildingDB(){
+async function buildingDB() {
   try {
     client.connect();
     await dropTables();
     await createTables();
     await createInitialUsers();
-
   } catch (error) {
     console.log("error during building");
     throw error;
