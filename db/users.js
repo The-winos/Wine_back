@@ -1,25 +1,24 @@
-const { client } = require("./client");
+const { client } = require("../index");
 const bcrypt = require("bcrypt");
 
-async function createUser({username, password, name, state, admin, email}){
-  const saltRound =10
+async function createUser({ username, password, name, state, admin, email }) {
+  const saltRound = 10;
   const salt = await bcrypt.genSalt(saltRound);
-  const bcryptPassword =await bcrypt.hash(password, salt);
+  const bcryptPassword = await bcrypt.hash(password, salt);
   try {
-const{
-  rows: [user],
-}=await client.query(
-  `
+    const {
+      rows: [user],
+    } = await client.query(
+      `
   INSERT INTO users (username, password, name, state, admin, email)
   VALUES ($1, $2, $3, $4, $5 $6)
   ON CONFLICT (username) DO NOTHING
   RETURNING *;
   `,
-  [username, bcryptPassword, name, state, admin, email]
-);
-delete user.password;
-return user;
-
+      [username, bcryptPassword, name, state, admin, email]
+    );
+    delete user.password;
+    return user;
   } catch (error) {
     throw error;
   }
@@ -90,25 +89,31 @@ async function getAllUsers() {
   }
 }
 
-async function deleteUser(id){
-  const{
-    rows:[user],
-  }= await client.query(`
+async function deleteUser(id) {
+  const {
+    rows: [user],
+  } = await client.query(
+    `
   DELETE FROM users
   WHERE id = $1
   RETURNING *
-  `, [id]
+  `,
+    [id]
   );
   return [user];
 }
 
-async function updateUser(id, fields={}){
-  const setString = Object.keys(fields).map((key, index)=>`"${key}"=$${index + 1}`).join(", ");
-  if(setString.length===0){
+async function updateUser(id, fields = {}) {
+  const setString = Object.keys(fields)
+    .map((key, index) => `"${key}"=$${index + 1}`)
+    .join(", ");
+  if (setString.length === 0) {
     return;
   }
   try {
-    const{ rows: [user],}= await client.query(
+    const {
+      rows: [user],
+    } = await client.query(
       `UPDATE users
       SET ${setString}
       WHERE ${id}
@@ -118,21 +123,17 @@ async function updateUser(id, fields={}){
     );
     delete user.password;
     return user;
-
   } catch (error) {
     throw error;
   }
 }
 
-
 module.exports = {
-createUser,
-getUser,
-getUserById,
-getUserByUsername,
-getAllUsers,
-deleteUser,
-updateUser,
-
-
+  createUser,
+  getUser,
+  getUserById,
+  getUserByUsername,
+  getAllUsers,
+  deleteUser,
+  updateUser,
 };
