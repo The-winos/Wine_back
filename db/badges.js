@@ -1,15 +1,15 @@
 const { client } = require("./client");
 
-async function createBadges(user_id){
+async function createBadges(author_id, total_reviews, total_uploads, total_follows, total_followers, total_main_photos){
 try {
   const{
     rows:[badges],
   }= await client.query(`
-  INSERT INTO badges(author_id)
-  VALUES($1)
+  INSERT INTO badges(author_id, total_reviews, total_uploads, total_follows, total_followers, total_main_photos)
+  VALUES($1, $2, $3, $4, $5, $6)
   RETURNING *;
   `,
-  [user_id]
+  [author_id, total_reviews, total_uploads, total_follows, total_followers, total_main_photos]
   );
   return badges;
 
