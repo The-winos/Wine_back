@@ -69,6 +69,18 @@ async function getBadgeByUser({username}){
   }
 }
 
+// async function attachBadgeToUser(userId){
+//   const userToReturn = {...users};
+//   try {
+//     const {rows: wines}= await client.query(`
+//     SELECT wines.*,
+//     `)
+
+//   } catch (error) {
+
+//   }
+// }
+
 async function updateBadge({id, fields={}}){
   const setString =Object.keys(fields).map((key,index)=>
   `"${key}"=$${index +1}`).join(", ");
