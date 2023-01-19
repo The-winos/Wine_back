@@ -10,6 +10,7 @@ const {
   deleteUser,
   updateUser,
 } = require("./users");
+const { getAllReviews, createReview } = require("./reviews");
 
 async function dropTables() {
   try {
@@ -53,9 +54,8 @@ async function createTables() {
       flavor wine_type
     );
     CREATE TABLE reviews (
-     id SERIAL PRIMARY KEY,
-      user_id INTEGER REFERENCES users(id),
-      wines_id INTEGER REFERENCES wines(id),
+      id SERIAL PRIMARY KEY,
+      name TEXT NOT NULL,
       rating INTEGER NOT NULL,
       price INTEGER,
       review_comment TEXT,
@@ -105,12 +105,33 @@ async function createInitialUsers() {
   }
 }
 
+async function createInitialReview() {
+  try {
+    console.log("Starting to create reviews");
+    await createReview({
+      name: "Alamos",
+      rating: 5,
+      price: 850,
+      review_comment:
+        "Plum and prune on the nose and palate. Fruity, with ripe, well-integrated tannins on the palate. Long, slightly drying finish with lingering plum and prune notes.",
+      image_url:
+        "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
+      review_date: 2023 - 01 - 19,
+    });
+    console.log("Finished creating review");
+  } catch (error) {
+    console.error("error creating review");
+    throw error;
+  }
+}
+
 async function buildingDB() {
   try {
     client.connect();
     await dropTables();
     await createTables();
     await createInitialUsers();
+    await createInitialReview();
   } catch (error) {
     console.log("error during building");
     throw error;
@@ -138,6 +159,10 @@ async function testDB() {
     console.log("Error during testDB");
     throw error;
   }
+
+  console.log("get all reviews");
+  const reviews = await getAllReviews(1);
+  console.log("This is a review", reviews);
 }
 
 buildingDB()
