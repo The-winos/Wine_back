@@ -69,17 +69,22 @@ async function getBadgeByUser({username}){
   }
 }
 
-// async function attachBadgeToUser(userId){
-//   const userToReturn = {...users};
-//   try {
-//     const {rows: wines}= await client.query(`
-//     SELECT wines.*,
-//     `)
+async function attachBadgeToUser(userId){
+  const badgeToReturn = {...users};
+  try {
+    const {rows: users}= await client.query(`
+    SELECT users.*, badges.author_id AS "authorId", badges.total_reviews, badges.total_uploads, badges.total_follows, badges.total_followers, badges.total_main_photos
+    FROM users
+    JOIN badges ON badges.author_id = users.id
+    WHERE badges.id IN ($1)
+    `, [badgeToReturn.id]);
+    badgeToReturn.users=users;
+    return badgeToReturn;
 
-//   } catch (error) {
-
-//   }
-// }
+  } catch (error) {
+console.error(error);
+  }
+}
 
 async function updateBadge({id, fields={}}){
   const setString =Object.keys(fields).map((key,index)=>
