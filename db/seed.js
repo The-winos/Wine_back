@@ -11,6 +11,8 @@ const {
   updateUser,
 } = require("./users");
 const { getAllReviews, createReview } = require("./reviews");
+const { createWine } = require("./wines");
+const { createBadges } = require("./badges");
 
 async function dropTables() {
   try {
@@ -107,6 +109,23 @@ async function createInitialUsers() {
   }
 }
 
+async function createInitialWine(){
+try {
+  console.log("Starting to Create Wines");
+  await createWine({
+    author_id:1,
+    name: "Apothic Dark",
+    image_url: "https://img.freepik.com/free-photo/bottle-wine-isolated-white_167946-4.jpg?size=338&ext=jpg&ga=GA1.2.1034222811.1663818713",
+    region: "California",
+    flavor: "Blend",
+ });
+ console.log("Finished creating wines");
+} catch (error) {
+  console.error("error creating wines");
+    throw error;
+}
+}
+
 async function createInitialReview() {
   try {
     console.log("Starting to create reviews");
@@ -126,6 +145,22 @@ async function createInitialReview() {
     throw error;
   }
 }
+async function createInitialBadges(){
+  try {
+    console.log("starting to create Badges");
+    await createBadges({
+      author_id:1,
+      total_reviews:2,
+      total_follows:0,
+      total_followers:1,
+      total_main_photos:0,
+    });
+    console.log("finished creating intial badges");
+  } catch (error) {
+    console.error("error creating badges");
+    throw error;
+  }
+}
 
 async function buildingDB() {
   try {
@@ -133,7 +168,9 @@ async function buildingDB() {
     await dropTables();
     await createTables();
     await createInitialUsers();
+    await createInitialWine();
     await createInitialReview();
+    await createInitialBadges();
   } catch (error) {
     console.log("error during building");
     throw error;
