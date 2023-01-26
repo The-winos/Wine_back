@@ -1,6 +1,8 @@
 const { client } = require("./client");
 
 async function createReview(
+  wine_id,
+  user_id,
   name,
   rating,
   price,
@@ -13,11 +15,20 @@ async function createReview(
       rows: [reviews],
     } = await client.query(
       `
-        INSERT INTO reviews(name, rating, price, review_comment, image_url, review_date)
-        VALUES ($1, $2, $3, $4, $5, $6)
+        INSERT INTO reviews(wine_id, user_id, name, rating, price, review_comment, image_url, review_date)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
         RETURNING *;
         `,
-      [name, rating, price, review_comment, image_url, review_date]
+      [
+        wine_id,
+        user_id,
+        name,
+        rating,
+        price,
+        review_comment,
+        image_url,
+        review_date,
+      ]
     );
     return reviews;
   } catch (error) {

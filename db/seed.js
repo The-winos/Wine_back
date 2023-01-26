@@ -11,7 +11,7 @@ const {
   updateUser,
 } = require("./users");
 const { getAllReviews, createReview } = require("./reviews");
-const { createWine } = require("./wines");
+const { createWine, getWineById } = require("./wines");
 const { createBadges } = require("./badges");
 
 async function dropTables() {
@@ -58,7 +58,7 @@ async function createTables() {
     CREATE TABLE reviews (
       id SERIAL PRIMARY KEY,
       wine_id INTEGER REFERENCES wines(id),
-      user_id INTEGER REFERENCES users(id)
+      user_id INTEGER REFERENCES users(id),
       name TEXT NOT NULL,
       rating INTEGER NOT NULL,
       price INTEGER,
@@ -109,35 +109,40 @@ async function createInitialUsers() {
   }
 }
 
-async function createInitialWine(){
-try {
-  console.log("Starting to Create Wines");
-  await createWine({
-    author_id:1,
-    name: "Apothic Dark",
-    image_url: "https://img.freepik.com/free-photo/bottle-wine-isolated-white_167946-4.jpg?size=338&ext=jpg&ga=GA1.2.1034222811.1663818713",
-    region: "California",
-    flavor: "Blend",
- });
- console.log("Finished creating wines");
-} catch (error) {
-  console.error("error creating wines");
+async function createInitialWine() {
+  try {
+    console.log("Starting to Create Wines");
+    await createWine({
+      author_id: 1,
+      name: "Apothic Dark",
+      image_url:
+        "https://img.freepik.com/free-photo/bottle-wine-isolated-white_167946-4.jpg?size=338&ext=jpg&ga=GA1.2.1034222811.1663818713",
+      region: "California",
+      flavor: "Blend",
+    });
+    console.log("Finished creating wines");
+  } catch (error) {
+    console.error("error creating wines");
     throw error;
-}
+  }
 }
 
 async function createInitialReview() {
   try {
     console.log("Starting to create reviews");
+    const wineId = await getWineById(1);
+    console.log("Starting to get Wine ID", wineId);
     await createReview({
-      name: "Alamos",
+      wine_id: wineId.id,
+      user_id: wineId.author_id,
+      name: "Review",
       rating: 5,
       price: 850,
       review_comment:
         "Plum and prune on the nose and palate. Fruity, with ripe, well-integrated tannins on the palate. Long, slightly drying finish with lingering plum and prune notes.",
       image_url:
         "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
-      review_date: 2023 - 01 - 19,
+      review_date: 2023,
     });
     console.log("Finished creating review");
   } catch (error) {
@@ -145,15 +150,15 @@ async function createInitialReview() {
     throw error;
   }
 }
-async function createInitialBadges(){
+async function createInitialBadges() {
   try {
     console.log("starting to create Badges");
     await createBadges({
-      author_id:1,
-      total_reviews:2,
-      total_follows:0,
-      total_followers:1,
-      total_main_photos:0,
+      author_id: 1,
+      total_reviews: 2,
+      total_follows: 0,
+      total_followers: 1,
+      total_main_photos: 0,
     });
     console.log("finished creating intial badges");
   } catch (error) {
