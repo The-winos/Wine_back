@@ -31,7 +31,7 @@ async function createUser({ username, password, name, state, admin, email }) {
 
 async function getUser({ username, password }) {
   try {
-    const user = await getWithUsername(username);
+    const user = await getUserByUsername(username);
     const hashedPassword = user.password;
     const validPassword = await bcrypt.compare(password, hashedPassword);
     if (validPassword) {
@@ -121,7 +121,7 @@ async function updateUser(id, fields = {}) {
     } = await client.query(
       `UPDATE users
       SET ${setString}
-      WHERE ${id}
+      WHERE id=${id}
       RETURNING *;
       `,
       Object.values(fields)
