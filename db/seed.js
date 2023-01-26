@@ -10,8 +10,22 @@ const {
   deleteUser,
   updateUser,
 } = require("./users");
-const { getAllReviews, createReview } = require("./reviews");
-const { createWine, getWineById } = require("./wines");
+const {
+  getAllReviews,
+  createReview,
+  getReviewByUser,
+  updateReview,
+  destroyReview,
+} = require("./reviews");
+const {
+  createWine,
+  getWineById,
+  getAllWines,
+  getWineByFlavor,
+  updateWine,
+  destroyWine,
+  getWineByName,
+} = require("./wines");
 const { createBadges } = require("./badges");
 
 async function dropTables() {
@@ -128,6 +142,25 @@ async function createInitialWine() {
       region: "California",
       flavor: "Blend",
     });
+
+    await createWine({
+      author_id: 2,
+      name: "Kirkland Malbec",
+      image_url:
+        "https://img.freepik.com/free-photo/bottle-wine-isolated-white_167946-4.jpg?size=338&ext=jpg&ga=GA1.2.1034222811.1663818713",
+      region: "Argentina",
+      flavor: "Malbec",
+    });
+
+    await createWine({
+      author_id: 2,
+      name: "Yucky wine",
+      image_url:
+        "https://img.freepik.com/free-photo/bottle-wine-isolated-white_167946-4.jpg?size=338&ext=jpg&ga=GA1.2.1034222811.1663818713",
+      region: "Trash",
+      flavor: "Malbec",
+    });
+
     console.log("Finished creating wines");
   } catch (error) {
     console.error("error creating wines");
@@ -152,6 +185,19 @@ async function createInitialReview() {
         "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
       review_date: 20190602,
     });
+
+    await createReview({
+      wine_id: wineId.id,
+      user_id: wineId.author_id,
+      name: "Delete Test",
+      rating: 5,
+      price: 850,
+      review_comment: "Nevermind.",
+      image_url:
+        "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
+      review_date: 20190602,
+    });
+
     console.log("Finished creating review");
   } catch (error) {
     console.error("error creating review");
@@ -164,7 +210,7 @@ async function createInitialBadges() {
     await createBadges({
       author_id: 1,
       total_reviews: 2,
-      total_uploads:3,
+      total_uploads: 3,
       total_follows: 0,
       total_followers: 1,
       total_main_photos: 0,
@@ -208,29 +254,73 @@ async function testDB() {
     console.log("this is all users", allUsers);
 
     console.log("testing getUser, password");
-    const gettingUser= await getUser({username:"AmazingHuman", password: "ABCD1234"});
-    console.log("this is getUser", gettingUser)
+    const gettingUser = await getUser({
+      username: "AmazingHuman",
+      password: "ABCD1234",
+    });
+    console.log("this is getUser", gettingUser);
 
     console.log("testing delete user");
-    const deletedUser= await deleteUser(3);
-    console.log("deleted user", deletedUser)
+    const deletedUser = await deleteUser(3);
+    console.log("deleted user", deletedUser);
 
     console.log("testing update User");
-    console.log(allUsers[0], "what is this??")
-    const updatingUser= await updateUser(allUsers[0].id, {state: "North Carolina", admin:true});
-    console.log("updated user", updatingUser)
+    console.log(allUsers[0], "what is this??");
+    const updatingUser = await updateUser(allUsers[0].id, {
+      state: "North Carolina",
+      admin: true,
+    });
+    console.log("updated user", updatingUser);
+
+    console.log("get all wines");
+    const wines = await getAllWines();
+    console.log("These are all wines", wines);
+
+    console.log("getting wine type");
+    const flavor = await getWineByFlavor("Blend");
+    console.log("These are the blend wines", flavor);
+
+    console.log("getting wines by id");
+    const wineId = await getWineById(1);
+    console.log("This is wine by id", wineId);
+
+    console.log("Updating wine");
+    const updatedWine = await updateWine(wines[2].id, {
+      region: "Still Trash",
+    });
+    console.log("Updated wine", updatedWine);
+
+    console.log("Destroying wine");
+    const destroyedWine = await destroyWine(3);
+    console.log("Deleting wine", destroyedWine);
+
+    console.log("Getting wine by name");
+    const wineName = await getWineByName("Kirkland Malbec");
+    console.log("Getting wine by name", wineName);
 
     console.log("get all reviews");
     const reviews = await getAllReviews();
     console.log("This is the reviews", reviews);
+
+    console.log("getting review by user");
+    const userReview = await getReviewByUser(1);
+    console.log("This is review by id", userReview);
+
+    console.log("updating review");
+    const updatedReview = await updateReview(reviews[0].id, {
+      name: "Bold and Beautiful",
+    });
+    console.log("Updated review", updatedReview);
+
+    console.log("Destroying review");
+    const deletedReview = await destroyReview(2);
+    console.log("Destroyed Review", deletedReview);
 
     console.log("Finished DB Tests");
   } catch (error) {
     console.log("Error during testDB");
     throw error;
   }
-
-
 }
 
 buildingDB()

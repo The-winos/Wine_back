@@ -8,7 +8,7 @@ async function createReview({
   price,
   review_comment,
   image_url,
-  review_date
+  review_date,
 }) {
   try {
     const {
@@ -37,9 +37,9 @@ async function createReview({
 }
 
 async function updateReview(id, fields = {}) {
-  const setString = Object.keys(fields).map((key, index) =>
-    `"${key}"=$${index + 1}`.join(",")
-  );
+  const setString = Object.keys(fields)
+    .map((key, index) => `"${key}"=$${index + 1}`)
+    .join(", ");
   if (setString.length === 0) {
     return;
   }
@@ -47,15 +47,14 @@ async function updateReview(id, fields = {}) {
     const {
       rows: [reviews],
     } = await client.query(
-      `
-        UPDATE reviews
+      `UPDATE reviews
         SET ${setString}
         WHERE id=${id}
         RETURNING *;
         `,
       Object.values(fields)
     );
-    console.log(product, "this is an updated review");
+    return reviews;
   } catch (error) {
     throw error;
   }
@@ -79,16 +78,14 @@ async function destroyReview(id) {
 
 async function getAllReviews() {
   try {
-    const { rows: reviewsIds } = await client.query(`
-      SELECT id
+    const { rows: reviews } = await client.query(`
+      SELECT *
       FROM reviews
         `);
-    const reviews = await Promise.all(
-      reviewsIds.map((reviews) => getReviewByUser(reviews.id))
-    );
+
     return reviews;
   } catch (error) {
-    console.error(error);
+    throw error;
   }
 }
 
