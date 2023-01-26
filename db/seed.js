@@ -58,6 +58,7 @@ async function createTables() {
       state VARCHAR(255) NOT NULL,
       admin BOOLEAN DEFAULT false,
       email VARCHAR(255) UNIQUE NOT NULL
+
     );
     CREATE TYPE wine_type AS ENUM ('Cabernet','Syrah','Zinfandel','Noir','Merlot','Malbec','Tempranillo','Riesling','Grigio','Sauvignon','Chardonnay','Moscato','Blend');
     CREATE TABLE wines(
