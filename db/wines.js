@@ -38,7 +38,7 @@ async function getWineByFlavor(flavor) {
       `
   SELECT *
   FROM wines
-  WHERE audience = $1
+  WHERE flavor = $1
   `,
       [flavor]
     );
