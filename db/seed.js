@@ -26,7 +26,7 @@ const {
   destroyWine,
   getWineByName,
 } = require("./wines");
-const { createBadges } = require("./badges");
+const { createBadges, getAllBadges, getBadgeById, getBadgeByUser, updateBadge } = require("./badges");
 
 async function dropTables() {
   try {
@@ -58,6 +58,7 @@ async function createTables() {
       state VARCHAR(255) NOT NULL,
       admin BOOLEAN DEFAULT false,
       email VARCHAR(255) UNIQUE NOT NULL
+
     );
     CREATE TYPE wine_type AS ENUM ('Cabernet','Syrah','Zinfandel','Noir','Merlot','Malbec','Tempranillo','Riesling','Grigio','Sauvignon','Chardonnay','Moscato','Blend');
     CREATE TABLE wines(
@@ -315,6 +316,23 @@ async function testDB() {
     console.log("Destroying review");
     const deletedReview = await destroyReview(2);
     console.log("Destroyed Review", deletedReview);
+
+    console.log("getting all badges");
+    const allBadges = await getAllBadges();
+    console.log("all the badges", allBadges)
+
+    console.log("getting badge by id");
+    const badgeId= await getBadgeById(1);
+    console.log("badge id 1", badgeId);
+
+    console.log("get badge by username");
+    const badgeUsername= await getBadgeByUser({username:"AmazingHuman"})
+    console.log("badges by user AmazingHuman", badgeUsername)
+
+    console.log("updating the badges");
+    console.log(allBadges[0].id, "LOOKY")
+    const updatedBadge= await updateBadge(allBadges[0].id, {total_follows:10,})
+    console.log("updated total follows from 0 to 10", updatedBadge)
 
     console.log("Finished DB Tests");
   } catch (error) {
