@@ -1,4 +1,5 @@
 const { client } = require("./client");
+const { getUserByUsername } = require("./users");
 
 async function createBadges({author_id, total_reviews, total_uploads, total_follows, total_followers, total_main_photos}){
 try {
@@ -51,42 +52,37 @@ try {
 
 async function getBadgeByUser({username}){
   try {
-    const{
-      rows: [badges],
-    }=await client.query(`
-    SELECT badges.*, users.username AS user_username
-    FROM badges
-    JOIN badges on users.id = badges.author_id
-    WHERE username = $1
-    `, [username]);
-    const diffBadges= Promise.all(badges.map((badge)=>{
-      return attachBadgeToUser(badge)
-    }))
-    // make function attachBadgeToUser
-    return diffBadges;
+    const userName= await getUserByUsername(username)
+    const{rows: badges} = await client.query(
+      `
+      SELECT * FROM badges
+      WHERE author_id= $1;
+      `, [userName.id]
+    );
+    return badges
   } catch (error) {
     throw error
   }
 }
 
-async function attachBadgeToUser(userId){
-  const badgeToReturn = {...users};
-  try {
-    const {rows: users}= await client.query(`
-    SELECT users.*, badges.author_id AS "authorId", badges.total_reviews, badges.total_uploads, badges.total_follows, badges.total_followers, badges.total_main_photos
-    FROM users
-    JOIN badges ON badges.author_id = users.id
-    WHERE badges.id IN ($1)
-    `, [badgeToReturn.id]);
-    badgeToReturn.users=users;
-    return badgeToReturn;
+// async function attachBadgeToUser(userId){
+//   const badgeToReturn = {...users};
+//   try {
+//     const {rows: users}= await client.query(`
+//     SELECT users.*, badges.author_id AS "authorId", badges.total_reviews, badges.total_uploads, badges.total_follows, badges.total_followers, badges.total_main_photos
+//     FROM users
+//     JOIN badges ON badges.author_id = users.id
+//     WHERE badges.id IN ($1)
+//     `, [badgeToReturn.id]);
+//     badgeToReturn.users=users;
+//     return badgeToReturn;
 
-  } catch (error) {
-console.error(error);
-  }
-}
+//   } catch (error) {
+// console.error(error);
+//   }
+// }
 
-async function updateBadge({id, fields={}}){
+async function updateBadge(id, fields={}){
   const setString =Object.keys(fields).map((key,index)=>
   `"${key}"=$${index +1}`).join(", ");
   if (setString.length === 0){
