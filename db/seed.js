@@ -46,7 +46,6 @@ async function createTables() {
       email VARCHAR(255) UNIQUE NOT NULL
     );
     CREATE TYPE wine_type AS ENUM ('Cabernet','Syrah','Zinfandel','Noir','Merlot','Malbec','Tempranillo','Riesling','Grigio','Sauvignon','Chardonnay','Moscato','Blend');
-
     CREATE TABLE wines(
       id SERIAL PRIMARY KEY,
       author_id INTEGER REFERENCES users(id),
@@ -55,18 +54,18 @@ async function createTables() {
       region TEXT,
       flavor wine_type
     );
-    CREATE TABLE reviews (
+    CREATE TABLE reviews(
       id SERIAL PRIMARY KEY,
       wine_id INTEGER REFERENCES wines(id),
       user_id INTEGER REFERENCES users(id),
-      name TEXT NOT NULL,
+      name TEXT,
       rating INTEGER NOT NULL,
       price INTEGER,
       review_comment TEXT,
-      image_url TEXT NOT NULL,
+      image_url TEXT,
       review_date DATE
     );
-    CREATE TABLE badges (
+    CREATE TABLE badges(
       id SERIAL PRIMARY KEY,
       author_id INTEGER REFERENCES users(id),
       total_reviews INTEGER,
@@ -102,6 +101,15 @@ async function createInitialUsers() {
       admin: true,
       email: "harry@potter.com",
     });
+
+    await createUser({
+      username: "Deleted",
+      password: "ABCD1234",
+      name: "NotHere",
+      state: "Colorado",
+      admin: false,
+      email: "deleted@potter.com",
+    });
     console.log("Finished creating users");
   } catch (error) {
     console.error("error creating users");
@@ -131,7 +139,7 @@ async function createInitialReview() {
   try {
     console.log("Starting to create reviews");
     const wineId = await getWineById(1);
-    console.log("Starting to get Wine ID", wineId);
+    console.log("Getting wine", wineId);
     await createReview({
       wine_id: wineId.id,
       user_id: wineId.author_id,
@@ -142,7 +150,7 @@ async function createInitialReview() {
         "Plum and prune on the nose and palate. Fruity, with ripe, well-integrated tannins on the palate. Long, slightly drying finish with lingering plum and prune notes.",
       image_url:
         "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
-      review_date: 2023,
+      review_date: 20190602,
     });
     console.log("Finished creating review");
   } catch (error) {
@@ -156,11 +164,12 @@ async function createInitialBadges() {
     await createBadges({
       author_id: 1,
       total_reviews: 2,
+      total_uploads:3,
       total_follows: 0,
       total_followers: 1,
       total_main_photos: 0,
     });
-    console.log("finished creating intial badges");
+    console.log("finished creating initial badges");
   } catch (error) {
     console.error("error creating badges");
     throw error;
@@ -198,15 +207,30 @@ async function testDB() {
     const allUsers = await getAllUsers();
     console.log("this is all users", allUsers);
 
+    console.log("testing getUser, password");
+    const gettingUser= await getUser({username:"AmazingHuman", password: "ABCD1234"});
+    console.log("this is getUser", gettingUser)
+
+    console.log("testing delete user");
+    const deletedUser= await deleteUser(3);
+    console.log("deleted user", deletedUser)
+
+    console.log("testing update User");
+    console.log(allUsers[0], "what is this??")
+    const updatingUser= await updateUser(allUsers[0].id, {state: "North Carolina", admin:true});
+    console.log("updated user", updatingUser)
+
+    console.log("get all reviews");
+    const reviews = await getAllReviews();
+    console.log("This is the reviews", reviews);
+
     console.log("Finished DB Tests");
   } catch (error) {
     console.log("Error during testDB");
     throw error;
   }
 
-  console.log("get all reviews");
-  const reviews = await getAllReviews(1);
-  console.log("This is a review", reviews);
+
 }
 
 buildingDB()

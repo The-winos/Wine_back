@@ -1,6 +1,6 @@
 const { client } = require("./client");
 
-async function createReview(
+async function createReview({
   wine_id,
   user_id,
   name,
@@ -9,7 +9,7 @@ async function createReview(
   review_comment,
   image_url,
   review_date
-) {
+}) {
   try {
     const {
       rows: [reviews],
@@ -81,7 +81,7 @@ async function getAllReviews() {
   try {
     const { rows: reviewsIds } = await client.query(`
       SELECT id
-      FROM reviews  
+      FROM reviews
         `);
     const reviews = await Promise.all(
       reviewsIds.map((reviews) => getReviewByUser(reviews.id))

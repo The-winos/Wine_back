@@ -1,6 +1,6 @@
 const { client } = require("./client");
 
-async function createBadges(author_id, total_reviews, total_uploads, total_follows, total_followers, total_main_photos){
+async function createBadges({author_id, total_reviews, total_uploads, total_follows, total_followers, total_main_photos}){
 try {
   const{
     rows:[badges],
