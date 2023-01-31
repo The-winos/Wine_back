@@ -26,7 +26,13 @@ const {
   destroyWine,
   getWineByName,
 } = require("./wines");
-const { createBadges, getAllBadges, getBadgeById, getBadgeByUser, updateBadge } = require("./badges");
+const {
+  createBadges,
+  getAllBadges,
+  getBadgeById,
+  getBadgeByUser,
+  updateBadge,
+} = require("./badges");
 
 async function dropTables() {
   try {
@@ -35,6 +41,7 @@ async function dropTables() {
     DROP TABLE IF EXISTS badges;
     DROP TABLE IF EXISTS reviews;
     DROP TABLE IF EXISTS wines;
+    DROP TABLE IF EXISTS followers;
     DROP TABLE IF EXISTS users;
     DROP TYPE IF EXISTS wine_type;
     `);
@@ -48,7 +55,6 @@ async function dropTables() {
 async function createTables() {
   try {
     console.log("Starting to build tables...");
-    //review line 32 - to get author AS username or ID ?? (review cart of fitness tracker)
     await client.query(`
     CREATE TABLE users(
       id SERIAL PRIMARY KEY,
@@ -57,7 +63,9 @@ async function createTables() {
       name VARCHAR(255) NOT NULL,
       state VARCHAR(255) NOT NULL,
       admin BOOLEAN DEFAULT false,
-      email VARCHAR(255) UNIQUE NOT NULL
+      email VARCHAR(255) UNIQUE NOT NULL,
+      follower_count INT NOT NULL DEFAULT (0),
+      following_count INT NOT NULL DEFAULT (0)
 
     );
     CREATE TYPE wine_type AS ENUM ('Cabernet','Syrah','Zinfandel','Noir','Merlot','Malbec','Tempranillo','Riesling','Grigio','Sauvignon','Chardonnay','Moscato','Blend');
@@ -89,6 +97,15 @@ async function createTables() {
       total_followers INTEGER,
       total_main_photos INTEGER
     );
+    CREATE TABLE followers(
+      id INT PRIMARY KEY,
+      user_id INT NOT NULL,
+      follower_id INT NOT NULL,
+      created_at TIMESTAMP NOT NULL DEFAULT (NOW()),
+      UNIQUE (user_id, follower_id),
+      FOREIGN KEY (user_id) REFERENCES users(id),
+      FOREIGN KEY (follower_id) REFERENCES users(id)
+    )
     `);
     console.log("Finished building tables");
   } catch (error) {
@@ -319,20 +336,22 @@ async function testDB() {
 
     console.log("getting all badges");
     const allBadges = await getAllBadges();
-    console.log("all the badges", allBadges)
+    console.log("all the badges", allBadges);
 
     console.log("getting badge by id");
-    const badgeId= await getBadgeById(1);
+    const badgeId = await getBadgeById(1);
     console.log("badge id 1", badgeId);
 
     console.log("get badge by username");
-    const badgeUsername= await getBadgeByUser({username:"AmazingHuman"})
-    console.log("badges by user AmazingHuman", badgeUsername)
+    const badgeUsername = await getBadgeByUser({ username: "AmazingHuman" });
+    console.log("badges by user AmazingHuman", badgeUsername);
 
     console.log("updating the badges");
-    console.log(allBadges[0].id, "LOOKY")
-    const updatedBadge= await updateBadge(allBadges[0].id, {total_follows:10,})
-    console.log("updated total follows from 0 to 10", updatedBadge)
+    console.log(allBadges[0].id, "LOOKY");
+    const updatedBadge = await updateBadge(allBadges[0].id, {
+      total_follows: 10,
+    });
+    console.log("updated total follows from 0 to 10", updatedBadge);
 
     console.log("Finished DB Tests");
   } catch (error) {
