@@ -7,6 +7,8 @@ const client = new Client({
     process.env.NODE_ENV === "production"
       ? { rejectUnauthorized: false }
       : undefined,
+
+
 });
 
 module.exports = {
