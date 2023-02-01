@@ -33,6 +33,13 @@ const {
   getBadgeByUser,
   updateBadge,
 } = require("./badges");
+const {
+  createFollower,
+  getAllFollowers,
+  getFollowerByUser,
+  updateFollower,
+  destroyFollower,
+} = require("./followers");
 
 async function dropTables() {
   try {
@@ -98,7 +105,7 @@ async function createTables() {
       total_main_photos INTEGER
     );
     CREATE TABLE followers(
-      id INT PRIMARY KEY,
+      id SERIAL PRIMARY KEY,
       user_id INT NOT NULL,
       follower_id INT NOT NULL,
       created_at TIMESTAMP NOT NULL DEFAULT (NOW()),
@@ -240,6 +247,28 @@ async function createInitialBadges() {
   }
 }
 
+async function createInitialFollowers() {
+  try {
+    console.log("starting to create followers");
+    await createFollower({
+      id: 1,
+      user_id: 1,
+      follower_id: 1,
+      created_at: "2022-12-31 23:59:59",
+    });
+    await createFollower({
+      id: 2,
+      user_id: 2,
+      follower_id: 2,
+      created_at: "2022-12-31 01:59:59",
+    });
+    console.log("finished created initial followers");
+  } catch (error) {
+    console.error("error creating followers");
+    throw error;
+  }
+}
+
 async function buildingDB() {
   try {
     client.connect();
@@ -249,6 +278,7 @@ async function buildingDB() {
     await createInitialWine();
     await createInitialReview();
     await createInitialBadges();
+    await createInitialFollowers();
   } catch (error) {
     console.log("error during building");
     throw error;
@@ -347,11 +377,29 @@ async function testDB() {
     console.log("badges by user AmazingHuman", badgeUsername);
 
     console.log("updating the badges");
-    console.log(allBadges[0].id, "LOOKY");
+    console.log(allBadges[0].id, "updated badge id");
     const updatedBadge = await updateBadge(allBadges[0].id, {
       total_follows: 10,
     });
     console.log("updated total follows from 0 to 10", updatedBadge);
+
+    console.log("get all followers");
+    const followers = await getAllFollowers();
+    console.log("These are all followers", followers);
+
+    console.log("getting review by user");
+    const userFollower = await getFollowerByUser(1);
+    console.log("This is follower by id", userFollower);
+
+    console.log("updating follower");
+    const updatedFollower = await updateFollower(followers[0].id, {
+      created_at: "2022-12-31 21:59:59",
+    });
+    console.log("Updated follower", updatedFollower);
+
+    console.log("Destroying follower");
+    const deletedFollower = await destroyFollower(1);
+    console.log("Destroyed Follower", deletedFollower);
 
     console.log("Finished DB Tests");
   } catch (error) {
