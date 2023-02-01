@@ -34,11 +34,12 @@ const {
   updateBadge,
 } = require("./badges");
 const {
-  createFollower,
+  addFollower,
   getAllFollowers,
   getFollowerByUser,
   updateFollower,
   destroyFollower,
+  getFollowingByUser,
 } = require("./followers");
 
 async function dropTables() {
@@ -108,11 +109,33 @@ async function createTables() {
       id SERIAL PRIMARY KEY,
       user_id INT NOT NULL,
       follower_id INT NOT NULL,
-      created_at TIMESTAMP NOT NULL DEFAULT (NOW()),
+      created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+      updated_at TIMESTAMP DEFAULT NOW(),
       UNIQUE (user_id, follower_id),
       FOREIGN KEY (user_id) REFERENCES users(id),
       FOREIGN KEY (follower_id) REFERENCES users(id)
-    )
+    );
+
+    CREATE OR REPLACE FUNCTION update_follow_counts()
+    RETURNS TRIGGER AS $$
+    BEGIN
+      UPDATE users
+      SET follower_count = follower_count + 1
+      WHERE id = NEW.follower_id;
+
+      UPDATE users
+      SET following_count = following_count + 1
+      WHERE id = NEW.user_id;
+
+      RETURN NEW;
+    END;
+    $$ LANGUAGE plpgsql;
+
+    CREATE TRIGGER update_follow_counts_trigger
+    AFTER INSERT ON followers
+    FOR EACH ROW
+    EXECUTE FUNCTION update_follow_counts();
+
     `);
     console.log("Finished building tables");
   } catch (error) {
@@ -131,6 +154,8 @@ async function createInitialUsers() {
       state: "Florida",
       admin: true,
       email: "dumdum@dumdum.com",
+      follower_count: 0,
+      following_count:0,
     });
     await createUser({
       username: "CuteGeek",
@@ -139,6 +164,8 @@ async function createInitialUsers() {
       state: "Colorado",
       admin: true,
       email: "harry@potter.com",
+      follower_count: 0,
+      following_count:0,
     });
 
     await createUser({
@@ -148,7 +175,21 @@ async function createInitialUsers() {
       state: "Colorado",
       admin: false,
       email: "deleted@potter.com",
+      follower_count: 0,
+      following_count:0,
     });
+
+    await createUser({
+      username: "Mmouse",
+      password: "ABCD1234",
+      name: "Minnie",
+      state: "Florida",
+      admin: false,
+      email: "Minnie@potter.com",
+      follower_count: 0,
+      following_count:0,
+    });
+
     console.log("Finished creating users");
   } catch (error) {
     console.error("error creating users");
@@ -250,18 +291,25 @@ async function createInitialBadges() {
 async function createInitialFollowers() {
   try {
     console.log("starting to create followers");
-    await createFollower({
-      id: 1,
+    await addFollower({
       user_id: 1,
-      follower_id: 1,
-      created_at: "2022-12-31 23:59:59",
-    });
-    await createFollower({
-      id: 2,
-      user_id: 2,
       follower_id: 2,
-      created_at: "2022-12-31 01:59:59",
     });
+    await addFollower({
+      user_id: 2,
+      follower_id: 1,
+    });
+
+    await addFollower({
+      user_id: 2,
+      follower_id: 4,
+    });
+    await addFollower({
+      user_id: 1,
+      follower_id: 4,
+    });
+
+
     console.log("finished created initial followers");
   } catch (error) {
     console.error("error creating followers");
@@ -313,8 +361,8 @@ async function testDB() {
     console.log("deleted user", deletedUser);
 
     console.log("testing update User");
-    console.log(allUsers[0], "what is this??");
-    const updatingUser = await updateUser(allUsers[0].id, {
+    console.log(allUsers[1], "what is this??");
+    const updatingUser = await updateUser(allUsers[1].id, {
       state: "North Carolina",
       admin: true,
     });
@@ -387,9 +435,14 @@ async function testDB() {
     const followers = await getAllFollowers();
     console.log("These are all followers", followers);
 
-    console.log("getting review by user");
-    const userFollower = await getFollowerByUser(1);
+    console.log("getting follow by user");
+    const userFollower = await getFollowerByUser({id:allUsers[3].id,});
     console.log("This is follower by id", userFollower);
+
+    console.log("getting people who follow a specfic user");
+    console.log("what is this", allUsers[3].id)
+    const followees = await getFollowingByUser({id:allUsers[3].id,});
+    console.log("these users are following user 1", followees)
 
     console.log("updating follower");
     const updatedFollower = await updateFollower(followers[0].id, {
@@ -397,9 +450,9 @@ async function testDB() {
     });
     console.log("Updated follower", updatedFollower);
 
-    console.log("Destroying follower");
-    const deletedFollower = await destroyFollower(1);
-    console.log("Destroyed Follower", deletedFollower);
+    // console.log("Destroying follower");
+    // const deletedFollower = await destroyFollower(1);
+    // console.log("Destroyed Follower", deletedFollower);
 
     console.log("Finished DB Tests");
   } catch (error) {
