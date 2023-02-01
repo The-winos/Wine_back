@@ -17,6 +17,8 @@ async function createWine({ author_id, name, image_url, region, flavor }) {
     throw error;
   }
 }
+
+
 async function getAllWines() {
   try {
     const { rows: wineIds } = await client.query(`
