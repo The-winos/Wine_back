@@ -42,6 +42,7 @@ const {
   getFollowingByUser,
 } = require("./followers");
 const { addSaved, getAllSavedByUserId, removeSaved } = require("./saved");
+const { addFavorite, getAllFavoritesByUserId, removeFavorite } = require("./favorites");
 
 async function dropTables() {
   try {
@@ -488,7 +489,20 @@ async function testDB() {
     const updatedList= await getAllSavedByUserId({user_id:1})
     console.log("List of current wines", updatedList)
 
+    console.log("adding a wine to favorites list")
+    const favoriteWine= await addFavorite({user_id:2, wine_id:1,});
+    const secondFavoredWine =await addFavorite({user_id:2, wine_id:2 });
+    console.log("Wine favorited!", favoriteWine, "and", secondFavoredWine);
 
+    console.log("lets get that whole list of saved wines");
+    const favoriteListofWines= await getAllFavoritesByUserId({user_id:2})
+    console.log("Here's all your favorite wines", favoriteListofWines);
+
+    console.log("We need to delete a favorited wine");
+    const notMyFavorite= await removeFavorite(1);
+    console.log("This wine is gone", notMyFavorite)
+    const updatedFavorList= await getAllFavoritesByUserId({user_id:2})
+    console.log("List of current wines", updatedFavorList)
 
     console.log("Finished DB Tests");
   } catch (error) {
