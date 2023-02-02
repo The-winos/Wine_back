@@ -78,8 +78,7 @@ async function createTables() {
       email VARCHAR(255) UNIQUE NOT NULL,
       follower_count INT NOT NULL DEFAULT (0),
       following_count INT NOT NULL DEFAULT (0)
-
-    );
+);
     CREATE TYPE wine_type AS ENUM ('Cabernet','Syrah','Zinfandel','Noir','Merlot','Malbec','Tempranillo','Riesling','Grigio','Sauvignon','Chardonnay','Moscato','Blend');
     CREATE TABLE wines(
       id SERIAL PRIMARY KEY,
@@ -100,15 +99,17 @@ async function createTables() {
       image_url TEXT,
       review_date DATE
     );
+
     CREATE TABLE badges(
       id SERIAL PRIMARY KEY,
       author_id INTEGER REFERENCES users(id),
       total_reviews INTEGER,
       total_uploads INTEGER,
-      total_follows INTEGER,
+      total_following INTEGER,
       total_followers INTEGER,
       total_main_photos INTEGER
-    );
+);
+
     CREATE TABLE followers(
       id SERIAL PRIMARY KEY,
       user_id INT NOT NULL,
@@ -155,6 +156,23 @@ async function createTables() {
     AFTER INSERT ON followers
     FOR EACH ROW
     EXECUTE FUNCTION update_follow_counts();
+
+    CREATE OR REPLACE FUNCTION update_following_count() RETURNS TRIGGER AS $$
+    BEGIN
+
+      UPDATE badges SET total_following = NEW.following_count WHERE author_id = NEW.id;
+
+      UPDATE badges SET total_followers = NEW.follower_count WHERE author_id = NEW.id;
+
+      RETURN NEW;
+    END;
+    $$ LANGUAGE plpgsql;
+
+    CREATE TRIGGER update_following_count_trigger
+    AFTER UPDATE OF following_count ON users
+    FOR EACH ROW
+    EXECUTE FUNCTION update_following_count();
+
 
     `);
     console.log("Finished building tables");
@@ -291,14 +309,16 @@ async function createInitialReview() {
   }
 }
 async function createInitialBadges() {
+  const user= await getUserById(1)
+  console.log(user, "looking here!!")
   try {
     console.log("starting to create Badges");
     await createBadges({
       author_id: 1,
       total_reviews: 2,
       total_uploads: 3,
-      total_follows: 0,
-      total_followers: 1,
+      total_following: user.following_count,
+      total_followers: user.follower_count,
       total_main_photos: 0,
     });
     console.log("finished creating initial badges");
@@ -447,9 +467,9 @@ async function testDB() {
     console.log("updating the badges");
     console.log(allBadges[0].id, "updated badge id");
     const updatedBadge = await updateBadge(allBadges[0].id, {
-      total_follows: 10,
+      total_reviews: 10,
     });
-    console.log("updated total follows from 0 to 10", updatedBadge);
+    console.log("updated total reviews from 2 to 10", updatedBadge);
 
     console.log("get all followers");
     const followers = await getAllFollowers();
