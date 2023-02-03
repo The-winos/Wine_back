@@ -103,11 +103,12 @@ async function createTables() {
     CREATE TABLE badges(
       id SERIAL PRIMARY KEY,
       author_id INTEGER REFERENCES users(id),
-      total_reviews INTEGER,
-      total_uploads INTEGER,
-      total_following INTEGER,
-      total_followers INTEGER,
-      total_main_photos INTEGER
+      welcome INTEGER NOT NULL DEFAULT(1),
+      total_reviews INTEGER NOT NULL DEFAULT (0),
+      total_uploads INTEGER NOT NULL DEFAULT (0),
+      total_following INTEGER NOT NULL DEFAULT (0),
+      total_followers INTEGER NOT NULL DEFAULT (0),
+      total_main_photos INTEGER NOT NULL DEFAULT (0)
 );
 
     CREATE TABLE followers(
@@ -172,6 +173,34 @@ async function createTables() {
     AFTER UPDATE OF following_count ON users
     FOR EACH ROW
     EXECUTE FUNCTION update_following_count();
+
+    CREATE OR REPLACE FUNCTION update_badge_review_count() RETURNS TRIGGER AS $$
+BEGIN
+    UPDATE badges SET total_reviews = total_reviews + 1 WHERE author_id = NEW.user_id;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER update_badge_review_count_trigger
+AFTER INSERT ON reviews
+FOR EACH ROW
+EXECUTE FUNCTION update_badge_review_count();
+
+CREATE OR REPLACE FUNCTION update_badge_review_count_down() RETURNS TRIGGER AS $$
+BEGIN
+    UPDATE badges SET total_reviews = total_reviews - 1 WHERE author_id = OLD.user_id;
+
+    RETURN OLD;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER update_badge_review_count_down_trigger
+AFTER DELETE ON reviews
+FOR EACH ROW
+EXECUTE FUNCTION update_badge_review_count_down();
+
+
 
 
     `);
@@ -308,25 +337,25 @@ async function createInitialReview() {
     throw error;
   }
 }
-async function createInitialBadges() {
-  const user= await getUserById(1)
-  console.log(user, "looking here!!")
-  try {
-    console.log("starting to create Badges");
-    await createBadges({
-      author_id: 1,
-      total_reviews: 2,
-      total_uploads: 3,
-      total_following: user.following_count,
-      total_followers: user.follower_count,
-      total_main_photos: 0,
-    });
-    console.log("finished creating initial badges");
-  } catch (error) {
-    console.error("error creating badges");
-    throw error;
-  }
-}
+// async function createInitialBadges() {
+//   const user= await getUserById(1)
+//   console.log(user, "looking here!!")
+//   try {
+//     console.log("starting to create Badges");
+//     await createBadges({
+//       author_id: 1,
+//       total_reviews: 2,
+//       total_uploads: 3,
+//       total_following: user.following_count,
+//       total_followers: user.follower_count,
+//       total_main_photos: 0,
+//     });
+//     console.log("finished creating initial badges");
+//   } catch (error) {
+//     console.error("error creating badges");
+//     throw error;
+//   }
+// }
 
 async function createInitialFollowers() {
   try {
@@ -365,7 +394,7 @@ async function buildingDB() {
     await createInitialUsers();
     await createInitialWine();
     await createInitialReview();
-    await createInitialBadges();
+    // await createInitialBadges();
     await createInitialFollowers();
   } catch (error) {
     console.log("error during building");
@@ -464,12 +493,12 @@ async function testDB() {
     const badgeUsername = await getBadgeByUser({ username: "AmazingHuman" });
     console.log("badges by user AmazingHuman", badgeUsername);
 
-    console.log("updating the badges");
-    console.log(allBadges[0].id, "updated badge id");
-    const updatedBadge = await updateBadge(allBadges[0].id, {
-      total_reviews: 10,
-    });
-    console.log("updated total reviews from 2 to 10", updatedBadge);
+    // console.log("updating the badges");
+    // console.log(allBadges[0].id, "updated badge id");
+    // const updatedBadge = await updateBadge(allBadges[0].id, {
+    //   total_reviews: 10,
+    // });
+    // console.log("updated total reviews from 2 to 10", updatedBadge);
 
     console.log("get all followers");
     const followers = await getAllFollowers();
