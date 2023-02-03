@@ -1,7 +1,7 @@
 const { client } = require("./client");
 const bcrypt = require("bcrypt");
 
-async function createUser({ username, password, name, state, admin, email, follower_count, following_count }) {
+async function createUser({ username, password, name, state, admin, email, follower_count, following_count, welcome, total_reviews, total_uploads, total_following, total_followers, total_main_photos }) {
 
   const saltRound = 10;
   const salt = await bcrypt.genSalt(saltRound);
@@ -20,6 +20,17 @@ async function createUser({ username, password, name, state, admin, email, follo
       [username, bcryptPassword, name, state, admin, email, follower_count, following_count]
     );
     delete user.password;
+
+    if (user) {
+      // insert a corresponding row into the "badges" table
+      await client.query(
+        `
+        INSERT INTO badges(author_id)
+        VALUES($1);
+        `,
+        [user.id,]
+      );
+    }
 
     return user;
   } catch (error) {
@@ -97,14 +108,25 @@ async function deleteUser(id) {
     rows: [user],
   } = await client.query(
     `
+  DELETE FROM badges
+  WHERE author_id = $1
+  RETURNING *
+  `,
+    [id]
+  );
+
+  const result = await client.query(
+    `
   DELETE FROM users
   WHERE id = $1
   RETURNING *
   `,
     [id]
   );
-  return [user];
+
+  return result.rows;
 }
+
 
 async function updateUser(id, fields = {}) {
   const setString = Object.keys(fields)
