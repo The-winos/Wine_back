@@ -42,7 +42,11 @@ const {
   getFollowingByUser,
 } = require("./followers");
 const { addSaved, getAllSavedByUserId, removeSaved } = require("./saved");
-const { addFavorite, getAllFavoritesByUserId, removeFavorite } = require("./favorites");
+const {
+  addFavorite,
+  getAllFavoritesByUserId,
+  removeFavorite,
+} = require("./favorites");
 
 async function dropTables() {
   try {
@@ -202,6 +206,33 @@ EXECUTE FUNCTION update_badge_review_count_down();
 
 
 
+CREATE OR REPLACE FUNCTION update_badge_upload_count() RETURNS TRIGGER AS $$
+BEGIN
+    UPDATE badges SET total_uploads = total_uploads + 1 WHERE author_id = NEW.user_id;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER update_badge_upload_count_trigger
+AFTER INSERT ON reviews
+FOR EACH ROW
+EXECUTE FUNCTION update_badge_upload_count();
+
+CREATE OR REPLACE FUNCTION update_badge_upload_count_down() RETURNS TRIGGER AS $$
+BEGIN
+    UPDATE badges SET total_uploads = total_uploads - 1 WHERE author_id = OLD.user_id;
+
+    RETURN OLD;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER update_badge_upload_count_down_trigger
+AFTER DELETE ON reviews
+FOR EACH ROW
+EXECUTE FUNCTION update_badge_upload_count_down();
+
+
 
     `);
     console.log("Finished building tables");
@@ -222,7 +253,7 @@ async function createInitialUsers() {
       admin: true,
       email: "dumdum@dumdum.com",
       follower_count: 0,
-      following_count:0,
+      following_count: 0,
     });
     await createUser({
       username: "CuteGeek",
@@ -232,7 +263,7 @@ async function createInitialUsers() {
       admin: true,
       email: "harry@potter.com",
       follower_count: 0,
-      following_count:0,
+      following_count: 0,
     });
 
     await createUser({
@@ -243,7 +274,7 @@ async function createInitialUsers() {
       admin: false,
       email: "deleted@potter.com",
       follower_count: 0,
-      following_count:0,
+      following_count: 0,
     });
 
     await createUser({
@@ -254,7 +285,7 @@ async function createInitialUsers() {
       admin: false,
       email: "Minnie@potter.com",
       follower_count: 0,
-      following_count:0,
+      following_count: 0,
     });
 
     console.log("Finished creating users");
@@ -377,7 +408,6 @@ async function createInitialFollowers() {
       user_id: 1,
       follower_id: 4,
     });
-
 
     console.log("finished created initial followers");
   } catch (error) {
@@ -505,13 +535,13 @@ async function testDB() {
     console.log("These are all followers", followers);
 
     console.log("getting follow by user");
-    const userFollower = await getFollowerByUser({id:allUsers[3].id,});
+    const userFollower = await getFollowerByUser({ id: allUsers[3].id });
     console.log("This is follower by id", userFollower);
 
     console.log("getting people who follow a specfic user");
-    console.log("what is this", allUsers[3].id)
-    const followees = await getFollowingByUser({id:allUsers[3].id,});
-    console.log("these users are following user 1", followees)
+    console.log("what is this", allUsers[3].id);
+    const followees = await getFollowingByUser({ id: allUsers[3].id });
+    console.log("these users are following user 1", followees);
 
     console.log("updating follower");
     const updatedFollower = await updateFollower(followers[0].id, {
@@ -523,35 +553,35 @@ async function testDB() {
     // const deletedFollower = await destroyFollower(1);
     // console.log("Destroyed Follower", deletedFollower);
 
-    console.log("adding a wine to Saved list")
-    const savedWine= await addSaved({user_id:1, wine_id:1,});
-    const secondWine =await addSaved({user_id:1, wine_id:2 });
+    console.log("adding a wine to Saved list");
+    const savedWine = await addSaved({ user_id: 1, wine_id: 1 });
+    const secondWine = await addSaved({ user_id: 1, wine_id: 2 });
     console.log("Wine Saved to save for later", savedWine, "and", secondWine);
 
     console.log("lets get that whole list of saved wines");
-    const savedListofWines= await getAllSavedByUserId({user_id:1})
+    const savedListofWines = await getAllSavedByUserId({ user_id: 1 });
     console.log("Here's all your saved wines", savedListofWines);
 
     console.log("We need to delete a saved wine");
-    const triedTheWine= await removeSaved(1);
-    console.log("This wine is gone", triedTheWine)
-    const updatedList= await getAllSavedByUserId({user_id:1})
-    console.log("List of current wines", updatedList)
+    const triedTheWine = await removeSaved(1);
+    console.log("This wine is gone", triedTheWine);
+    const updatedList = await getAllSavedByUserId({ user_id: 1 });
+    console.log("List of current wines", updatedList);
 
-    console.log("adding a wine to favorites list")
-    const favoriteWine= await addFavorite({user_id:2, wine_id:1,});
-    const secondFavoredWine =await addFavorite({user_id:2, wine_id:2 });
+    console.log("adding a wine to favorites list");
+    const favoriteWine = await addFavorite({ user_id: 2, wine_id: 1 });
+    const secondFavoredWine = await addFavorite({ user_id: 2, wine_id: 2 });
     console.log("Wine favorited!", favoriteWine, "and", secondFavoredWine);
 
     console.log("lets get that whole list of saved wines");
-    const favoriteListofWines= await getAllFavoritesByUserId({user_id:2})
+    const favoriteListofWines = await getAllFavoritesByUserId({ user_id: 2 });
     console.log("Here's all your favorite wines", favoriteListofWines);
 
     console.log("We need to delete a favorited wine");
-    const notMyFavorite= await removeFavorite(1);
-    console.log("This wine is gone", notMyFavorite)
-    const updatedFavorList= await getAllFavoritesByUserId({user_id:2})
-    console.log("List of current wines", updatedFavorList)
+    const notMyFavorite = await removeFavorite(1);
+    console.log("This wine is gone", notMyFavorite);
+    const updatedFavorList = await getAllFavoritesByUserId({ user_id: 2 });
+    console.log("List of current wines", updatedFavorList);
 
     console.log("Finished DB Tests");
   } catch (error) {
