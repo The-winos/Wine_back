@@ -1,16 +1,16 @@
 const { client } = require("./client");
 
-async function createWine({ author_id, name, image_url, region, flavor }) {
+async function createWine({ author_id, name, image_url, price, region, flavor }) {
   try {
     const {
       rows: [wines],
     } = await client.query(
       `
-    INSERT INTO wines (author_id, name, image_url, region, flavor)
-    VALUES ($1, $2, $3, $4, $5)
+    INSERT INTO wines (author_id, name, image_url, price, region, flavor)
+    VALUES ($1, $2, $3, $4, $5, $6)
     RETURNING *;
     `,
-      [author_id, name, image_url, region, flavor]
+      [author_id, name, image_url, price, region, flavor]
     );
     return wines;
   } catch (error) {

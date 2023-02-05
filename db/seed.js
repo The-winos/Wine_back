@@ -85,6 +85,7 @@ async function createTables() {
       author_id INTEGER REFERENCES users(id),
       name TEXT UNIQUE NOT NULL,
       image_url TEXT NOT NULL,
+      price INTEGER DEFAULT (0),
       region TEXT,
       flavor wine_type
     );
@@ -200,6 +201,20 @@ AFTER DELETE ON reviews
 FOR EACH ROW
 EXECUTE FUNCTION update_badge_review_count_down();
 
+CREATE OR REPLACE FUNCTION update_wine_price() RETURNS TRIGGER AS $$
+BEGIN
+  UPDATE wines
+  SET price = (SELECT AVG(price) FROM reviews WHERE wine_id = NEW.wine_id)
+  WHERE id = NEW.wine_id;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER update_wine_price_trigger
+AFTER INSERT ON reviews
+FOR EACH ROW
+EXECUTE FUNCTION update_wine_price();
+
 
 
 
@@ -268,7 +283,7 @@ async function createInitialWine() {
   try {
     console.log("Starting to Create Wines");
     await createWine({
-      author_id: 1,
+      author_id: 2,
       name: "Apothic Dark",
       image_url:
         "https://img.freepik.com/free-photo/bottle-wine-isolated-white_167946-4.jpg?size=338&ext=jpg&ga=GA1.2.1034222811.1663818713",
@@ -277,7 +292,7 @@ async function createInitialWine() {
     });
 
     await createWine({
-      author_id: 2,
+      author_id: 1,
       name: "Kirkland Malbec",
       image_url:
         "https://img.freepik.com/free-photo/bottle-wine-isolated-white_167946-4.jpg?size=338&ext=jpg&ga=GA1.2.1034222811.1663818713",
@@ -286,12 +301,20 @@ async function createInitialWine() {
     });
 
     await createWine({
-      author_id: 2,
+      author_id: 1,
       name: "Yucky wine",
       image_url:
         "https://img.freepik.com/free-photo/bottle-wine-isolated-white_167946-4.jpg?size=338&ext=jpg&ga=GA1.2.1034222811.1663818713",
       region: "Trash",
       flavor: "Malbec",
+    });
+    await createWine({
+      author_id: 2,
+      name: "19 Crimes, The Banished",
+      image_url:
+        "https://img.freepik.com/free-photo/bottle-wine-isolated-white_167946-4.jpg?size=338&ext=jpg&ga=GA1.2.1034222811.1663818713",
+      region: "Australia",
+      flavor: "Blend",
     });
 
     console.log("Finished creating wines");
@@ -324,8 +347,42 @@ async function createInitialReview() {
       user_id: wineId.author_id,
       name: "Delete Test",
       rating: 5,
-      price: 850,
+      price: 950,
       review_comment: "Nevermind.",
+      image_url:
+        "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
+      review_date: 20190602,
+    });
+    await createReview({
+      wine_id: 4,
+      user_id: 2,
+      name: "Bold and dark",
+      rating: 5,
+      price: 899,
+      review_comment: "This wine has a unique flavor that it is both smooth and heavy. I love to eat it with steaks",
+      image_url:
+        "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
+      review_date: 20190602,
+    });
+
+    await createReview({
+      wine_id: 2,
+      user_id: wineId.author_id,
+      name: "Not bad for price",
+      rating: 4,
+      price: 879,
+      review_comment: "It wasn't my favorite wine but it was solid for the price",
+      image_url:
+        "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
+      review_date: 20190602,
+    });
+    await createReview({
+      wine_id: 4,
+      user_id: 4,
+      name: "Over Paid!",
+      rating: 4,
+      price: 1999,
+      review_comment: "I liked the wine but I bought it on their website for 20 bucks! Went to my local liquor store and found it for 10! I feel so dumb. Still wine is good",
       image_url:
         "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
       review_date: 20190602,
