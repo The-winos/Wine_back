@@ -1,6 +1,13 @@
 const { client } = require("./client");
 
-async function createWine({ author_id, name, image_url, price, region, flavor }) {
+async function createWine({
+  author_id,
+  name,
+  image_url,
+  price,
+  region,
+  flavor,
+}) {
   try {
     const {
       rows: [wines],
@@ -17,7 +24,6 @@ async function createWine({ author_id, name, image_url, price, region, flavor })
     throw error;
   }
 }
-
 
 async function getAllWines() {
   try {
