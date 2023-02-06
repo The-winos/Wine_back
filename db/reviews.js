@@ -9,14 +9,15 @@ async function createReview({
   review_comment,
   image_url,
   review_date,
+  location,
 }) {
   try {
     const {
       rows: [reviews],
     } = await client.query(
       `
-        INSERT INTO reviews(wine_id, user_id, name, rating, price, review_comment, image_url, review_date)
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+        INSERT INTO reviews(wine_id, user_id, name, rating, price, review_comment, image_url, review_date, location)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
         RETURNING *;
         `,
       [
@@ -28,6 +29,7 @@ async function createReview({
         review_comment,
         image_url,
         review_date,
+        location,
       ]
     );
     return reviews;

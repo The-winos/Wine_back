@@ -102,7 +102,8 @@ async function createTables() {
       price INTEGER,
       review_comment TEXT,
       image_url TEXT,
-      review_date DATE
+      review_date DATE,
+      location VARCHAR(255)
     );
 
     CREATE TABLE badges(
@@ -218,7 +219,6 @@ CREATE TRIGGER update_wine_price_trigger
 AFTER INSERT ON reviews
 FOR EACH ROW
 EXECUTE FUNCTION update_wine_price();
-
 
 
 CREATE OR REPLACE FUNCTION update_badge_upload_count() RETURNS TRIGGER AS $$
@@ -358,11 +358,11 @@ async function createInitialWine() {
 async function createInitialReview() {
   try {
     console.log("Starting to create reviews");
-    const wineId = await getWineById(1);
-    console.log("Getting wine", wineId);
+    // const wineId = await getWineById(1);
+    // console.log("Getting wine", wineId);
     await createReview({
-      wine_id: wineId.id,
-      user_id: wineId.author_id,
+      wine_id: 1,
+      user_id: 1,
       name: "Review",
       rating: 5,
       price: 850,
@@ -371,11 +371,12 @@ async function createInitialReview() {
       image_url:
         "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
       review_date: 20190602,
+      location: "Grocery",
     });
 
     await createReview({
-      wine_id: wineId.id,
-      user_id: wineId.author_id,
+      wine_id: 1,
+      user_id: 1,
       name: "Delete Test",
       rating: 5,
       price: 950,
@@ -383,6 +384,7 @@ async function createInitialReview() {
       image_url:
         "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
       review_date: 20190602,
+      location: "Costco",
     });
     await createReview({
       wine_id: 4,
@@ -390,22 +392,26 @@ async function createInitialReview() {
       name: "Bold and dark",
       rating: 5,
       price: 899,
-      review_comment: "This wine has a unique flavor that it is both smooth and heavy. I love to eat it with steaks",
+      review_comment:
+        "This wine has a unique flavor that it is both smooth and heavy. I love to eat it with steaks",
       image_url:
         "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
       review_date: 20190602,
+      location: "Trader Joe's",
     });
 
     await createReview({
       wine_id: 2,
-      user_id: wineId.author_id,
+      user_id: 1,
       name: "Not bad for price",
       rating: 4,
       price: 879,
-      review_comment: "It wasn't my favorite wine but it was solid for the price",
+      review_comment:
+        "It wasn't my favorite wine but it was solid for the price",
       image_url:
         "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
       review_date: 20190602,
+      location: "Liquor store",
     });
     await createReview({
       wine_id: 4,
@@ -413,10 +419,12 @@ async function createInitialReview() {
       name: "Over Paid!",
       rating: 4,
       price: 1999,
-      review_comment: "I liked the wine but I bought it on their website for 20 bucks! Went to my local liquor store and found it for 10! I feel so dumb. Still wine is good",
+      review_comment:
+        "I liked the wine but I bought it on their website for 20 bucks! Went to my local liquor store and found it for 10! I feel so dumb. Still wine is good",
       image_url:
         "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
       review_date: 20190602,
+      location: "On-line",
     });
 
     console.log("Finished creating review");
