@@ -1,5 +1,5 @@
 function requireUser(req, res, next) {
-  if (!req.user) {
+  if (!req.users) {
     next({
       error: "401",
       name: "MissingUserError",
@@ -10,7 +10,7 @@ function requireUser(req, res, next) {
 }
 
 function requireAdmin(req, res, next) {
-  if (!req.user.admin) {
+  if (!req.users.admin) {
     next({
       name: "Permissions Invalid ",
       message: "You must have administrator access",
