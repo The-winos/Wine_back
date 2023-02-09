@@ -8,11 +8,11 @@ favoritesRouter.use((req, res, next) => {
   next();
 });
 
-// GET /api/favorites/:id
-favoritesRouter.get("/:id", async (req, res, next) => {
-  const { user_id } = req.params;
+// GET /api/favorites/:userId
+favoritesRouter.get("/:userId", async (req, res, next) => {
+  const { userId } = req.params;
   try {
-    const favoritesId = await getAllFavoritesByUserId({ user_id });
+    const favoritesId = await getAllFavoritesByUserId({ userId });
     res.send(favoritesId);
   } catch ({ name, message, error }) {
     next({ name, message, error });
@@ -21,15 +21,25 @@ favoritesRouter.get("/:id", async (req, res, next) => {
 
 //DELETE /api/favorites/:favoritesId
 favoritesRouter.delete("/:favoriteId", requireUser, async (req, res, next) => {
+  //you can access the req.params here
+  const favoriteId = req.params;
   try {
-    const { user_id } = req.params;
-    const favorite = await getAllFavoritesByUserId({ user_id });
-    const deletedFavorite = await removeFavorite(favorite.id);
+    // favoriteId is already in the params so you don't need to find it again
+
+    // const { user_id } = req.params;
+    // const favorite = await getAllFavoritesByUserId({ user_id });
+    const deletedFavorite = await removeFavorite(favoriteId);
     res.send(deletedFavorite);
   } catch ({ name, message, error }) {
-    next({ name, message, error });
+    next({
+      name: "NoFavorite",
+      message: "No favorite with that id",
+      error: "couldntFindFavorite",
+    });
   }
 });
+
+// don't think we need the one below but we do need a post one for adding to favorites
 
 //UPDATE /api/favorites/:favoriteId
 favoritesRouter.patch("/:favoriteId", requireUser, async (req, res, next) => {
