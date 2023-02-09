@@ -33,7 +33,7 @@ async function removeSaved(id) {
   }
 }
 
-async function getAllSavedByUserId({ user_id }) {
+async function getAllSavedByUserId( id ) {
   try {
     const { rows: saved } = await client.query(
       `
@@ -41,16 +41,38 @@ async function getAllSavedByUserId({ user_id }) {
     FROM saved
     WHERE user_id=$1
     `,
-      [user_id]
+    [id]
     );
     return saved;
   } catch (error) {
     throw error;
   }
 }
+ async function getSavedById(id){
+  try {
+    const { rows:[save]}=await client.query(
+      `
+      SELECT *
+      FROM saved
+      WHERE id=$1
+      `, [id]
+    );
+    if(!save){
+      throw{
+        name:"Saved not found",
+        message: `Could not find a saved wine ${id}`
+      };
+
+    }return save;
+  } catch (error) {
+    console.error(error);
+  }
+ }
+
 
 module.exports = {
   addSaved,
   removeSaved,
   getAllSavedByUserId,
+  getSavedById
 };

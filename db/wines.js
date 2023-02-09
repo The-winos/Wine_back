@@ -68,6 +68,7 @@ async function getWineById(id) {
     `,
       [id]
     );
+    console.log(wine, "what this?")
     if (!wine) {
       throw {
         name: "WineNotFound",

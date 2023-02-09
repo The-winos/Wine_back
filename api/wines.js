@@ -9,7 +9,7 @@ winesRouter.use((req, res, next) => {
   console.log("A request is being made to /wines");
   next();
 });
-
+//tested, works
 winesRouter.get("/", async (req, res, next) => {
   try {
     const allWines = await getAllWines();
@@ -23,10 +23,11 @@ winesRouter.get("/", async (req, res, next) => {
   }
 });
 
+//tested works
 winesRouter.get("/:id", async (req, res, next) => {
   const { id } = req.params;
   try {
-    const wineId = getWineById(id);
+    const wineId = await getWineById(id);
     res.send(wineId);
   } catch ({ name, message, error }) {
     next({
@@ -37,7 +38,8 @@ winesRouter.get("/:id", async (req, res, next) => {
   }
 });
 
-winesRouter.get("/flavor:type", async(req, res, next)=>{
+//tested works
+winesRouter.get("/flavor/:type", async(req, res, next)=>{
   const {type: flavor}= req.params;
   try {
     const flavorType= await getWineByFlavor(flavor);

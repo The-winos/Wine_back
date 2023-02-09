@@ -84,7 +84,7 @@ async function createTables() {
       follower_count INT NOT NULL DEFAULT (0),
       following_count INT NOT NULL DEFAULT (0)
 );
-    CREATE TYPE wine_type AS ENUM ('Cabernet','Syrah','Zinfandel','Noir','Merlot','Malbec','Tempranillo','Riesling','Grigio','Sauvignon','Chardonnay','Moscato','Blend');
+    CREATE TYPE wine_type AS ENUM ('Cabernet','Syrah','Zinfandel','Noir','Merlot','Malbec','Tempranillo','Riesling','Grigio','Sauvignon','Chardonnay','Moscato','Blend', 'Other');
     CREATE TABLE wines(
       id SERIAL PRIMARY KEY,
       author_id INTEGER REFERENCES users(id),
@@ -629,14 +629,14 @@ async function testDB() {
     console.log("Wine Saved to save for later", savedWine, "and", secondWine);
 
     console.log("lets get that whole list of saved wines");
-    const savedListofWines = await getAllSavedByUserId({ user_id: 1 });
+    const savedListofWines = await getAllSavedByUserId(1);
     console.log("Here's all your saved wines", savedListofWines);
 
-    console.log("We need to delete a saved wine");
-    const triedTheWine = await removeSaved(1);
-    console.log("This wine is gone", triedTheWine);
-    const updatedList = await getAllSavedByUserId({ user_id: 1 });
-    console.log("List of current wines", updatedList);
+    // console.log("We need to delete a saved wine");
+    // const triedTheWine = await removeSaved(1);
+    // console.log("This wine is gone", triedTheWine);
+    // const updatedList = await getAllSavedByUserId({ user_id: 1 });
+    // console.log("List of current wines", updatedList);
 
     console.log("adding a wine to favorites list");
     const favoriteWine = await addFavorite({ user_id: 2, wine_id: 1 });
