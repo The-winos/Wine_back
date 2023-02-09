@@ -80,6 +80,7 @@ async function createTables() {
       state VARCHAR(255) NOT NULL,
       admin BOOLEAN DEFAULT false,
       email VARCHAR(255) UNIQUE NOT NULL,
+      year_born INT NOT NULL,
       follower_count INT NOT NULL DEFAULT (0),
       following_count INT NOT NULL DEFAULT (0)
 );
@@ -267,6 +268,7 @@ async function createInitialUsers() {
       state: "Florida",
       admin: true,
       email: "dumdum@dumdum.com",
+      year_born:1992,
       follower_count: 0,
       following_count: 0,
     });
@@ -277,6 +279,7 @@ async function createInitialUsers() {
       state: "Colorado",
       admin: true,
       email: "harry@potter.com",
+      year_born: 1986,
       follower_count: 0,
       following_count: 0,
     });
@@ -288,6 +291,7 @@ async function createInitialUsers() {
       state: "Colorado",
       admin: false,
       email: "deleted@potter.com",
+      year_born:1978,
       follower_count: 0,
       following_count: 0,
     });
@@ -299,6 +303,7 @@ async function createInitialUsers() {
       state: "Florida",
       admin: false,
       email: "Minnie@potter.com",
+      year_born:1928,
       follower_count: 0,
       following_count: 0,
     });
@@ -520,9 +525,9 @@ async function testDB() {
     });
     console.log("this is getUser", gettingUser);
 
-    console.log("testing delete user");
-    const deletedUser = await deleteUser(3);
-    console.log("deleted user", deletedUser);
+    // console.log("testing delete user");
+    // const deletedUser = await deleteUser(3);
+    // console.log("deleted user", deletedUser);
 
     console.log("testing update User");
     console.log(allUsers[1], "what is this??");

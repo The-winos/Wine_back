@@ -38,11 +38,11 @@ apiRouter.use(async (req, res, next) => {
   }
 });
 
-const adminRouter = require("./admin");
-apiRouter.use("/admin", adminRouter);
+// const adminRouter = require("./admin");
+// apiRouter.use("/admin", adminRouter);
 
-const badgesRouter = require("./badges");
-apiRouter.use("/badges", badgesRouter);
+// const badgesRouter = require("./badges");
+// apiRouter.use("/badges", badgesRouter);
 
 const favoritesRouter = require("./favorites");
 apiRouter.use("/favorites", favoritesRouter);
@@ -53,8 +53,8 @@ apiRouter.use("/followers", followersRouter);
 const reviewsRouter = require("./reviews");
 apiRouter.use("/reviews", reviewsRouter);
 
-const savedRouter = require("./saved");
-apiRouter.use("/saved", savedRouter);
+// const savedRouter = require("./saved");
+// apiRouter.use("/saved", savedRouter);
 
 const usersRouter = require("./users");
 apiRouter.use("/users", usersRouter);
