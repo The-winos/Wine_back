@@ -53,8 +53,8 @@ apiRouter.use("/followers", followersRouter);
 const reviewsRouter = require("./reviews");
 apiRouter.use("/reviews", reviewsRouter);
 
-// const savedRouter = require("./saved");
-// apiRouter.use("/saved", savedRouter);
+const savedRouter = require("./saved");
+apiRouter.use("/saved", savedRouter);
 
 const usersRouter = require("./users");
 apiRouter.use("/users", usersRouter);

@@ -94,7 +94,6 @@ console.log(req.user, "heree")
 });
 
 usersRouter.get("/:username", async(req, res, next)=>{
-  console.log("yo")
   const username=req.params.username;
   console.log(username, "anything?")
   try {
