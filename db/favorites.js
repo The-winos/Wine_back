@@ -43,8 +43,30 @@ async function getAllFavoritesByUserId({user_id}){
   }
 }
 
+async function getFavoritedById(id){
+  try {
+    const { rows:[favorite]}=await client.query(
+      `
+      SELECT *
+      FROM favorites
+      WHERE id=$1
+      `, [id]
+    );
+    if(!favorite){
+      throw{
+        name:"Favorite not found",
+        message: `Could not find a favorite wine ${id}`
+      };
+
+    }return favorite;
+  } catch (error) {
+    console.error(error);
+  }
+ }
+
 module.exports = {
 addFavorite,
 removeFavorite,
-getAllFavoritesByUserId
+getAllFavoritesByUserId,
+getFavoritedById
 };
