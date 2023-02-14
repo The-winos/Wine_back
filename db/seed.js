@@ -268,7 +268,7 @@ async function createInitialUsers() {
       state: "Florida",
       admin: true,
       email: "dumdum@dumdum.com",
-      year_born:1992,
+      year_born: 1992,
       follower_count: 0,
       following_count: 0,
     });
@@ -291,7 +291,7 @@ async function createInitialUsers() {
       state: "Colorado",
       admin: false,
       email: "deleted@potter.com",
-      year_born:1978,
+      year_born: 1978,
       follower_count: 0,
       following_count: 0,
     });
@@ -303,7 +303,18 @@ async function createInitialUsers() {
       state: "Florida",
       admin: false,
       email: "Minnie@potter.com",
-      year_born:1928,
+      year_born: 1928,
+      follower_count: 0,
+      following_count: 0,
+    });
+    await createUser({
+      username: "newUser",
+      password: "newUser4u",
+      name: "newTest",
+      state: "colorado",
+      admin: true,
+      email: "newUser@newUser.com",
+      year_born: 1989,
       follower_count: 0,
       following_count: 0,
     });
@@ -430,6 +441,18 @@ async function createInitialReview() {
         "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
       review_date: 20190602,
       location: "On-line",
+    });
+    await createReview({
+      wine_id: 1,
+      user_id: 5,
+      name: "Not too bad",
+      rating: 3,
+      price: 1999,
+      review_comment: "Would buy it again",
+      image_url:
+        "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
+      review_date: 20230213,
+      location: "Costco",
     });
 
     console.log("Finished creating review");

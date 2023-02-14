@@ -96,11 +96,45 @@ async function getReviewByUser(id) {
     const { rows: reviews } = await client.query(
       `
           SELECT * FROM reviews
+          WHERE user_id = $1;
+        `,
+      [id]
+    );
+    return reviews;
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function getReviewById(id) {
+  try {
+    const {
+      rows: [reviews],
+    } = await client.query(
+      `
+          SELECT * FROM reviews
           WHERE id = $1;
         `,
       [id]
     );
     return reviews;
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function getReviewByIdAndUserId(id, user_id) {
+  try {
+    const {
+      rows: [review],
+    } = await client.query(
+      `
+          SELECT * FROM reviews
+          WHERE id = $1 AND user_id = $2;
+        `,
+      [id, user_id]
+    );
+    return review;
   } catch (error) {
     throw error;
   }
@@ -112,4 +146,6 @@ module.exports = {
   destroyReview,
   getAllReviews,
   getReviewByUser,
+  getReviewById,
+  getReviewByIdAndUserId,
 };
