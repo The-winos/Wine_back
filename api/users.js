@@ -75,7 +75,6 @@ usersRouter.post("/register", async(req, res, next)=>{
 
 usersRouter.get("/me", async(req, res, next)=>{
   try {
-console.log(req.user, "heree")
     if(req.user){
 
       res.send(req.user);
@@ -95,7 +94,6 @@ console.log(req.user, "heree")
 
 usersRouter.get("/:username", async(req, res, next)=>{
   const username=req.params.username;
-  console.log(username, "anything?")
   try {
     const user= await getUserByUsername(username);
     res.send(user);

@@ -23,7 +23,7 @@ winesRouter.get("/", async (req, res, next) => {
   }
 });
 
-//tested works
+//tested works with error
 winesRouter.get("/:id", async (req, res, next) => {
   const { id } = req.params;
   try {
@@ -38,7 +38,7 @@ winesRouter.get("/:id", async (req, res, next) => {
   }
 });
 
-//tested works
+//tested works, with error
 winesRouter.get("/flavor/:type", async(req, res, next)=>{
   const {type: flavor}= req.params;
   try {
@@ -53,7 +53,7 @@ winesRouter.get("/flavor/:type", async(req, res, next)=>{
 
   }
 })
-
+//tested with error
 winesRouter.post("/", requireUser, async(req, res, next)=>{
   try {
     const{
@@ -91,16 +91,17 @@ winesRouter.post("/", requireUser, async(req, res, next)=>{
   }
 });
 
-winesRouter.delete("/:wineName", requireAdmin, async(req, res, next)=>{
+//tested with error
+winesRouter.delete("/:wineId", requireAdmin, async(req, res, next)=>{
+  const { wineId } = req.params;
   try {
-   const{wineName}=req.params;
-   const wine= await getWineByName(wineName);
+   const wine= await getWineById(wineId);
    const deletedWine= await destroyWine(wine.id);
    res.send(deletedWine);
   } catch ({name, message, error}) {
     next({
       name:"NoWineToDelete",
-      message:`No wine by the name of ${wineName} to delete`,
+      message:`No wine by the id of ${wineId} to delete`,
       error:"WineDeleteError"
     })
     };
@@ -108,18 +109,19 @@ winesRouter.delete("/:wineName", requireAdmin, async(req, res, next)=>{
   }
 )
 
-winesRouter.patch("/:wineName", requireUser, async(req, res, next)=>{
-  const {wineName}=req.params;
+//tested with error, error coming from updateWine
+winesRouter.patch("/:wineId", requireUser, async(req, res, next)=>{
+  const {wineId}=req.params;
   const updateFields= req.body;
   try {
-    const originalWine= await getWineByName(wineName);
+    const originalWine= await getWineById(wineId);
     if(originalWine){
       const updatedWine= await updateWine(originalWine.id, updateFields);
       res.send(updatedWine);
     }else{
       next({
         name:"WineDoesNotExist",
-        message:`Wine ${wineName} not found`,
+        message:`Wine ${wineId} not found`,
         error:"WineNotFound",
       });
     }
