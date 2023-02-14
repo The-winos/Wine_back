@@ -1,6 +1,14 @@
 const express = require("express");
 const reviewsRouter = express.Router();
-const { getAllReviews, getReviewByUser } = require("../db/reviews");
+const {
+  createReview,
+  destroyReview,
+  getAllReviews,
+  getReviewByUser,
+  getReviewById,
+  updateReview,
+  getReviewByIdAndUserId,
+} = require("../db/reviews");
 const { requireUser } = require("./utils");
 
 reviewsRouter.use((req, res, next) => {
@@ -8,7 +16,7 @@ reviewsRouter.use((req, res, next) => {
   next();
 });
 
-// GET /api/reviews
+// GET /api/reviews //passed get all reviews and error
 reviewsRouter.get("/", async (req, res, next) => {
   try {
     const allReviews = await getAllReviews();
@@ -18,18 +26,21 @@ reviewsRouter.get("/", async (req, res, next) => {
   }
 });
 
-// GET /api/reviews/:id
+// GET /api/reviews/:id //passed get review by user ID and error
 reviewsRouter.get("/:id", async (req, res, next) => {
   const { id } = req.params;
+  console.log("is this id", id);
+
   try {
-    const reviewsId = await getReviewById(id);
+    const reviewsId = await getReviewByUser(id);
+
     res.send(reviewsId);
   } catch ({ name, message, error }) {
     next({ name, message, error });
   }
 });
 
-//POST /api/reviews
+//POST /api/reviews // passed create and error
 reviewsRouter.post("/", requireUser, async (req, res, next) => {
   try {
     const {
@@ -54,17 +65,50 @@ reviewsRouter.post("/", requireUser, async (req, res, next) => {
       review_date,
       location,
     };
-    const possibleReview = await getReviewByUser(id);
-    if (!possibleReview) {
+    const possibleReview = await getReviewByUser(user_id);
+    console.log("Review?", possibleReview.wine_id);
+    if (possibleReview.length > 0) {
+      const existingReview = possibleReview.some(
+        (review) => review.wine_id === wine_id
+      );
+      if (!existingReview) {
+        const newReview = await createReview(reviewData);
+        if (newReview) {
+          res.send(newReview);
+        }
+      } else {
+        next({
+          name: "UserReviewExists",
+          message: `A review with that wine ${wine_id} already exists`,
+          error: "UserReviewExists",
+        });
+      }
+    } else {
       const newReview = await createReview(reviewData);
       if (newReview) {
         res.send(newReview);
       }
+    }
+  } catch ({ name, message, error }) {
+    next({ name, message, error });
+  }
+});
+
+//DELETE /api/reviews/:reviewId //passed destroy and error
+reviewsRouter.delete("/:reviewId", requireUser, async (req, res, next) => {
+  try {
+    const { reviewId } = req.params;
+    const review = await getReviewById(reviewId);
+    console.log("review?", review.user_id);
+    console.log("which user?", req.user.id);
+    if (req.user.id == review.user_id) {
+      const deletedReview = await destroyReview(reviewId);
+      res.send(deletedReview);
     } else {
       next({
-        name: "UserReviewExists",
-        message: `A review with that username ${id} already exists`,
-        error: "UserReviewExists",
+        name: "unauthorizedUser",
+        message: `User ${req.user.username} cannot delete unauthorized review`,
+        Error: "Unauthorized User",
       });
     }
   } catch ({ name, message, error }) {
@@ -72,24 +116,12 @@ reviewsRouter.post("/", requireUser, async (req, res, next) => {
   }
 });
 
-//DELETE /api/reviews/:reviewId
-reviewsRouter.delete("/:reviewId", requireUser, async (req, res, next) => {
-  try {
-    const { reviewId } = req.params;
-    const review = await getReviewByUser(reviewId);
-    const deletedReview = await destroyReview(review.id);
-    res.send(deletedReview);
-  } catch ({ name, message, error }) {
-    next({ name, message, error });
-  }
-});
-
-//UPDATE /api/reviews/:reviewId
+//UPDATE /api/reviews/:reviewId //passed update and error
 reviewsRouter.patch("/:reviewId", requireUser, async (req, res, next) => {
   const { reviewId } = req.params;
   const updateFields = req.body;
   try {
-    const originalReview = await getReviewByUser(reviewId);
+    const originalReview = await getReviewByIdAndUserId(reviewId, req.user.id);
 
     if (originalReview) {
       const updatedReview = await updateReview(reviewId, updateFields);
