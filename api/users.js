@@ -2,7 +2,7 @@ const express = require("express");
 const usersRouter = express.Router();
 const jwt = require("jsonwebtoken");
 const { getUser, getUserByUsername, createUser, getAllUsers, deleteUser, updateUser } = require("../db/users");
-const { requireAdmin, requireUser } = require("./utils");
+const { requireAdmin, requireUser, requireUserOrAdmin } = require("./utils");
 
 
 usersRouter.use((req, res, next)=>{
@@ -10,6 +10,8 @@ usersRouter.use((req, res, next)=>{
   next()
 });
 
+
+//tested with incorrect info, and expired token
 usersRouter.post("/login", async(req, res, next)=>{
   const {username, password}= req.body;
   try {
@@ -36,27 +38,20 @@ usersRouter.post("/login", async(req, res, next)=>{
   }
 });
 
+// tested with error and refined password to all 1 if statement
 usersRouter.post("/register", async(req, res, next)=>{
   const {username, password, name, state, admin, email, year_born, follower_count, following_count }= req.body;
   try {
     const user =await getUserByUsername(username);
 
-    if (password.length<8){
-      next({
-        error:"PasswordTooShort",
-        message:"Password must be 8 characters long",
-        name:"Password too Short"
-      })
-    }
-    else if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(password)) {
+
+    if (!/(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z]).{8,}/.test(password)) {
       next({
         error:"PasswordRequirementsNotMet",
-        message:"Password must contain at least one number and one uppercase letter",
+        message:"Password must contain at least one number, one uppercase letter and be 8 characters long",
         name:"Password Requirements Not Met"
       });
-
-
-  }  else{
+    } else{
         const newUser= await createUser({
           username, password, name, state, admin, email, year_born, follower_count, following_count
         });
@@ -73,6 +68,7 @@ usersRouter.post("/register", async(req, res, next)=>{
   }
 });
 
+//tested with error
 usersRouter.get("/me", async(req, res, next)=>{
   try {
     if(req.user){
@@ -92,17 +88,26 @@ usersRouter.get("/me", async(req, res, next)=>{
   }
 });
 
+// tested with error
 usersRouter.get("/:username", async(req, res, next)=>{
   const username=req.params.username;
   try {
     const user= await getUserByUsername(username);
-    res.send(user);
-
+    if(user){
+    res.send(user);}
+      else{
+        next({
+          error:"unknownUser",
+          name: "No User by that username",
+          message:`no user found bu ma,e of ${username}`,
+        });
+      }
   } catch (error) {
-    next({message:"No user by this username."})
+    next({error, name, message})
   }
 });
 
+//tested with errors, fixed requireadmin incase no one is logged in to get the correct error message
 usersRouter.get("/", requireAdmin, async (req, res, next)=>{
   try {
     const users= await getAllUsers();
@@ -112,6 +117,7 @@ usersRouter.get("/", requireAdmin, async (req, res, next)=>{
   }
 })
 
+//tested with errors
 usersRouter.delete("/:username", requireAdmin, async (req, res, next)=>{
   try {
     const {username}= req.params;
@@ -128,7 +134,8 @@ usersRouter.delete("/:username", requireAdmin, async (req, res, next)=>{
   }
 });
 
-usersRouter.patch("/:username", requireUser || requireAdmin, async(req, res, next)=>{
+//tested with errors, made new middleware for requireuser or admin
+usersRouter.patch("/:username", requireUserOrAdmin, async(req, res, next)=>{
   const {username}=req.params;
   const updateFields= req.body;
   try {
