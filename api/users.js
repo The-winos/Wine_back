@@ -40,7 +40,7 @@ usersRouter.post("/login", async(req, res, next)=>{
 
 // tested with error and refined password to all 1 if statement
 usersRouter.post("/register", async(req, res, next)=>{
-  const {username, password, name, state, admin, email, year_born, follower_count, following_count }= req.body;
+  const {username, password, name, state, role, email, year_born, follower_count, following_count }= req.body;
   try {
     const user =await getUserByUsername(username);
 
@@ -53,7 +53,7 @@ usersRouter.post("/register", async(req, res, next)=>{
       });
     } else{
         const newUser= await createUser({
-          username, password, name, state, admin, email, year_born, follower_count, following_count
+          username, password, name, state, role, email, year_born, follower_count, following_count
         });
         const token =jwt.sign(newUser, process.env.JWT_SECRET, {expiresIn:"1w",});
         res.send({
@@ -93,7 +93,9 @@ usersRouter.get("/:username", async(req, res, next)=>{
   const username=req.params.username;
   try {
     const user= await getUserByUsername(username);
+
     if(user){
+      delete user.password;
     res.send(user);}
       else{
         next({
@@ -138,6 +140,12 @@ usersRouter.delete("/:username", requireAdmin, async (req, res, next)=>{
 usersRouter.patch("/:username", requireUserOrAdmin, async(req, res, next)=>{
   const {username}=req.params;
   const updateFields= req.body;
+  const isAdmin = req.user.role;
+  console.log(req.user, "lets look")
+
+  if (isAdmin!="admin") {
+    delete updateFields.role;
+  }
   try {
     const originalUser= await getUserByUsername(username);
     if(originalUser){
