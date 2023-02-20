@@ -110,7 +110,7 @@ winesRouter.delete("/:wineId", requireAdmin, async(req, res, next)=>{
 )
 
 //tested with error, error coming from updateWine
-winesRouter.patch("/:wineId", requireUser, async(req, res, next)=>{
+winesRouter.patch("/:wineId", requireAdmin, async(req, res, next)=>{
   const {wineId}=req.params;
   const updateFields= req.body;
   try {

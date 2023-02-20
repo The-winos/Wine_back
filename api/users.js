@@ -140,6 +140,12 @@ usersRouter.delete("/:username", requireAdmin, async (req, res, next)=>{
 usersRouter.patch("/:username", requireUserOrAdmin, async(req, res, next)=>{
   const {username}=req.params;
   const updateFields= req.body;
+  const isAdmin = req.user.role;
+  console.log(req.user, "lets look")
+
+  if (isAdmin!="admin") {
+    delete updateFields.role;
+  }
   try {
     const originalUser= await getUserByUsername(username);
     if(originalUser){
