@@ -52,14 +52,15 @@ async function dropTables() {
   try {
     console.log("Starting to drop tables...");
     await client.query(`
-    DROP TABLE IF EXISTS saved;
-    DROP TABLE IF EXISTS favorites;
-    DROP TABLE IF EXISTS badges;
-    DROP TABLE IF EXISTS reviews;
-    DROP TABLE IF EXISTS wines;
-    DROP TABLE IF EXISTS followers;
-    DROP TABLE IF EXISTS users;
-    DROP TYPE IF EXISTS wine_type;
+      DROP TABLE IF EXISTS saved;
+      DROP TABLE IF EXISTS favorites;
+      DROP TABLE IF EXISTS badges;
+      DROP TABLE IF EXISTS reviews;
+      DROP TABLE IF EXISTS wines;
+      DROP TABLE IF EXISTS followers;
+      DROP TABLE IF EXISTS users;
+      DROP TYPE IF EXISTS user_role;
+      DROP TYPE IF EXISTS wine_type;
     `);
     console.log("Finished dropping tables");
   } catch (error) {
@@ -68,23 +69,28 @@ async function dropTables() {
   }
 }
 
+
 async function createTables() {
   try {
     console.log("Starting to build tables...");
     await client.query(`
+    CREATE TYPE user_role AS ENUM ('user', 'admin', 'merchant');
+
     CREATE TABLE users(
       id SERIAL PRIMARY KEY,
       username VARCHAR(255) UNIQUE NOT NULL,
       password VARCHAR(255) NOT NULL,
       name VARCHAR(255) NOT NULL,
       state VARCHAR(255) NOT NULL,
-      admin BOOLEAN DEFAULT false,
+      role user_role DEFAULT 'user',
       email VARCHAR(255) UNIQUE NOT NULL,
       year_born INT NOT NULL,
       follower_count INT NOT NULL DEFAULT (0),
       following_count INT NOT NULL DEFAULT (0)
-);
+    );
+
     CREATE TYPE wine_type AS ENUM ('Cabernet','Syrah','Zinfandel','Noir','Merlot','Malbec','Tempranillo','Riesling','Grigio','Sauvignon','Chardonnay','Moscato','Blend', 'Other');
+
     CREATE TABLE wines(
       id SERIAL PRIMARY KEY,
       author_id INTEGER REFERENCES users(id),
@@ -262,22 +268,22 @@ async function createInitialUsers() {
   try {
     console.log("Starting to create users");
     await createUser({
-      username: "AmazingHuman",
+      username: "amazinghuman",
       password: "ABCD1234",
       name: "Jenniffer",
       state: "Florida",
-      admin: true,
+      role: "admin",
       email: "dumdum@dumdum.com",
       year_born: 1992,
       follower_count: 0,
       following_count: 0,
     });
     await createUser({
-      username: "CuteGeek",
+      username: "cutegeek",
       password: "ABCD1234",
       name: "Jessy",
       state: "Colorado",
-      admin: true,
+      role: "admin",
       email: "harry@potter.com",
       year_born: 1986,
       follower_count: 0,
@@ -285,11 +291,11 @@ async function createInitialUsers() {
     });
 
     await createUser({
-      username: "Deleted",
+      username: "deleted",
       password: "ABCD1234",
       name: "NotHere",
       state: "Colorado",
-      admin: false,
+      role: "user",
       email: "deleted@potter.com",
       year_born: 1978,
       follower_count: 0,
@@ -297,22 +303,22 @@ async function createInitialUsers() {
     });
 
     await createUser({
-      username: "Mmouse",
+      username: "mmouse",
       password: "ABCD1234",
       name: "Minnie",
       state: "Florida",
-      admin: false,
+      role: "merchant",
       email: "Minnie@potter.com",
       year_born: 1928,
       follower_count: 0,
       following_count: 0,
     });
     await createUser({
-      username: "newUser",
-      password: "newUser4u",
-      name: "newTest",
+      username: "soppia",
+      password: "Abcd1234",
+      name: "sophia",
       state: "colorado",
-      admin: true,
+      role:"user",
       email: "newUser@newUser.com",
       year_born: 1989,
       follower_count: 0,
@@ -534,7 +540,7 @@ async function testDB() {
     console.log(userId, "this is user Id");
 
     console.log("getting user by username");
-    const username = await getUserByUsername("CuteGeek");
+    const username = await getUserByUsername("cutegeek");
     console.log("result:", username);
 
     console.log("testing getting all users");
@@ -543,7 +549,7 @@ async function testDB() {
 
     console.log("testing getUser, password");
     const gettingUser = await getUser({
-      username: "AmazingHuman",
+      username: "amazinghuman",
       password: "ABCD1234",
     });
     console.log("this is getUser", gettingUser);
@@ -556,7 +562,6 @@ async function testDB() {
     console.log(allUsers[1], "what is this??");
     const updatingUser = await updateUser(allUsers[1].id, {
       state: "North Carolina",
-      admin: true,
     });
     console.log("updated user", updatingUser);
 
@@ -574,7 +579,7 @@ async function testDB() {
 
     console.log("Updating wine");
     const updatedWine = await updateWine(wines[2].id, {
-      region: "Still Trash",
+      region: "California",
     });
     console.log("Updated wine", updatedWine);
 
@@ -613,7 +618,7 @@ async function testDB() {
     console.log("badge id 1", badgeId);
 
     console.log("get badge by username");
-    const badgeUsername = await getBadgeByUser({ username: "AmazingHuman" });
+    const badgeUsername = await getBadgeByUser({ username: "amazinghuman" });
     console.log("badges by user AmazingHuman", badgeUsername);
 
     // console.log("updating the badges");
