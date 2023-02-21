@@ -1,3 +1,5 @@
+
+
 function requireUser(req, res, next) {
   if (!req.user) {
     next({
@@ -36,25 +38,13 @@ function requireAdmin(req, res, next) {
   next();
 }
 
-function requireUserOrAdmin(req, res, next) {
-  if (!req.user) {
-    next({
-      name: "AuthenticationError",
-      message: "You must be logged in to perform this action",
-    });
-  } else if (req.user.role !== 'admin' && req.user.username !== req.params.username) {
-    next({
-      name: "Permissions Invalid",
-      message: "You do not have permission to update this user",
-    });
-  } else {
-    next();
-  }
-}
+
+
+
 
 module.exports = {
   requireUser,
   requireMerchantOrAdmin,
   requireAdmin,
-  requireUserOrAdmin,
+
 };

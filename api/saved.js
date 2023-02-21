@@ -1,17 +1,18 @@
 const express = require("express");
-const { getAllSavedByUserId, getSavedById } = require("../db/saved");
+const { getAllSavedByUserId, getSavedById, addSaved, removeSaved } = require("../db/saved");
 const { getUserById, getUserByUsername } = require("../db/users");
 const savedRouter = express.Router();
-const { requireUser } = require("./utils");
+const { requireUser, requireAdmin } = require("./utils");
 
 savedRouter.use((req, res, next) => {
   console.log("A request is being made to /saved");
   next();
 });
 
-savedRouter.get("/:username", async (req, res, next) => {
-  const  username  = req.params.username;
-  const user = await getUserByUsername(username)
+//tested with errors and working
+savedRouter.get("/:userId", async (req, res, next) => {
+  const  userId  = req.params.userId;
+  const user = await getUserById(userId)
   try {
     const savedWines = await getAllSavedByUserId(user.id);
     res.send(savedWines);
@@ -24,6 +25,7 @@ savedRouter.get("/:username", async (req, res, next) => {
   }
 });
 
+// tested with errors, added safe gaurd to insure logged in user or admin are only one that can update this
 savedRouter.post("/", requireUser, async (req, res, next) => {
   try {
     const { user_id, wine_id } = req.body;
@@ -34,6 +36,13 @@ savedRouter.post("/", requireUser, async (req, res, next) => {
         name: "WineAlreadySaved",
         message: "Wine is already saved",
         error: "WineAlreadySaved",
+      };
+    }
+    if(req.user.id != user_id && req.user.role != "admin"){
+      throw {
+        name: "Not correct user",
+        message: "Must be the logged in user to add to saved",
+        error: "NotCorrectUser",
       };
     }
     const saved = await addSaved({ user_id, wine_id });
@@ -47,11 +56,14 @@ savedRouter.post("/", requireUser, async (req, res, next) => {
   }
 });
 
-savedRouter.delete("/:savedId", requireUser, async (req, res, next)=>{
+// tested requireUserOrAdmin didn't work so we will need to safe gaurd that in the front end to ensure the loggedin user is the one that posted, added, ect
+savedRouter.delete("/:savedId", requireUser || requireAdmin, async (req, res, next)=>{
   try {
     const {savedId}= req.params;
+    console.log(req.params, "params")
     const save = await getSavedById(savedId);
-    const deletedSave= await deletedSave(save.id)
+    console.log(save, "save")
+    const deletedSave= await removeSaved(save.id)
     res.send(deletedSave);
   } catch ({name, message, error}) {
     next({
@@ -59,9 +71,9 @@ savedRouter.delete("/:savedId", requireUser, async (req, res, next)=>{
       message:"Error deleted saved wine",
       error:"WineDeleteFail"
     });
-
   }
-})
+});
+
 
 
 
