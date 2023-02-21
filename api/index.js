@@ -41,8 +41,8 @@ apiRouter.use(async (req, res, next) => {
 // const adminRouter = require("./admin");
 // apiRouter.use("/admin", adminRouter);
 
-// const badgesRouter = require("./badges");
-// apiRouter.use("/badges", badgesRouter);
+const badgesRouter = require("./badges");
+apiRouter.use("/badges", badgesRouter);
 
 const favoritesRouter = require("./favorites");
 apiRouter.use("/favorites", favoritesRouter);

@@ -69,7 +69,6 @@ async function dropTables() {
   }
 }
 
-
 async function createTables() {
   try {
     console.log("Starting to build tables...");
@@ -122,7 +121,7 @@ async function createTables() {
       total_following INTEGER NOT NULL DEFAULT (0),
       total_followers INTEGER NOT NULL DEFAULT (0),
       total_main_photos INTEGER NOT NULL DEFAULT (0)
-);
+    );
 
     CREATE TABLE followers(
       id SERIAL PRIMARY KEY,
@@ -318,7 +317,7 @@ async function createInitialUsers() {
       password: "Abcd1234",
       name: "sophia",
       state: "colorado",
-      role:"user",
+      role: "user",
       email: "newUser@newUser.com",
       year_born: 1989,
       follower_count: 0,
