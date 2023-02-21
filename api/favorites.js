@@ -1,5 +1,6 @@
 const express = require("express");
 const { getAllFavoritesByUserId, removeFavorite, getFavoritedById, addFavorite } = require("../db/favorites");
+const { getUserById } = require("../db/users");
 const favoritesRouter = express.Router();
 const { requireUser, requireAdmin } = require("./utils");
 
@@ -8,12 +9,22 @@ favoritesRouter.use((req, res, next) => {
   next();
 });
 
+//tested with errors
 // GET /api/favorites/:userId
 favoritesRouter.get("/:userId", async (req, res, next) => {
   const  userId  = req.params.userId;
+  console.log(userId, "userId")
   const user = await getUserById(userId)
+  console.log(user, "user")
   try {
-    const favoriteWines = await getAllFavoritesByUserId(user.id);
+    const favoriteWines = await getAllFavoritesByUserId({user_id:user.id});
+    if(!favoriteWines.length){
+      next({
+        name: "NoWines favored",
+        message: "No wines favorited",
+        error: "NoFavor",
+      });
+    }
     res.send(favoriteWines);
   } catch ({ name, message, error }) {
     next({
@@ -25,6 +36,7 @@ favoritesRouter.get("/:userId", async (req, res, next) => {
 });
 
 
+//tested with errors
 favoritesRouter.delete("/:favoriteId", requireUser || requireAdmin, async (req, res, next)=>{
   try {
     const {favoriteId}= req.params;
@@ -43,8 +55,8 @@ favoritesRouter.delete("/:favoriteId", requireUser || requireAdmin, async (req, 
 favoritesRouter.post("/", requireUser, async (req, res, next) => {
   try {
     const { user_id, wine_id } = req.body;
-    const favoriteWines = await getAllFavoritesByUserId(user_id);
-    const alreadyFavored = favoriteWines.some((favoriteWine) => favoriteWine.wine_id === wine_id);
+    const favoriteWines = await getAllFavoritesByUserId({user_id});
+    const alreadyFavored = favoriteWines.some((favoriteWine) =>favoriteWine.wine_id === wine_id);
     if (alreadyFavored) {
       throw {
         name: "WineAlreadyFavorited",
