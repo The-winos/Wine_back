@@ -40,7 +40,7 @@ usersRouter.post("/login", async(req, res, next)=>{
 
 // tested with error and refined password to all 1 if statement
 usersRouter.post("/register", async(req, res, next)=>{
-  const {username, password, name, state, role, email, year_born, follower_count, following_count }= req.body;
+  const {username, password, name, state, avatar, role, email, year_born, follower_count, following_count }= req.body;
   try {
     const user =await getUserByUsername(username);
 
@@ -53,7 +53,7 @@ usersRouter.post("/register", async(req, res, next)=>{
       });
     } else{
         const newUser= await createUser({
-          username, password, name, state, role, email, year_born, follower_count, following_count
+          username, password, name, state, avatar, role, email, year_born, follower_count, following_count
         });
         const token =jwt.sign(newUser, process.env.JWT_SECRET, {expiresIn:"1w",});
         res.send({
