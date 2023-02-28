@@ -5,6 +5,7 @@ async function createWine({
   name,
   image_url,
   price,
+  rating,
   region,
   flavor,
 }) {
@@ -13,11 +14,11 @@ async function createWine({
       rows: [wines],
     } = await client.query(
       `
-    INSERT INTO wines (author_id, name, image_url, price, region, flavor)
-    VALUES ($1, $2, $3, $4, $5, $6)
+    INSERT INTO wines (author_id, name, image_url, price, rating, region, flavor)
+    VALUES ($1, $2, $3, $4, $5, $6, $7)
     RETURNING *;
     `,
-      [author_id, name, image_url, price, region, flavor]
+      [author_id, name, image_url, price, rating, region, flavor]
     );
     return wines;
   } catch (error) {

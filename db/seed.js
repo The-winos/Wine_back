@@ -97,6 +97,7 @@ async function createTables() {
       name TEXT UNIQUE NOT NULL,
       image_url TEXT NOT NULL,
       price INTEGER DEFAULT (0),
+      rating INTEGER DEFAULT (0),
       region TEXT,
       flavor wine_type
     );
@@ -253,6 +254,20 @@ CREATE TRIGGER update_badge_upload_count_down_trigger
 AFTER DELETE ON reviews
 FOR EACH ROW
 EXECUTE FUNCTION update_badge_upload_count_down();
+
+CREATE OR REPLACE FUNCTION update_wine_rating() RETURNS TRIGGER AS $$
+BEGIN
+  UPDATE wines
+  SET rating = (SELECT AVG(rating) FROM reviews WHERE wine_id = NEW.wine_id)
+  WHERE id = NEW.wine_id;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER update_wine_rating_trigger
+AFTER INSERT ON reviews
+FOR EACH ROW
+EXECUTE FUNCTION update_wine_rating();
 
 
 
