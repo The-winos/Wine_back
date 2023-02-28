@@ -1,7 +1,7 @@
 const express = require("express");
 const usersRouter = express.Router();
 const jwt = require("jsonwebtoken");
-const { getUser, getUserByUsername, createUser, getAllUsers, deleteUser, updateUser } = require("../db/users");
+const { getUser, getUserByUsername, createUser, getAllUsers, deleteUser, updateUser, getUserById } = require("../db/users");
 const { requireAdmin, requireUser, requireUserOrAdmin } = require("./utils");
 
 
@@ -48,7 +48,7 @@ usersRouter.post("/register", async(req, res, next)=>{
     if (!/(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z]).{8,}/.test(password)) {
       next({
         error:"PasswordRequirementsNotMet",
-        message:"Password must contain at least one number, one uppercase letter and be 8 characters long",
+        message:"Password must contain at least one number, one uppercase letter, one lowercase number and be 8 characters long",
         name:"Password Requirements Not Met"
       });
     } else{
@@ -89,10 +89,10 @@ usersRouter.get("/me", async(req, res, next)=>{
 });
 
 // tested with error
-usersRouter.get("/:username", async(req, res, next)=>{
-  const username=req.params.username;
+usersRouter.get("/:id", async(req, res, next)=>{
+  const id=req.params.id;
   try {
-    const user= await getUserByUsername(username);
+    const user= await getUserById(id);
 
     if(user){
       delete user.password;
@@ -100,12 +100,16 @@ usersRouter.get("/:username", async(req, res, next)=>{
       else{
         next({
           error:"unknownUser",
-          name: "No User by that username",
-          message:`no user found bu ma,e of ${username}`,
+          name: "No User by that id",
+          message:`no user found by id of ${id}`,
         });
       }
   } catch (error) {
-    next({error, name, message})
+    next({
+      error:"unknownUser",
+      name: "No User by that id",
+      message:`no user found by id of ${id}`,
+    });
   }
 });
 
