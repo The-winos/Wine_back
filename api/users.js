@@ -168,5 +168,18 @@ usersRouter.patch("/:username", requireUser || requireAdmin, async(req, res, nex
   }
 });
 
+// GET /api/reviews/:id //passed get review by user ID and error
+usersRouter.get("/:id/reviews", async (req, res, next) => {
+  const { id } = req.params;
+
+  try {
+    const reviewsId = await getReviewByUser(id);
+
+    res.send(reviewsId);
+  } catch ({ name, message, error }) {
+    next({ name, message, error });
+  }
+});
+
 
 module.exports=usersRouter;

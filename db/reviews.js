@@ -106,6 +106,21 @@ async function getReviewByUser(id) {
   }
 }
 
+async function getReviewByWineId(id) {
+  try {
+    const { rows: reviews } = await client.query(
+      `
+          SELECT * FROM reviews
+          WHERE wine_id = $1;
+        `,
+      [id]
+    );
+    return reviews;
+  } catch (error) {
+    throw error;
+  }
+}
+
 async function getReviewById(id) {
   try {
     const {
@@ -148,4 +163,5 @@ module.exports = {
   getReviewByUser,
   getReviewById,
   getReviewByIdAndUserId,
+  getReviewByWineId
 };

@@ -2,6 +2,7 @@
 const express = require("express");
 const winesRouter = express.Router();
 const jwt = require("jsonwebtoken");
+const { getReviewByWineId } = require("../db/reviews");
 const { getAllWines, getWineById, getWineByFlavor, getWineByName, createWine, destroyWine, updateWine } = require("../db/wines");
 const { requireUser, requireAdmin } = require("./utils");
 
@@ -130,5 +131,18 @@ winesRouter.patch("/:wineId", requireAdmin, async(req, res, next)=>{
 
   }
 })
+
+winesRouter.get("/:id/reviews", async (req, res, next) => {
+  const { id } = req.params;
+  console.log("is this wine id", id);
+
+  try {
+    const reviewsId = await getReviewByWineId(id);
+
+    res.send(reviewsId);
+  } catch ({ name, message, error }) {
+    next({ name, message, error });
+  }
+});
 
 module.exports = winesRouter;
