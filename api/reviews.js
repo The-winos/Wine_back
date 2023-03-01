@@ -8,6 +8,7 @@ const {
   getReviewById,
   updateReview,
   getReviewByIdAndUserId,
+  getReviewByWineId,
 } = require("../db/reviews");
 const { requireUser } = require("./utils");
 
@@ -26,19 +27,6 @@ reviewsRouter.get("/", async (req, res, next) => {
   }
 });
 
-// GET /api/reviews/:id //passed get review by user ID and error
-reviewsRouter.get("/:id", async (req, res, next) => {
-  const { id } = req.params;
-  console.log("is this id", id);
-
-  try {
-    const reviewsId = await getReviewByUser(id);
-
-    res.send(reviewsId);
-  } catch ({ name, message, error }) {
-    next({ name, message, error });
-  }
-});
 
 //POST /api/reviews // passed create and error
 reviewsRouter.post("/", requireUser, async (req, res, next) => {
