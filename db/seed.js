@@ -89,7 +89,7 @@ async function createTables() {
       following_count INT NOT NULL DEFAULT (0)
     );
 
-    CREATE TYPE wine_type AS ENUM ('Cabernet','Syrah','Zinfandel','Noir','Merlot','Malbec','Tempranillo','Riesling','Grigio','Sauvignon','Chardonnay','Moscato','Blend', 'Other');
+    CREATE TYPE wine_type AS ENUM ('Cabernet','Syrah','Zinfandel','Noir','Merlot','Malbec','Tempranillo','Riesling','Grigio','Sauvignon','Chardonnay','Moscato','Blend','TreTerzi', 'Other');
 
     CREATE TABLE wines(
       id SERIAL PRIMARY KEY,
@@ -217,7 +217,7 @@ EXECUTE FUNCTION update_badge_review_count_down();
 CREATE OR REPLACE FUNCTION update_wine_price() RETURNS TRIGGER AS $$
 BEGIN
   UPDATE wines
-  SET price = (SELECT AVG(price) FROM reviews WHERE wine_id = NEW.wine_id)
+  SET price = (SELECT AVG(price) FROM reviews WHERE wine_id = NEW.wine_id AND price>0)
   WHERE id = NEW.wine_id;
   RETURN NEW;
 END;
@@ -227,6 +227,7 @@ CREATE TRIGGER update_wine_price_trigger
 AFTER INSERT ON reviews
 FOR EACH ROW
 EXECUTE FUNCTION update_wine_price();
+
 
 
 CREATE OR REPLACE FUNCTION update_badge_upload_count() RETURNS TRIGGER AS $$
@@ -301,7 +302,7 @@ async function createInitialUsers() {
       state: "Colorado",
       avatar:"https://cdn5.vectorstock.com/i/1000x1000/01/69/businesswoman-character-avatar-icon-vector-12800169.jpg",
       role: "admin",
-      email: "harry@potter.com",
+      email: "japarker0421@gmail.com",
       year_born: 1986,
       follower_count: 0,
       following_count: 0,
@@ -321,26 +322,38 @@ async function createInitialUsers() {
     });
 
     await createUser({
-      username: "mmouse",
+      username: "iceman",
       password: "ABCD1234",
-      name: "Minnie",
-      state: "Florida",
+      name: "Justin",
+      state: "Colorado",
       avatar:"https://thumbs.dreamstime.com/b/mouse-avatar-illustration-cartoon-45383544.jpg",
-      role: "merchant",
-      email: "Minnie@potter.com",
-      year_born: 1928,
+      role: "admin",
+      email: "thelastprince11@yahoo.com",
+      year_born: 1975,
       follower_count: 0,
       following_count: 0,
     });
     await createUser({
-      username: "soppia",
+      username: "sistersubie",
       password: "Abcd1234",
-      name: "sophia",
+      name: "Sue",
       state: "colorado",
       avatar:"https://www.w3schools.com/howto/img_avatar2.png",
-      role: "user",
-      email: "newUser@newUser.com",
-      year_born: 1989,
+      role: "merchant",
+      email: "sistersubie@gmail.com",
+      year_born: 1956,
+      follower_count: 0,
+      following_count: 0,
+    });
+    await createUser({
+      username: "gapiesco",
+      password: "Abcd1234",
+      name: "Joe",
+      state: "Florida",
+      avatar:"https://www.w3schools.com/howto/img_avatar2.png",
+      role: "merchant",
+      email: "gapies55@yahoo.com",
+      year_born: 1955,
       follower_count: 0,
       following_count: 0,
     });
@@ -389,6 +402,23 @@ async function createInitialWine() {
       region: "Australia",
       flavor: "Blend",
     });
+    await createWine({
+      author_id: 2,
+      name: "Chalkboard",
+      image_url:
+        "https://img.freepik.com/free-photo/bottle-wine-isolated-white_167946-4.jpg?size=338&ext=jpg&ga=GA1.2.1034222811.1663818713",
+      region: "California",
+      flavor: "Cabernet",
+    });
+    await createWine({
+      author_id: 2,
+      name: "Palumbo Selezion Speciale",
+      image_url:
+        "https://img.freepik.com/free-photo/bottle-wine-isolated-white_167946-4.jpg?size=338&ext=jpg&ga=GA1.2.1034222811.1663818713",
+      region: "Puglia, IGT Italy",
+      flavor: "TreTerzi",
+    });
+
 
     console.log("Finished creating wines");
   } catch (error) {
@@ -400,20 +430,19 @@ async function createInitialWine() {
 async function createInitialReview() {
   try {
     console.log("Starting to create reviews");
-    // const wineId = await getWineById(1);
-    // console.log("Getting wine", wineId);
+
     await createReview({
       wine_id: 1,
-      user_id: 1,
-      name: "Review",
+      user_id: 2,
+      name: "Really good",
       rating: 5,
-      price: 850,
+      price: 899,
       review_comment:
-        "Plum and prune on the nose and palate. Fruity, with ripe, well-integrated tannins on the palate. Long, slightly drying finish with lingering plum and prune notes.",
+        "This wine is so good its got a full body without being too much. It pairs good with all red meats or just to drink on it's own. It's a favorite in our household",
       image_url:
         "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
-      review_date: 20190602,
-      location: "Grocery",
+      review_date: '2019-06-2',
+      location: "Davco",
     });
 
     await createReview({
@@ -425,7 +454,7 @@ async function createInitialReview() {
       review_comment: "Nevermind.",
       image_url:
         "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
-      review_date: 20190602,
+      review_date: '2019-06-02',
       location: "Costco",
     });
     await createReview({
@@ -433,13 +462,13 @@ async function createInitialReview() {
       user_id: 2,
       name: "Bold and dark",
       rating: 5,
-      price: 899,
+      price: 999,
       review_comment:
         "This wine has a unique flavor that it is both smooth and heavy. I love to eat it with steaks",
       image_url:
         "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
-      review_date: 20190602,
-      location: "Trader Joe's",
+      review_date: '2019-06-02',
+      location: "Davco",
     });
 
     await createReview({
@@ -452,34 +481,71 @@ async function createInitialReview() {
         "It wasn't my favorite wine but it was solid for the price",
       image_url:
         "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
-      review_date: 20190602,
-      location: "Liquor store",
+      review_date: '2019-06-02',
+      location: "Costco",
     });
     await createReview({
       wine_id: 4,
       user_id: 4,
-      name: "Over Paid!",
+      name: "Solid",
       rating: 4,
-      price: 1999,
+      price: 999,
       review_comment:
-        "I liked the wine but I bought it on their website for 20 bucks! Went to my local liquor store and found it for 10! I feel so dumb. Still wine is good",
+        "This wine is just easy to drink. There's never a time when someone opens it that I'm disappointed",
       image_url:
         "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
-      review_date: 20190602,
-      location: "On-line",
+      review_date: '2019-06-02',
+      location: "local liquor store",
+    });
+    await createReview({
+      wine_id: 1,
+      user_id: 4,
+      name: "Solid wine!",
+      rating: 5,
+      price: 999,
+      review_comment: "Delicious, fantastic wine.Always a good buy. It's super flavorful!",
+      image_url:
+        "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
+      review_date: '2023-02-13',
+      location: "Davco",
     });
     await createReview({
       wine_id: 1,
       user_id: 5,
-      name: "Not too bad",
+      name: "A good go to!",
       rating: 3,
-      price: 1999,
-      review_comment: "Would buy it again",
+      price: 999,
+      review_comment: "Solid, easy to drink wine. A good go to, it's not a bad buy but I feel there are other wines in this price range that are better.",
       image_url:
         "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
-      review_date: 20230213,
-      location: "Costco",
+      review_date:'2023-02-13',
+      location: "Davco",
     });
+    await createReview({
+      wine_id: 5,
+      user_id: 2,
+      name: "Good for a mix up!",
+      rating: 3,
+      price: 999,
+      review_comment: "This wine didn't blow me away but it's flavor was good and I could def drink it. This is a wine I wouldn't claim is a favorite but if someone had it I'd pick it as I know it's a good wine. ",
+      image_url:
+        "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
+      review_date: '2023-02-13',
+      location: "Davco",
+    });
+    await createReview({
+      wine_id: 6,
+      user_id: 6,
+      name: "One of my favorites",
+      rating: 5,
+      price: 1400,
+      review_comment: "I'm not a connoisseur by any stretch, but I love this red. It's not too dry and has a great fruity taste.",
+      image_url:
+        "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
+      review_date: '2023-02-13',
+      location: "Wine Club",
+    });
+
 
     console.log("Finished creating review");
   } catch (error) {
