@@ -510,8 +510,8 @@ async function createInitialReview() {
       location: "Davco",
     });
     await createReview({
-      wine_id: 1,
-      user_id: 5,
+      wine_id: 5,
+      user_id: 4,
       name: "A good go to!",
       rating: 3,
       price: 999,
