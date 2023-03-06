@@ -9,6 +9,7 @@ const {
   updateReview,
   getReviewByIdAndUserId,
   getReviewByWineId,
+  getReviewsByFollowers,
 } = require("../db/reviews");
 const { requireUser } = require("./utils");
 
@@ -26,6 +27,16 @@ reviewsRouter.get("/", async (req, res, next) => {
     next({ name, message, error });
   }
 });
+
+reviewsRouter.get("/:userId", async (req, res, next)=>{
+  const { userId } = req.params
+  try {
+    const followersReviews= await getReviewsByFollowers(userId);
+    res.send(followersReviews);
+  } catch ({ name, message, error }) {
+    next({ name, message, error });
+  }
+})
 
 
 //POST /api/reviews // passed create and error

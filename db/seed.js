@@ -16,6 +16,7 @@ const {
   getReviewByUser,
   updateReview,
   destroyReview,
+  getReviewsByFollowers,
 } = require("./reviews");
 const {
   createWine,
@@ -766,6 +767,10 @@ async function testDB() {
     console.log("This wine is gone", notMyFavorite);
     const updatedFavorList = await getAllFavoritesByUserId({ user_id: 2 });
     console.log("List of current wines", updatedFavorList);
+    console.log("We need to delete a favorited wine");
+
+    const getReviewsbyfollow = await getReviewsByFollowers(2);
+    console.log("These should be the reviews from user 2's followers", getReviewsbyfollow);
 
     console.log("Finished DB Tests");
   } catch (error) {
