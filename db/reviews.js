@@ -155,6 +155,24 @@ async function getReviewByIdAndUserId(id, user_id) {
   }
 }
 
+async function getReviewsByFollowers(user_id) {
+  try {
+    const { rows: reviews } = await client.query(
+      `
+      SELECT reviews.*
+      FROM reviews
+      JOIN followers  ON reviews.user_id = followers.user_id
+      WHERE followers.follower_id = $1;
+    `,
+      [user_id]
+    );
+    return reviews;
+  } catch (error) {
+    throw error;
+  }
+}
+
+
 module.exports = {
   createReview,
   updateReview,
@@ -163,5 +181,6 @@ module.exports = {
   getReviewByUser,
   getReviewById,
   getReviewByIdAndUserId,
-  getReviewByWineId
+  getReviewByWineId,
+  getReviewsByFollowers
 };
