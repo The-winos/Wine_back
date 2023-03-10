@@ -54,21 +54,21 @@ usersRouter.post("/register", async (req, res, next) => {
     avatar,
     role,
     email,
-    year_born,
+    birthday,
     follower_count,
     following_count,
   } = req.body;
   try {
     const user = await getUserByUsername(username);
 
-    if (!/(?=.*[A-Z])(?=.*\d)(?=.*[a-z])?.{8,}/.test(password)) {
+    if (!/(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}/.test(password)) {
       next({
         error: "PasswordRequirementsNotMet",
         message:
-          "Password must be at least 8 characters long and contain at least one uppercase letter and one digit. You can also include optional lowercase letters and special characters.",
+          "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one digit. You can also include optional special characters.",
         name: "Password Requirements Not Met",
       });
-    } else if (new Date().getFullYear() - year_born < 21) {
+    } else if (new Date().getFullYear() - birthday < 21) {
       next({
         error: "UnderageRegistration",
         message: "You must be at least 21 years old to register.",
@@ -83,7 +83,7 @@ usersRouter.post("/register", async (req, res, next) => {
         avatar,
         role,
         email,
-        year_born,
+        birthday,
         follower_count,
         following_count,
       });

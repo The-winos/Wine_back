@@ -85,7 +85,7 @@ async function createTables() {
       avatar VARCHAR(255),
       role user_role DEFAULT 'user',
       email VARCHAR(255) UNIQUE NOT NULL,
-      year_born INT NOT NULL,
+      birthday DATE NOT NULL,
       follower_count INT NOT NULL DEFAULT (0),
       following_count INT NOT NULL DEFAULT (0)
     );
@@ -289,10 +289,10 @@ async function createInitialUsers() {
       password: "ABCD1234",
       name: "Jenniffer",
       state: "Florida",
-      avatar:"https://www.w3schools.com/w3images/avatar6.png",
+      avatar: "https://www.w3schools.com/w3images/avatar6.png",
       role: "admin",
       email: "dumdum@dumdum.com",
-      year_born: 1992,
+      birthday: "1992-01-01",
       follower_count: 0,
       following_count: 0,
     });
@@ -301,10 +301,11 @@ async function createInitialUsers() {
       password: "ABCD1234",
       name: "Jessy",
       state: "Colorado",
-      avatar:"https://cdn5.vectorstock.com/i/1000x1000/01/69/businesswoman-character-avatar-icon-vector-12800169.jpg",
+      avatar:
+        "https://cdn5.vectorstock.com/i/1000x1000/01/69/businesswoman-character-avatar-icon-vector-12800169.jpg",
       role: "admin",
       email: "japarker0421@gmail.com",
-      year_born: 1986,
+      birthday: "1986-12-01",
       follower_count: 0,
       following_count: 0,
     });
@@ -314,10 +315,11 @@ async function createInitialUsers() {
       password: "ABCD1234",
       name: "NotHere",
       state: "Colorado",
-      avatar:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJbM1sKRHlT8AroSFkNAmAT4fCrvcBOqCUXX_e1YF45ZjkBnqYDKz7AmqZblmAlZALabY&usqp=CAU",
+      avatar:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJbM1sKRHlT8AroSFkNAmAT4fCrvcBOqCUXX_e1YF45ZjkBnqYDKz7AmqZblmAlZALabY&usqp=CAU",
       role: "user",
       email: "deleted@potter.com",
-      year_born: 1978,
+      birthday: "1978-03-13",
       follower_count: 0,
       following_count: 0,
     });
@@ -327,10 +329,11 @@ async function createInitialUsers() {
       password: "ABCD1234",
       name: "Justin",
       state: "Colorado",
-      avatar:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTue0QzcbncaPSxMCpLhzOab4a1Sux6xXpow&usqp=CAU",
+      avatar:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTue0QzcbncaPSxMCpLhzOab4a1Sux6xXpow&usqp=CAU",
       role: "admin",
       email: "thelastprince11@yahoo.com",
-      year_born: 1975,
+      birthday: "1975-04-15",
       follower_count: 0,
       following_count: 0,
     });
@@ -339,10 +342,10 @@ async function createInitialUsers() {
       password: "Abcd1234",
       name: "Sue",
       state: "colorado",
-      avatar:"https://www.w3schools.com/howto/img_avatar2.png",
+      avatar: "https://www.w3schools.com/howto/img_avatar2.png",
       role: "merchant",
       email: "sistersubie@gmail.com",
-      year_born: 1956,
+      birthday: "1956-09-18",
       follower_count: 0,
       following_count: 0,
     });
@@ -351,10 +354,11 @@ async function createInitialUsers() {
       password: "Abcd1234",
       name: "Joe",
       state: "Florida",
-      avatar:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuFbUU_a4sv-K_cepk27hrSBc2PgISEEGQyojJ1rSECA&s",
+      avatar:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuFbUU_a4sv-K_cepk27hrSBc2PgISEEGQyojJ1rSECA&s",
       role: "merchant",
       email: "gapies55@yahoo.com",
-      year_born: 1955,
+      birthday: "1955-06-02",
       follower_count: 0,
       following_count: 0,
     });
@@ -420,7 +424,6 @@ async function createInitialWine() {
       flavor: "TreTerzi",
     });
 
-
     console.log("Finished creating wines");
   } catch (error) {
     console.error("error creating wines");
@@ -442,7 +445,7 @@ async function createInitialReview() {
         "This wine is so good its got a full body without being too much. It pairs good with all red meats or just to drink on it's own. It's a favorite in our household",
       image_url:
         "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
-      review_date: '2019-06-2',
+      review_date: "2019-06-2",
       location: "Davco",
     });
 
@@ -455,7 +458,7 @@ async function createInitialReview() {
       review_comment: "Nevermind.",
       image_url:
         "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
-      review_date: '2019-06-02',
+      review_date: "2019-06-02",
       location: "Costco",
     });
     await createReview({
@@ -468,7 +471,7 @@ async function createInitialReview() {
         "This wine has a unique flavor that it is both smooth and heavy. I love to eat it with steaks",
       image_url:
         "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
-      review_date: '2019-06-02',
+      review_date: "2019-06-02",
       location: "Davco",
     });
 
@@ -482,7 +485,7 @@ async function createInitialReview() {
         "It wasn't my favorite wine but it was solid for the price",
       image_url:
         "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
-      review_date: '2019-06-02',
+      review_date: "2019-06-02",
       location: "Costco",
     });
     await createReview({
@@ -495,7 +498,7 @@ async function createInitialReview() {
         "This wine is just easy to drink. There's never a time when someone opens it that I'm disappointed",
       image_url:
         "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
-      review_date: '2019-06-02',
+      review_date: "2019-06-02",
       location: "local liquor store",
     });
     await createReview({
@@ -504,10 +507,11 @@ async function createInitialReview() {
       name: "Solid wine!",
       rating: 5,
       price: 999,
-      review_comment: "Delicious, fantastic wine.Always a good buy. It's super flavorful!",
+      review_comment:
+        "Delicious, fantastic wine.Always a good buy. It's super flavorful!",
       image_url:
         "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
-      review_date: '2023-02-13',
+      review_date: "2023-02-13",
       location: "Davco",
     });
     await createReview({
@@ -516,10 +520,11 @@ async function createInitialReview() {
       name: "A good go to!",
       rating: 3,
       price: 999,
-      review_comment: "Solid, easy to drink wine. A good go to, it's not a bad buy but I feel there are other wines in this price range that are better.",
+      review_comment:
+        "Solid, easy to drink wine. A good go to, it's not a bad buy but I feel there are other wines in this price range that are better.",
       image_url:
         "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
-      review_date:'2023-02-13',
+      review_date: "2023-02-13",
       location: "Davco",
     });
     await createReview({
@@ -528,10 +533,11 @@ async function createInitialReview() {
       name: "Good for a mix up!",
       rating: 3,
       price: 999,
-      review_comment: "This wine didn't blow me away but it's flavor was good and I could def drink it. This is a wine I wouldn't claim is a favorite but if someone had it I'd pick it as I know it's a good wine. ",
+      review_comment:
+        "This wine didn't blow me away but it's flavor was good and I could def drink it. This is a wine I wouldn't claim is a favorite but if someone had it I'd pick it as I know it's a good wine. ",
       image_url:
         "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
-      review_date: '2023-02-13',
+      review_date: "2023-02-13",
       location: "Davco",
     });
     await createReview({
@@ -540,13 +546,13 @@ async function createInitialReview() {
       name: "One of my favorites",
       rating: 5,
       price: 1400,
-      review_comment: "I'm not a connoisseur by any stretch, but I love this red. It's not too dry and has a great fruity taste.",
+      review_comment:
+        "I'm not a connoisseur by any stretch, but I love this red. It's not too dry and has a great fruity taste.",
       image_url:
         "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
-      review_date: '2023-02-13',
+      review_date: "2023-02-13",
       location: "Wine Club",
     });
-
 
     console.log("Finished creating review");
   } catch (error) {
@@ -770,7 +776,10 @@ async function testDB() {
     console.log("We need to delete a favorited wine");
 
     const getReviewsbyfollow = await getReviewsByFollowers(2);
-    console.log("These should be the reviews from user 2's followers", getReviewsbyfollow);
+    console.log(
+      "These should be the reviews from user 2's followers",
+      getReviewsbyfollow
+    );
 
     console.log("Finished DB Tests");
   } catch (error) {

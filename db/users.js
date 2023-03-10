@@ -1,8 +1,24 @@
 const { client } = require("./client");
 const bcrypt = require("bcrypt");
 
-async function createUser({ username, password, name, state, avatar, role, email, year_born, follower_count, following_count, welcome, total_reviews, total_uploads, total_following, total_followers, total_main_photos }) {
-
+async function createUser({
+  username,
+  password,
+  name,
+  state,
+  avatar,
+  role,
+  email,
+  birthday,
+  follower_count,
+  following_count,
+  welcome,
+  total_reviews,
+  total_uploads,
+  total_following,
+  total_followers,
+  total_main_photos,
+}) {
   const saltRound = 10;
   const salt = await bcrypt.genSalt(saltRound);
 
@@ -12,12 +28,23 @@ async function createUser({ username, password, name, state, avatar, role, email
       rows: [user],
     } = await client.query(
       `
-  INSERT INTO users(username, password, name, state, avatar,role, email, year_born, follower_count, following_count)
+  INSERT INTO users(username, password, name, state, avatar, role, email, birthday, follower_count, following_count)
   VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
   ON CONFLICT (username) DO NOTHING
   RETURNING *;
   `,
-      [username, bcryptPassword, name, state, avatar, role, email, year_born, follower_count, following_count]
+      [
+        username,
+        bcryptPassword,
+        name,
+        state,
+        avatar,
+        role,
+        email,
+        birthday,
+        follower_count,
+        following_count,
+      ]
     );
     delete user.password;
 
@@ -28,7 +55,7 @@ async function createUser({ username, password, name, state, avatar, role, email
         INSERT INTO badges(author_id)
         VALUES($1);
         `,
-        [user.id,]
+        [user.id]
       );
     }
 
@@ -126,7 +153,6 @@ async function deleteUser(id) {
 
   return result.rows;
 }
-
 
 async function updateUser(id, fields = {}) {
   const setString = Object.keys(fields)
