@@ -3,6 +3,7 @@ const {
   destroyFollower,
   getFollowingByUser,
   updateFollower,
+  getFollowerByUser,
 } = require("../db/followers");
 const followersRouter = express.Router();
 const { requireUser } = require("./utils");
@@ -26,7 +27,7 @@ followersRouter.get("/", async (req, res, next) => {
 followersRouter.get("/:id", async (req, res, next) => {
   const { id } = req.params;
   try {
-    const followersId = await getFollowingByUser({ id });
+    const followersId = await getFollowerByUser({ id });
     res.send(followersId);
   } catch ({ name, message, error }) {
     next({ name, message, error });
