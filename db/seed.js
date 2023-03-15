@@ -90,7 +90,7 @@ async function createTables() {
       following_count INT NOT NULL DEFAULT (0)
     );
 
-    CREATE TYPE wine_type AS ENUM ('Cabernet','Syrah','Zinfandel','Noir','Merlot','Malbec','Tempranillo','Riesling','Grigio','Sauvignon','Chardonnay','Moscato','Blend','TreTerzi', 'Other');
+    CREATE TYPE wine_type AS ENUM ('Cabernet','Syrah','Zinfandel','Pinot Noir','Merlot','Malbec','Tempranillo','Riesling','Pinot Grigio','Sauvignon','Chardonnay','Moscato','Blend','TreTerzi', 'Petite Sirah', 'Other');
 
     CREATE TABLE wines(
       id SERIAL PRIMARY KEY,
@@ -423,6 +423,38 @@ async function createInitialWine() {
       region: "Puglia, IGT Italy",
       flavor: "TreTerzi",
     });
+    await createWine({
+      author_id: 5,
+      name: "Bogle, Red Blend",
+      image_url:
+        "https://img.freepik.com/free-photo/bottle-wine-isolated-white_167946-4.jpg?size=338&ext=jpg&ga=GA1.2.1034222811.1663818713",
+      region: "California",
+      flavor: "Blend",
+    });
+    await createWine({
+      author_id: 5,
+      name: "Petite Petite, by Michael David",
+      image_url:
+        "https://img.freepik.com/free-photo/bottle-wine-isolated-white_167946-4.jpg?size=338&ext=jpg&ga=GA1.2.1034222811.1663818713",
+      region: "California",
+      flavor: "Petite Sirah",
+    });
+    await createWine({
+      author_id: 5,
+      name: "Meiomi",
+      image_url:
+        "https://img.freepik.com/free-photo/bottle-wine-isolated-white_167946-4.jpg?size=338&ext=jpg&ga=GA1.2.1034222811.1663818713",
+      region: "California",
+      flavor: "Pinot Noir",
+    });
+    await createWine({
+      author_id: 5,
+      name: "Kirkland Cabernet",
+      image_url:
+        "https://static6.depositphotos.com/1000261/645/i/600/depositphotos_6459418-stock-photo-white-wine-box.jpg",
+      region: "California",
+      flavor: "Cabernet",
+    });
 
     console.log("Finished creating wines");
   } catch (error) {
@@ -553,6 +585,72 @@ async function createInitialReview() {
       review_date: "2023-02-13",
       location: "Wine Club",
     });
+    await createReview({
+      wine_id: 7,
+      user_id: 5,
+      name: "Perfect for a party",
+      rating: 3,
+      price: 800,
+      review_comment:
+        "This is the one I get the most often as for the price most people enjoy it, but it doesn't break the bank when having a large party",
+      image_url:
+        "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
+      review_date: "2023-03-15",
+      location: "Costco",
+    });
+    await createReview({
+      wine_id: 8,
+      user_id: 5,
+      name: "REALLY good for price!",
+      rating: 4,
+      price: 1200,
+      review_comment:
+        "It's amazing for the price! a favorite for me!",
+      image_url:
+        "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
+      review_date: "2023-03-15",
+      location: "Costco",
+    });
+    await createReview({
+      wine_id: 9,
+      user_id: 5,
+      name: "It's so yummy",
+      rating: 5,
+      price: 2000,
+      review_comment:
+        "Meiomi yummy yummy for my tummy!",
+      image_url:
+        "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
+      review_date: "2023-03-15",
+      location: "Costco",
+    });
+    await createReview({
+      wine_id: 10,
+      user_id: 5,
+      name: "Small amounts...",
+      rating: 2,
+      price: 1400,
+      review_comment:
+        "I can drink it in small amounts but it makes my heart race. Not one I'd pick unless no other options.",
+      image_url:
+      "https://static6.depositphotos.com/1000261/645/i/600/depositphotos_6459418-stock-photo-white-wine-box.jpg",
+      review_date: "2023-03-15",
+      location: "Costco",
+    });
+    await createReview({
+      wine_id: 7,
+      user_id: 2,
+      name: "Really like this wine!",
+      rating: 5,
+      price: 899,
+      review_comment:
+        "I really enjoy this wine, specially compared to it's Cab. It's got a nice smooth flavor that is super easy to sip on.",
+      image_url:
+      "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
+      review_date: "2023-03-15",
+      location: "Costco",
+    });
+
 
     console.log("Finished creating review");
   } catch (error) {
