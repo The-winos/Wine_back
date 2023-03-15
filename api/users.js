@@ -1,6 +1,7 @@
 const express = require("express");
 const usersRouter = express.Router();
 const jwt = require("jsonwebtoken");
+const { getReviewByUser } = require("../db/reviews");
 const {
   getUser,
   getUserByUsername,
