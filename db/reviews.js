@@ -159,11 +159,11 @@ async function getReviewsByFollowers(user_id) {
   try {
     const { rows: reviews } = await client.query(
       `
-      SELECT reviews.*, users.username AS follower_username
+      SELECT reviews.*
       FROM reviews
-      JOIN followers ON reviews.user_id = followers.user_id
-      JOIN users ON followers.follower_id = users.id
+      JOIN followers ON reviews.user_id = followers.follower_id
       WHERE followers.user_id = $1;
+
 
     `,
       [user_id]
