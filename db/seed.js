@@ -832,11 +832,6 @@ async function testDB() {
     const followees = await getFollowingByUser({ id: allUsers[3].id });
     console.log("these users are following user 1", followees);
 
-    console.log("updating follower");
-    const updatedFollower = await updateFollower(followers[0].id, {
-      created_at: "2022-12-31 21:59:59",
-    });
-    console.log("Updated follower", updatedFollower);
 
     // console.log("Destroying follower");
     // const deletedFollower = await destroyFollower(1);
