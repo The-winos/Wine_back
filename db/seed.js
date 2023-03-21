@@ -455,6 +455,14 @@ async function createInitialWine() {
       region: "California",
       flavor: "Cabernet",
     });
+    await createWine({
+      author_id: 2,
+      name: "Amore Assoluto",
+      image_url:
+      "https://img.freepik.com/free-photo/bottle-wine-isolated-white_167946-4.jpg?size=338&ext=jpg&ga=GA1.2.1034222811.1663818713",
+      region: "Italy",
+      flavor: "Blend",
+    });
 
     console.log("Finished creating wines");
   } catch (error) {
@@ -649,6 +657,17 @@ async function createInitialReview() {
       "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
       review_date: "2023-03-15",
       location: "Costco",
+    });
+    await createReview({
+      wine_id: 11,
+      user_id: 2,
+      name: "Super smooth!",
+      rating: 4,
+      review_comment:
+        "Very smooth and easy to drink. Perfect for sipping and having some giggles with friends.",
+      image_url:
+      "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
+      review_date: "2023-03-15",
     });
 
 
