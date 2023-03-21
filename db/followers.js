@@ -69,29 +69,10 @@ async function getFollowingByUser({id}) {
   }
 }
 
-async function updateFollower(id, fields = {}) {
-  const setString = Object.keys(fields)
-    .map((key, index) => `"${key}"=$${index + 1}`)
-    .join(", ");
-  if (setString.length === 0) {
-    return;
-  }
-  try {
-    const {
-      rows: [followers],
-    } = await client.query(
-      `UPDATE followers
-          SET ${setString}
-          WHERE id=${id}
-          RETURNING *;
-          `,
-      Object.values(fields)
-    );
-    return followers;
-  } catch (error) {
-    throw error;
-  }
-}
+
+
+
+
 
 async function destroyFollower(id) {
   try {
@@ -113,7 +94,6 @@ module.exports = {
   addFollower,
   getAllFollowers,
   getFollowerByUser,
-  updateFollower,
   destroyFollower,
   getFollowingByUser
 };

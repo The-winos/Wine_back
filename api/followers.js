@@ -4,6 +4,7 @@ const {
   getFollowingByUser,
   updateFollower,
   getFollowerByUser,
+  addFollower,
 } = require("../db/followers");
 const followersRouter = express.Router();
 const { requireUser } = require("./utils");
@@ -46,15 +47,16 @@ followersRouter.delete("/:followerId", requireUser, async (req, res, next) => {
   }
 });
 
-//UPDATE /api/followers/:followerId
-followersRouter.patch("/:followerId", requireUser, async (req, res, next) => {
-  const { followerId } = req.params;
+//UPDATE /api/followers/:userId
+followersRouter.post("/:user_id", requireUser, async (req, res, next) => {
+  const { user_id } = req.params;
+  const { follower_id } = req.body; // retrieve the follower ID from the request body
   const updateFields = req.body;
   try {
-    const originalFollower = await getFollowingByUser({ id });
+    const originalFollower = await getFollowingByUser({ user_id });
 
     if (originalFollower) {
-      const updatedFollower = await updateFollower(followerId, updateFields);
+      const updatedFollower = await addFollower({user_id, follower_id}); // pass in the user ID and follower ID
       console.log("this is updated follower", updatedFollower);
       res.send(updatedFollower);
     } else {
@@ -68,5 +70,6 @@ followersRouter.patch("/:followerId", requireUser, async (req, res, next) => {
     next({ name, message, error });
   }
 });
+
 
 module.exports = followersRouter;
