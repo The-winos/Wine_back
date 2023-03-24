@@ -22,6 +22,7 @@ usersRouter.use((req, res, next) => {
 usersRouter.post("/login", async (req, res, next) => {
   const { username, password } = req.body;
   try {
+    console.log(username, password, "banana");
     const user = await getUser({ username, password });
     if (user) {
       const token = jwt.sign(user, process.env.JWT_SECRET, {
@@ -62,7 +63,15 @@ usersRouter.post("/register", async (req, res, next) => {
   try {
     const user = await getUserByUsername(username);
 
-    if (!/(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}/.test(password)) {
+    if (user) {
+      // check if user exists
+      next({
+        error: "DuplicateUsername",
+        message:
+          "This username is already taken. Please choose a different one.",
+        name: "Duplicate Username",
+      });
+    } else if (!/(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}/.test(password)) {
       next({
         error: "PasswordRequirementsNotMet",
         message:
