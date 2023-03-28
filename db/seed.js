@@ -48,6 +48,7 @@ const {
   getAllFavoritesByUserId,
   removeFavorite,
 } = require("./favorites");
+const { userData } = require("./data");
 
 async function dropTables() {
   try {
@@ -283,87 +284,11 @@ EXECUTE FUNCTION update_wine_rating();
 
 async function createInitialUsers() {
   try {
+
     console.log("Starting to create users");
-    await createUser({
-      username: "amazinghuman",
-      password: "ABCD1234",
-      name: "Jenniffer",
-      state: "Florida",
-      avatar: "https://www.w3schools.com/w3images/avatar6.png",
-      role: "admin",
-      email: "dumdum@dumdum.com",
-      birthday: "1992-01-01",
-      follower_count: 0,
-      following_count: 0,
-    });
-    await createUser({
-      username: "cutegeek",
-      password: "ABCD1234",
-      name: "Jessy",
-      state: "Colorado",
-      avatar:
-        "https://cdn5.vectorstock.com/i/1000x1000/01/69/businesswoman-character-avatar-icon-vector-12800169.jpg",
-      role: "admin",
-      email: "japarker0421@gmail.com",
-      birthday: "1986-12-01",
-      follower_count: 0,
-      following_count: 0,
-    });
-
-    await createUser({
-      username: "deleted",
-      password: "ABCD1234",
-      name: "NotHere",
-      state: "Colorado",
-      avatar:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJbM1sKRHlT8AroSFkNAmAT4fCrvcBOqCUXX_e1YF45ZjkBnqYDKz7AmqZblmAlZALabY&usqp=CAU",
-      role: "user",
-      email: "deleted@potter.com",
-      birthday: "1978-03-13",
-      follower_count: 0,
-      following_count: 0,
-    });
-
-    await createUser({
-      username: "iceman",
-      password: "ABCD1234",
-      name: "Justin",
-      state: "Colorado",
-      avatar:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTue0QzcbncaPSxMCpLhzOab4a1Sux6xXpow&usqp=CAU",
-      role: "admin",
-      email: "thelastprince11@yahoo.com",
-      birthday: "1975-04-15",
-      follower_count: 0,
-      following_count: 0,
-    });
-    await createUser({
-      username: "sistersubie",
-      password: "Abcd1234",
-      name: "Sue",
-      state: "colorado",
-      avatar: "https://www.w3schools.com/howto/img_avatar2.png",
-      role: "merchant",
-      email: "sistersubie@gmail.com",
-      birthday: "1956-09-18",
-      follower_count: 0,
-      following_count: 0,
-    });
-    await createUser({
-      username: "gapiesco",
-      password: "Abcd1234",
-      name: "Joe",
-      state: "Florida",
-      avatar:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuFbUU_a4sv-K_cepk27hrSBc2PgISEEGQyojJ1rSECA&s",
-      role: "merchant",
-      email: "gapies55@yahoo.com",
-      birthday: "1955-06-02",
-      follower_count: 0,
-      following_count: 0,
-    });
-
+        await Promise.all(userData.map(createUser))
     console.log("Finished creating users");
+
   } catch (error) {
     console.error("error creating users");
     throw error;
@@ -745,35 +670,35 @@ async function testDB() {
   try {
     console.log("Starting to test database...");
 
-    console.log("getting user by Id");
-    const userId = await getUserById(1);
-    console.log(userId, "this is user Id");
+    // console.log("getting user by Id");
+    // const userId = await getUserById(1);
+    // console.log(userId, "this is user Id");
 
-    console.log("getting user by username");
-    const username = await getUserByUsername("cutegeek");
-    console.log("result:", username);
+    // console.log("getting user by username");
+    // const username = await getUserByUsername("cutegeek");
+    // console.log("result:", username);
 
-    console.log("testing getting all users");
-    const allUsers = await getAllUsers();
-    console.log("this is all users", allUsers);
+    // console.log("testing getting all users");
+    // const allUsers = await getAllUsers();
+    // console.log("this is all users", allUsers);
 
-    console.log("testing getUser, password");
-    const gettingUser = await getUser({
-      username: "amazinghuman",
-      password: "ABCD1234",
-    });
-    console.log("this is getUser", gettingUser);
+    // console.log("testing getUser, password");
+    // const gettingUser = await getUser({
+    //   username: "amazinghuman",
+    //   password: "ABCD1234",
+    // });
+    // console.log("this is getUser", gettingUser);
 
     // console.log("testing delete user");
     // const deletedUser = await deleteUser(3);
     // console.log("deleted user", deletedUser);
 
-    console.log("testing update User");
-    console.log(allUsers[1], "what is this??");
-    const updatingUser = await updateUser(allUsers[1].id, {
-      state: "North Carolina",
-    });
-    console.log("updated user", updatingUser);
+    // console.log("testing update User");
+    // console.log(allUsers[1], "what is this??");
+    // const updatingUser = await updateUser(allUsers[1].id, {
+    //   state: "North Carolina",
+    // });
+    // console.log("updated user", updatingUser);
 
     console.log("get all wines");
     const wines = await getAllWines();
@@ -842,14 +767,14 @@ async function testDB() {
     const followers = await getAllFollowers();
     console.log("These are all followers", followers);
 
-    console.log("getting follow by user");
-    const userFollower = await getFollowerByUser({ id: allUsers[3].id });
-    console.log("This is follower by id", userFollower);
+    // console.log("getting follow by user");
+    // const userFollower = await getFollowerByUser({ id: allUsers[3].id });
+    // console.log("This is follower by id", userFollower);
 
-    console.log("getting people who follow a specfic user");
-    console.log("what is this", allUsers[3].id);
-    const followees = await getFollowingByUser({ id: allUsers[3].id });
-    console.log("these users are following user 1", followees);
+    // console.log("getting people who follow a specfic user");
+    // console.log("what is this", allUsers[3].id);
+    // const followees = await getFollowingByUser({ id: allUsers[3].id });
+    // console.log("these users are following user 1", followees);
 
 
     // console.log("Destroying follower");
