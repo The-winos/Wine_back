@@ -787,11 +787,11 @@ async function testDB() {
     const wineId = await getWineById(1);
     console.log("This is wine by id", wineId);
 
-    console.log("Updating wine");
-    const updatedWine = await updateWine(wines[2].id, {
-      region: "California",
-    });
-    console.log("Updated wine", updatedWine);
+    // console.log("Updating wine");
+    // const updatedWine = await updateWine(wines[2].id, {
+    //   region: "California",
+    // });
+    // console.log("Updated wine", updatedWine);
 
     console.log("Destroying wine");
     const destroyedWine = await destroyWine(3);

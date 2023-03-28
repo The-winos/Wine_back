@@ -39,6 +39,22 @@ winesRouter.get("/:id", async (req, res, next) => {
   }
 });
 
+winesRouter.get("/name/:name", async (req, res, next) => {
+  const { name } = req.params;
+  const encodedName = encodeURIComponent(name);
+  try {
+    const wineName = await getWineByName(encodedName);
+    res.send(wineName);
+  } catch ({ name, message, error }) {
+    next({
+      name: "NoWineName",
+      message: `Couldn't find wine by ${name}`,
+      error: "noWineByName",
+    });
+  }
+});
+
+
 //tested works, with error
 winesRouter.get("/flavor/:type", async(req, res, next)=>{
   const {type: flavor}= req.params;
