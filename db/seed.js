@@ -356,6 +356,8 @@ async function createInitialReview() {
       rating: 4,
       price: 879,
       review_comment:
+        //write an honest review of kirkland's malbec
+        //reduce seed by moving createReviews to data.js
         "It wasn't my favorite wine but it was solid for the price",
       image_url:
         "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
