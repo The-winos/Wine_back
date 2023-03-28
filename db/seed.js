@@ -48,7 +48,7 @@ const {
   getAllFavoritesByUserId,
   removeFavorite,
 } = require("./favorites");
-const { userData } = require("./data");
+const { userData, wineData } = require("./data");
 
 async function dropTables() {
   try {
@@ -284,11 +284,9 @@ EXECUTE FUNCTION update_wine_rating();
 
 async function createInitialUsers() {
   try {
-
     console.log("Starting to create users");
-        await Promise.all(userData.map(createUser))
+    await Promise.all(userData.map(createUser));
     console.log("Finished creating users");
-
   } catch (error) {
     console.error("error creating users");
     throw error;
@@ -298,96 +296,7 @@ async function createInitialUsers() {
 async function createInitialWine() {
   try {
     console.log("Starting to Create Wines");
-    await createWine({
-      author_id: 2,
-      name: "Apothic Dark",
-      image_url:
-        "https://img.freepik.com/free-photo/bottle-wine-isolated-white_167946-4.jpg?size=338&ext=jpg&ga=GA1.2.1034222811.1663818713",
-      region: "California",
-      flavor: "Blend",
-    });
-
-    await createWine({
-      author_id: 1,
-      name: "Kirkland Malbec",
-      image_url:
-        "https://img.freepik.com/free-photo/bottle-wine-isolated-white_167946-4.jpg?size=338&ext=jpg&ga=GA1.2.1034222811.1663818713",
-      region: "Argentina",
-      flavor: "Malbec",
-    });
-
-    await createWine({
-      author_id: 1,
-      name: "Yucky wine",
-      image_url:
-        "https://img.freepik.com/free-photo/bottle-wine-isolated-white_167946-4.jpg?size=338&ext=jpg&ga=GA1.2.1034222811.1663818713",
-      region: "Trash",
-      flavor: "Malbec",
-    });
-    await createWine({
-      author_id: 2,
-      name: "19 Crimes, The Banished",
-      image_url:
-        "https://img.freepik.com/free-photo/bottle-wine-isolated-white_167946-4.jpg?size=338&ext=jpg&ga=GA1.2.1034222811.1663818713",
-      region: "Australia",
-      flavor: "Blend",
-    });
-    await createWine({
-      author_id: 2,
-      name: "Chalkboard",
-      image_url:
-        "https://img.freepik.com/free-photo/bottle-wine-isolated-white_167946-4.jpg?size=338&ext=jpg&ga=GA1.2.1034222811.1663818713",
-      region: "California",
-      flavor: "Cabernet",
-    });
-    await createWine({
-      author_id: 2,
-      name: "Palumbo Selezion Speciale",
-      image_url:
-        "https://img.freepik.com/free-photo/bottle-wine-isolated-white_167946-4.jpg?size=338&ext=jpg&ga=GA1.2.1034222811.1663818713",
-      region: "Puglia, IGT Italy",
-      flavor: "TreTerzi",
-    });
-    await createWine({
-      author_id: 5,
-      name: "Bogle, Red Blend",
-      image_url:
-        "https://img.freepik.com/free-photo/bottle-wine-isolated-white_167946-4.jpg?size=338&ext=jpg&ga=GA1.2.1034222811.1663818713",
-      region: "California",
-      flavor: "Blend",
-    });
-    await createWine({
-      author_id: 5,
-      name: "Petite Petite, by Michael David",
-      image_url:
-        "https://img.freepik.com/free-photo/bottle-wine-isolated-white_167946-4.jpg?size=338&ext=jpg&ga=GA1.2.1034222811.1663818713",
-      region: "California",
-      flavor: "Petite Sirah",
-    });
-    await createWine({
-      author_id: 5,
-      name: "Meiomi",
-      image_url:
-        "https://img.freepik.com/free-photo/bottle-wine-isolated-white_167946-4.jpg?size=338&ext=jpg&ga=GA1.2.1034222811.1663818713",
-      region: "California",
-      flavor: "Pinot Noir",
-    });
-    await createWine({
-      author_id: 5,
-      name: "Kirkland Cabernet",
-      image_url:
-        "https://static6.depositphotos.com/1000261/645/i/600/depositphotos_6459418-stock-photo-white-wine-box.jpg",
-      region: "California",
-      flavor: "Cabernet",
-    });
-    await createWine({
-      author_id: 2,
-      name: "Amore Assoluto",
-      image_url:
-      "https://img.freepik.com/free-photo/bottle-wine-isolated-white_167946-4.jpg?size=338&ext=jpg&ga=GA1.2.1034222811.1663818713",
-      region: "Italy",
-      flavor: "Blend",
-    });
+    await Promise.all(wineData.map(createWine));
 
     console.log("Finished creating wines");
   } catch (error) {
@@ -537,8 +446,7 @@ async function createInitialReview() {
       name: "REALLY good for price!",
       rating: 4,
       price: 1200,
-      review_comment:
-        "It's amazing for the price! a favorite for me!",
+      review_comment: "It's amazing for the price! a favorite for me!",
       image_url:
         "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
       review_date: "2023-03-15",
@@ -550,8 +458,7 @@ async function createInitialReview() {
       name: "It's so yummy",
       rating: 5,
       price: 2000,
-      review_comment:
-        "Meiomi yummy yummy for my tummy!",
+      review_comment: "Meiomi yummy yummy for my tummy!",
       image_url:
         "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
       review_date: "2023-03-15",
@@ -566,7 +473,7 @@ async function createInitialReview() {
       review_comment:
         "I can drink it in small amounts but it makes my heart race. Not one I'd pick unless no other options.",
       image_url:
-      "https://static6.depositphotos.com/1000261/645/i/600/depositphotos_6459418-stock-photo-white-wine-box.jpg",
+        "https://static6.depositphotos.com/1000261/645/i/600/depositphotos_6459418-stock-photo-white-wine-box.jpg",
       review_date: "2023-03-15",
       location: "Costco",
     });
@@ -579,7 +486,7 @@ async function createInitialReview() {
       review_comment:
         "I really enjoy this wine, specially compared to it's Cab. It's got a nice smooth flavor that is super easy to sip on.",
       image_url:
-      "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
+        "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
       review_date: "2023-03-15",
       location: "Costco",
     });
@@ -591,10 +498,9 @@ async function createInitialReview() {
       review_comment:
         "Very smooth and easy to drink. Perfect for sipping and having some giggles with friends.",
       image_url:
-      "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
+        "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
       review_date: "2023-03-15",
     });
-
 
     console.log("Finished creating review");
   } catch (error) {
@@ -775,7 +681,6 @@ async function testDB() {
     // console.log("what is this", allUsers[3].id);
     // const followees = await getFollowingByUser({ id: allUsers[3].id });
     // console.log("these users are following user 1", followees);
-
 
     // console.log("Destroying follower");
     // const deletedFollower = await destroyFollower(1);
