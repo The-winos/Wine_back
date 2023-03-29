@@ -78,6 +78,7 @@ const userData = [
   },
 ];
 
+//wine post
 const wineData = [
   {
     author_id: 2,
@@ -177,7 +178,165 @@ const wineData = [
   },
 ];
 
+const reviewData = [
+  {
+    wine_id: 2,
+    user_id: 1,
+    name: "Not bad for price",
+    rating: 4,
+    price: 879,
+    review_comment:
+      //write an honest review of kirkland's malbec
+      //reduce seed by moving createReviews to data.js
+      "It wasn't my favorite wine but it was solid for the price",
+    image_url:
+      "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
+    review_date: "2019-06-02",
+    location: "Costco",
+  },
+  {
+    wine_id: 4,
+    user_id: 4,
+    name: "Solid",
+    rating: 4,
+    price: 999,
+    review_comment:
+      "This wine is just easy to drink. There's never a time when someone opens it that I'm disappointed",
+    image_url:
+      "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
+    review_date: "2019-06-02",
+    location: "local liquor store",
+  },
+  {
+    wine_id: 1,
+    user_id: 4,
+    name: "Solid wine!",
+    rating: 5,
+    price: 999,
+    review_comment:
+      "Delicious, fantastic wine.Always a good buy. It's super flavorful!",
+    image_url:
+      "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
+    review_date: "2023-02-13",
+    location: "Davco",
+  },
+  {
+    wine_id: 5,
+    user_id: 4,
+    name: "A good go to!",
+    rating: 3,
+    price: 999,
+    review_comment:
+      "Solid, easy to drink wine. A good go to, it's not a bad buy but I feel there are other wines in this price range that are better.",
+    image_url:
+      "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
+    review_date: "2023-02-13",
+    location: "Davco",
+  },
+  {
+    wine_id: 5,
+    user_id: 2,
+    name: "Good for a mix up!",
+    rating: 3,
+    price: 999,
+    review_comment:
+      "This wine didn't blow me away but it's flavor was good and I could def drink it. This is a wine I wouldn't claim is a favorite but if someone had it I'd pick it as I know it's a good wine. ",
+    image_url:
+      "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
+    review_date: "2023-02-13",
+    location: "Davco",
+  },
+  {
+    wine_id: 6,
+    user_id: 6,
+    name: "One of my favorites",
+    rating: 5,
+    price: 1400,
+    review_comment:
+      "I'm not a connoisseur by any stretch, but I love this red. It's not too dry and has a great fruity taste.",
+    image_url:
+      "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
+    review_date: "2023-02-13",
+    location: "Wine Club",
+  },
+  {
+    wine_id: 7,
+    user_id: 5,
+    name: "Perfect for a party",
+    rating: 3,
+    price: 800,
+    review_comment:
+      "This is the one I get the most often as for the price most people enjoy it, but it doesn't break the bank when having a large party",
+    image_url:
+      "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
+    review_date: "2023-03-15",
+    location: "Costco",
+  },
+  {
+    wine_id: 8,
+    user_id: 5,
+    name: "REALLY good for price!",
+    rating: 4,
+    price: 1200,
+    review_comment: "It's amazing for the price! a favorite for me!",
+    image_url:
+      "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
+    review_date: "2023-03-15",
+    location: "Costco",
+  },
+  {
+    wine_id: 9,
+    user_id: 5,
+    name: "It's so yummy",
+    rating: 5,
+    price: 2000,
+    review_comment: "Meiomi yummy yummy for my tummy!",
+    image_url:
+      "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
+    review_date: "2023-03-15",
+    location: "Costco",
+  },
+  {
+    wine_id: 10,
+    user_id: 5,
+    name: "Small amounts...",
+    rating: 2,
+    price: 1400,
+    review_comment:
+      "I can drink it in small amounts but it makes my heart race. Not one I'd pick unless no other options.",
+    image_url:
+      "https://static6.depositphotos.com/1000261/645/i/600/depositphotos_6459418-stock-photo-white-wine-box.jpg",
+    review_date: "2023-03-15",
+    location: "Costco",
+  },
+  {
+    wine_id: 7,
+    user_id: 2,
+    name: "Really like this wine!",
+    rating: 5,
+    price: 899,
+    review_comment:
+      "I really enjoy this wine, specially compared to it's Cab. It's got a nice smooth flavor that is super easy to sip on.",
+    image_url:
+      "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
+    review_date: "2023-03-15",
+    location: "Costco",
+  },
+  {
+    wine_id: 11,
+    user_id: 2,
+    name: "Super smooth!",
+    rating: 4,
+    review_comment:
+      "Very smooth and easy to drink. Perfect for sipping and having some giggles with friends.",
+    image_url:
+      "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
+    review_date: "2023-03-15",
+  },
+];
+
 module.exports = {
   userData,
   wineData,
+  reviewData,
 };
