@@ -1,5 +1,6 @@
 const userData = [
   {
+    id:1,
     username: "amazinghuman",
     password: "ABCD1234",
     name: "Jenniffer",
@@ -12,6 +13,7 @@ const userData = [
     following_count: 0,
   },
   {
+    id:2,
     username: "cutegeek",
     password: "ABCD1234",
     name: "Jessy",
@@ -24,21 +26,9 @@ const userData = [
     follower_count: 0,
     following_count: 0,
   },
-  {
-    username: "deleted",
-    password: "ABCD1234",
-    name: "NotHere",
-    state: "Colorado",
-    avatar:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJbM1sKRHlT8AroSFkNAmAT4fCrvcBOqCUXX_e1YF45ZjkBnqYDKz7AmqZblmAlZALabY&usqp=CAU",
-    role: "user",
-    email: "deleted@potter.com",
-    birthday: "1978-03-13",
-    follower_count: 0,
-    following_count: 0,
-  },
 
   {
+    id:3,
     username: "iceman",
     password: "ABCD1234",
     name: "Justin",
@@ -52,6 +42,7 @@ const userData = [
     following_count: 0,
   },
   {
+    id:4,
     username: "sistersubie",
     password: "Abcd1234",
     name: "Sue",
@@ -64,6 +55,7 @@ const userData = [
     following_count: 0,
   },
   {
+    id:5,
     username: "gapiesco",
     password: "Abcd1234",
     name: "Joe",
@@ -86,11 +78,11 @@ const wineData = [
     image_url:
       "https://img.freepik.com/free-photo/bottle-wine-isolated-white_167946-4.jpg?size=338&ext=jpg&ga=GA1.2.1034222811.1663818713",
     region: "California",
-    flavor: "Blend",
+    flavor: "Red Blend",
   },
 
   {
-    author_id: 1,
+    author_id: 4,
     name: "Kirkland Malbec",
     image_url:
       "https://img.freepik.com/free-photo/bottle-wine-isolated-white_167946-4.jpg?size=338&ext=jpg&ga=GA1.2.1034222811.1663818713",
@@ -112,7 +104,7 @@ const wineData = [
     image_url:
       "https://img.freepik.com/free-photo/bottle-wine-isolated-white_167946-4.jpg?size=338&ext=jpg&ga=GA1.2.1034222811.1663818713",
     region: "Australia",
-    flavor: "Blend",
+    flavor: "Red Blend",
   },
 
   {
@@ -125,7 +117,7 @@ const wineData = [
   },
 
   {
-    author_id: 2,
+    author_id: 5,
     name: "Palumbo Selezion Speciale",
     image_url:
       "https://img.freepik.com/free-photo/bottle-wine-isolated-white_167946-4.jpg?size=338&ext=jpg&ga=GA1.2.1034222811.1663818713",
@@ -134,16 +126,16 @@ const wineData = [
   },
 
   {
-    author_id: 5,
+    author_id: 2,
     name: "Bogle, Red Blend",
     image_url:
       "https://img.freepik.com/free-photo/bottle-wine-isolated-white_167946-4.jpg?size=338&ext=jpg&ga=GA1.2.1034222811.1663818713",
     region: "California",
-    flavor: "Blend",
+    flavor: "Red Blend",
   },
 
   {
-    author_id: 5,
+    author_id: 1,
     name: "Petite Petite, by Michael David",
     image_url:
       "https://img.freepik.com/free-photo/bottle-wine-isolated-white_167946-4.jpg?size=338&ext=jpg&ga=GA1.2.1034222811.1663818713",
@@ -152,7 +144,7 @@ const wineData = [
   },
 
   {
-    author_id: 5,
+    author_id: 1,
     name: "Meiomi",
     image_url:
       "https://img.freepik.com/free-photo/bottle-wine-isolated-white_167946-4.jpg?size=338&ext=jpg&ga=GA1.2.1034222811.1663818713",
@@ -161,7 +153,7 @@ const wineData = [
   },
 
   {
-    author_id: 5,
+    author_id: 1,
     name: "Kirkland Cabernet",
     image_url:
       "https://static6.depositphotos.com/1000261/645/i/600/depositphotos_6459418-stock-photo-white-wine-box.jpg",
@@ -174,14 +166,14 @@ const wineData = [
     image_url:
       "https://img.freepik.com/free-photo/bottle-wine-isolated-white_167946-4.jpg?size=338&ext=jpg&ga=GA1.2.1034222811.1663818713",
     region: "Italy",
-    flavor: "Blend",
+    flavor: "Red Blend",
   },
 ];
 
 const reviewData = [
   {
     wine_id: 2,
-    user_id: 1,
+    user_id: 4,
     name: "Not bad for price",
     rating: 4,
     price: 879,
@@ -196,7 +188,7 @@ const reviewData = [
   },
   {
     wine_id: 4,
-    user_id: 4,
+    user_id: 3,
     name: "Solid",
     rating: 4,
     price: 999,
@@ -209,7 +201,7 @@ const reviewData = [
   },
   {
     wine_id: 1,
-    user_id: 4,
+    user_id: 3,
     name: "Solid wine!",
     rating: 5,
     price: 999,
@@ -222,7 +214,7 @@ const reviewData = [
   },
   {
     wine_id: 5,
-    user_id: 4,
+    user_id: 3,
     name: "A good go to!",
     rating: 3,
     price: 999,
@@ -248,7 +240,7 @@ const reviewData = [
   },
   {
     wine_id: 6,
-    user_id: 6,
+    user_id: 5,
     name: "One of my favorites",
     rating: 5,
     price: 1400,
@@ -261,7 +253,7 @@ const reviewData = [
   },
   {
     wine_id: 7,
-    user_id: 5,
+    user_id: 1,
     name: "Perfect for a party",
     rating: 3,
     price: 800,
@@ -274,7 +266,7 @@ const reviewData = [
   },
   {
     wine_id: 8,
-    user_id: 5,
+    user_id: 1,
     name: "REALLY good for price!",
     rating: 4,
     price: 1200,
@@ -286,7 +278,7 @@ const reviewData = [
   },
   {
     wine_id: 9,
-    user_id: 5,
+    user_id: 1,
     name: "It's so yummy",
     rating: 5,
     price: 2000,
@@ -298,7 +290,7 @@ const reviewData = [
   },
   {
     wine_id: 10,
-    user_id: 5,
+    user_id: 1,
     name: "Small amounts...",
     rating: 2,
     price: 1400,

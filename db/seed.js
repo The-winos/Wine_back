@@ -91,7 +91,7 @@ async function createTables() {
       following_count INT NOT NULL DEFAULT (0)
     );
 
-    CREATE TYPE wine_type AS ENUM ('Cabernet','Syrah','Zinfandel','Pinot Noir','Merlot','Malbec','Tempranillo','Riesling','Pinot Grigio','Sauvignon','Chardonnay','Moscato','Blend','TreTerzi', 'Petite Sirah', 'Other');
+    CREATE TYPE wine_type AS ENUM ('Cabernet','Syrah','Zinfandel','Pinot Noir','Merlot','Malbec','Tempranillo','Riesling','Pinot Grigio','Sauvignon','Chardonnay','Moscato','Red Blend','White Blend','TreTerzi', 'Petite Sirah', 'Other');
 
     CREATE TABLE wines(
       id SERIAL PRIMARY KEY,
@@ -419,7 +419,7 @@ async function testDB() {
     console.log("These are all wines", wines);
 
     console.log("getting wine type");
-    const flavor = await getWineByFlavor("Blend");
+    const flavor = await getWineByFlavor("Red Blend");
     console.log("These are the blend wines", flavor);
 
     console.log("getting wines by id");
