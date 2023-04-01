@@ -1,6 +1,6 @@
 const userData = [
   {
-    id:1,
+    id: 1,
     username: "amazinghuman",
     password: "ABCD1234",
     name: "Jenniffer",
@@ -13,7 +13,7 @@ const userData = [
     following_count: 0,
   },
   {
-    id:2,
+    id: 2,
     username: "cutegeek",
     password: "ABCD1234",
     name: "Jessy",
@@ -28,7 +28,7 @@ const userData = [
   },
 
   {
-    id:3,
+    id: 3,
     username: "iceman",
     password: "ABCD1234",
     name: "Justin",
@@ -42,7 +42,7 @@ const userData = [
     following_count: 0,
   },
   {
-    id:4,
+    id: 4,
     username: "sistersubie",
     password: "Abcd1234",
     name: "Sue",
@@ -55,7 +55,7 @@ const userData = [
     following_count: 0,
   },
   {
-    id:5,
+    id: 5,
     username: "gapiesco",
     password: "Abcd1234",
     name: "Joe",
@@ -179,7 +179,6 @@ const reviewData = [
     price: 879,
     review_comment:
       //write an honest review of kirkland's malbec
-      //reduce seed by moving createReviews to data.js
       "It wasn't my favorite wine but it was solid for the price",
     image_url:
       "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
