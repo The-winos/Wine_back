@@ -64,6 +64,18 @@ const userData = [
     follower_count: 0,
     following_count: 0,
   },
+  {
+    username: "lexsan7393",
+    password: "Abcd1234", 
+    name: "Lex", 
+    state: "Virginia", 
+    avatar: "https://cdn.pixabay.com/photo/2022/12/27/02/39/alien-7680107_1280.png", 
+    role: "admin", 
+    email: "alemulli@gmail.com", 
+    birthday: "1993-07-03", 
+    follower_count: 0, 
+    following_count: 0,
+  }
 ];
 
 //wine post
