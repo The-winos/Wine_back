@@ -70,8 +70,6 @@ reviewsRouter.post("/", requireUser, async (req, res, next) => {
       const existingReview = possibleReview.some(
         (review) => review.wine_id === wine_id
       );
-    console.log(possibleReview,"possiable")
-      console.log(existingReview, "existing")
       if (!existingReview) {
         const newReview = await createReview(reviewData);
         if (newReview) {

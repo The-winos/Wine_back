@@ -285,7 +285,9 @@ EXECUTE FUNCTION update_wine_rating();
 async function createInitialUsers() {
   try {
     console.log("Starting to create users");
-    await Promise.all(userData.map(createUser));
+    for (const user of userData) {
+      await createUser(user);
+    }
     console.log("Finished creating users");
   } catch (error) {
     console.error("error creating users");
@@ -293,10 +295,13 @@ async function createInitialUsers() {
   }
 }
 
+
 async function createInitialWine() {
   try {
     console.log("Starting to Create Wines");
-    await Promise.all(wineData.map(createWine));
+   for (const wine of wineData){
+    await createWine(wine)
+   }
 
     console.log("Finished creating wines");
   } catch (error) {
