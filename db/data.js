@@ -66,14 +66,38 @@ const userData = [
   },
   {
     username: "lexsan7393",
-    password: "Abcd1234", 
-    name: "Lex", 
-    state: "Virginia", 
-    avatar: "https://cdn.pixabay.com/photo/2022/12/27/02/39/alien-7680107_1280.png", 
-    role: "admin", 
-    email: "alemulli@gmail.com", 
-    birthday: "1993-07-03", 
-    follower_count: 0, 
+    password: "Abcd1234",
+    name: "Lex",
+    state: "Virginia",
+    avatar: "https://cdn.pixabay.com/photo/2022/12/27/02/39/alien-7680107_1280.png",
+    role: "admin",
+    email: "alemulli@gmail.com",
+    birthday: "1993-07-03",
+    follower_count: 0,
+    following_count: 0,
+  },
+  {
+    username: "bdizzle",
+    password: "Abcd1234",
+    name: "Bryan",
+    state: "Colorado",
+    avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTue0QzcbncaPSxMCpLhzOab4a1Sux6xXpow&usqp=CAU",
+    role: "user",
+    email: "bryan@bryan.com",
+    birthday: "1986-10-06",
+    follower_count: 0,
+    following_count: 0,
+  },
+  {
+    username: "anthrogirl80",
+    password: "Abcd1234",
+    name: "Mary",
+    state: "Colorado",
+    avatar: "https://cdn5.vectorstock.com/i/1000x1000/01/69/businesswoman-character-avatar-icon-vector-12800169.jpg",
+    role: "user",
+    email: "mwdoptix@gmail.com",
+    birthday: "1986-01-06",
+    follower_count: 0,
     following_count: 0,
   }
 ];
@@ -176,6 +200,31 @@ const wineData = [
     region: "Italy",
     flavor: "Red Blend",
   },
+  {
+    author_id: 7,
+    name: "Friuli Grave",
+    image_url:
+      "https://preview.free3d.com/img/2015/09/1868291155406357898/jx90iyj3.jpg",
+    region: "Italy",
+    flavor: "Pinot Grigio",
+  },
+  {
+    author_id: 8,
+    name: "Mariborough",
+    image_url:
+      "https://preview.free3d.com/img/2015/09/1868291155406357898/jx90iyj3.jpg",
+    region: "New Zealand",
+    flavor: "Sauvignon Blanc",
+  },
+  {
+    author_id: 8,
+    name: "Milbrandt",
+    image_url:
+      "https://preview.free3d.com/img/2015/09/1868291155406357898/jx90iyj3.jpg",
+    region: "Washington",
+    flavor: "Riesling",
+  },
+
 ];
 
 const reviewData = [
@@ -328,6 +377,65 @@ const reviewData = [
     rating: 4,
     review_comment:
       "Very smooth and easy to drink. Perfect for sipping and having some giggles with friends.",
+    image_url:
+      "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
+    review_date: "2023-03-15",
+  },
+  {
+    wine_id: 12,
+    user_id: 7,
+    name: "Good balance",
+    rating: 4,
+    price: 799,
+    review_comment:
+      "Not overbearing and no aftertaste",
+    image_url:
+      "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
+    review_date: "2023-03-15",
+  },
+  {
+    wine_id: 12,
+    user_id: 8,
+    name: "Sipping alcohol",
+    rating: 2,
+    price: 699,
+    review_comment:
+      "To me this tastes like I'm sipping pure alcohol. Dry",
+    image_url:
+      "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
+    review_date: "2023-03-15",
+  },
+  {
+    wine_id: 13,
+    user_id: 7,
+    name: "Very Fruity",
+    rating: 3,
+    price: 699,
+    review_comment:
+      "Has a fruity taste, not bad though.",
+    image_url:
+      "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
+    review_date: "2023-03-15",
+  },
+  {
+    wine_id: 13,
+    user_id: 8,
+    name: "It's grape!",
+    rating: 4,
+    price: 799,
+    review_comment:
+      "Definitely grape! I enjoyed it.",
+    image_url:
+      "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
+    review_date: "2023-03-15",
+  },
+  {
+    wine_id: 14,
+    user_id: 8,
+    name: "Not overly sweet",
+    rating: 4,
+    review_comment:
+      "It's not a sweet resiling but not dry. It's the perfect balance of sweet and dry.",
     image_url:
       "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
     review_date: "2023-03-15",
