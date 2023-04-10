@@ -369,6 +369,20 @@ async function createInitialFollowers() {
   }
 }
 
+async function createInitialFavorites() {
+  try {
+    console.log("starting to create favorites list");
+    await addFavorite ({
+      user_id: 6,
+      wine_id: 3
+    });
+    console.log("finished creating initial favorites list")
+  } catch (error) {
+    console.error("error creating favorites list");
+    throw error;
+  }
+}
+
 async function buildingDB() {
   try {
     client.connect();
@@ -379,6 +393,7 @@ async function buildingDB() {
     await createInitialReview();
     // await createInitialBadges();
     await createInitialFollowers();
+    await createInitialFavorites();
   } catch (error) {
     console.log("error during building");
     throw error;
