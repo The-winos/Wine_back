@@ -374,7 +374,7 @@ async function createInitialFavorites() {
     console.log("starting to create favorites list");
     await addFavorite ({
       user_id: 6,
-      wine_id: 3
+      wine_id: 1
     });
     console.log("finished creating initial favorites list")
   } catch (error) {
