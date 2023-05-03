@@ -372,10 +372,9 @@ async function createInitialFollowers() {
 async function createInitialFavorites() {
   try {
     console.log("starting to create favorites list");
-    await addFavorite ({
-      user_id: 6,
-      wine_id: 1
-    });
+    await addFavorite (
+      6, 1
+    );
     console.log("finished creating initial favorites list")
   } catch (error) {
     console.error("error creating favorites list");
@@ -530,20 +529,20 @@ async function testDB() {
     // console.log("List of current wines", updatedList);
 
     console.log("adding a wine to favorites list");
-    const favoriteWine = await addFavorite({ user_id: 2, wine_id: 1 });
-    const secondFavoredWine = await addFavorite({ user_id: 2, wine_id: 2 });
-    console.log("Wine favorited!", favoriteWine, "and", secondFavoredWine);
+    const favoriteWine = await addFavorite(2, 1);
+    const secondFavoredWine = await addFavorite(2, 4);
+    console.log("Wine favorited!", favoriteWine, "and");
 
     console.log("lets get that whole list of saved wines");
     const favoriteListofWines = await getAllFavoritesByUserId({ user_id: 2 });
     console.log("Here's all your favorite wines", favoriteListofWines);
 
-    console.log("We need to delete a favorited wine");
-    const notMyFavorite = await removeFavorite(1);
-    console.log("This wine is gone", notMyFavorite);
-    const updatedFavorList = await getAllFavoritesByUserId({ user_id: 2 });
-    console.log("List of current wines", updatedFavorList);
-    console.log("We need to delete a favorited wine");
+    // console.log("We need to delete a favorited wine");
+    // const notMyFavorite = await removeFavorite(1);
+    // console.log("This wine is gone", notMyFavorite);
+    // const updatedFavorList = await getAllFavoritesByUserId({ user_id: 2 });
+    // console.log("List of current wines", updatedFavorList);
+    // console.log("We need to delete a favorited wine");
 
     const getReviewsbyfollow = await getReviewsByFollowers(2);
     console.log(

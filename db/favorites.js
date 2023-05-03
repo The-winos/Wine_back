@@ -1,9 +1,9 @@
 const { client } = require("./client");
 
 
-async function addFavorite({
+async function addFavorite(
   user_id, wine_id
-}){
+){
   try { const{rows:[favorites]}=await client.query(
     `INSERT INTO favorites(user_id, wine_id)
     VALUES($1, $2)
