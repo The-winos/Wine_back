@@ -22,7 +22,6 @@ usersRouter.use((req, res, next) => {
 usersRouter.post("/login", async (req, res, next) => {
   const { username, password } = req.body;
   try {
-    console.log(username, password, "banana");
     const user = await getUser({ username, password });
     if (user) {
       const token = jwt.sign(user, process.env.JWT_SECRET, {
@@ -51,7 +50,6 @@ usersRouter.post("/register", async (req, res, next) => {
   const {
     username,
     password,
-    name,
     state,
     avatar,
     role,
@@ -88,7 +86,6 @@ usersRouter.post("/register", async (req, res, next) => {
       const newUser = await createUser({
         username,
         password,
-        name,
         state,
         avatar,
         role,

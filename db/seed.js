@@ -81,7 +81,6 @@ async function createTables() {
       id SERIAL PRIMARY KEY,
       username VARCHAR(255) UNIQUE NOT NULL,
       password VARCHAR(255) NOT NULL,
-      name VARCHAR(255) NOT NULL,
       state VARCHAR(255) NOT NULL,
       avatar VARCHAR(255),
       role user_role DEFAULT 'user',
@@ -295,13 +294,12 @@ async function createInitialUsers() {
   }
 }
 
-
 async function createInitialWine() {
   try {
     console.log("Starting to Create Wines");
-   for (const wine of wineData){
-    await createWine(wine)
-   }
+    for (const wine of wineData) {
+      await createWine(wine);
+    }
 
     console.log("Finished creating wines");
   } catch (error) {
@@ -372,10 +370,8 @@ async function createInitialFollowers() {
 async function createInitialFavorites() {
   try {
     console.log("starting to create favorites list");
-    await addFavorite (
-      6, 1
-    );
-    console.log("finished creating initial favorites list")
+    await addFavorite(6, 1);
+    console.log("finished creating initial favorites list");
   } catch (error) {
     console.error("error creating favorites list");
     throw error;
