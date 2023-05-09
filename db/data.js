@@ -224,6 +224,30 @@ const wineData = [
     region: "Washington",
     flavor: "Riesling",
   },
+  {
+    author_id: 8,
+    name: "Robert Mondavi",
+    image_url:
+      "https://preview.free3d.com/img/2015/09/1868291155406357898/jx90iyj3.jpg",
+    region: "California",
+    flavor: "Chardonnay",
+  },
+  {
+    author_id: 8,
+    name: "Barefoot Moscato",
+    image_url:
+      "https://preview.free3d.com/img/2015/09/1868291155406357898/jx90iyj3.jpg",
+    region: "California",
+    flavor: "Moscato",
+  },
+  {
+    author_id: 2,
+    name: "Uppercut",
+    image_url:
+      "https://img.freepik.com/free-photo/bottle-wine-isolated-white_167946-4.jpg?size=338&ext=jpg&ga=GA1.2.1034222811.1663818713",
+    region: "Napa Valley",
+    flavor: "Cabernet",
+  },
 
 ];
 
@@ -439,6 +463,80 @@ const reviewData = [
     image_url:
       "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
     review_date: "2023-03-15",
+  },
+  {
+    wine_id: 15,
+    user_id: 8,
+    name: "Cookies",
+    rating: 2,
+    review_comment:
+      "It actually does taste buttery. Makes me think of cookies from a press.",
+    image_url:
+      "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
+    review_date: "2023-05-09",
+  },
+  {
+    wine_id: 15,
+    user_id: 7,
+    name: "It's good",
+    rating: 3,
+    review_comment:
+      "Enjoyable wine, does in fact have a buttery texture",
+    image_url:
+      "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
+    review_date: "2023-05-09",
+  },
+  {
+    wine_id: 16,
+    user_id: 8,
+    name: "So sweet",
+    rating: 1,
+    price: 799,
+    review_comment:
+      "It's sickly sweet and has a texture like mead",
+    image_url:
+      "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
+    review_date: "2023-05-09",
+    location: "local liquor store",
+  },
+  {
+    wine_id: 16,
+    user_id: 7,
+    name: "Too sweet",
+    rating: 1,
+    price: 799,
+    review_comment:
+      "Just way too sweet",
+    image_url:
+      "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
+    review_date: "2023-05-09",
+    location: "local liquor store",
+  },
+  {
+    wine_id: 17,
+    user_id: 2,
+    name: "Super drinkable and smooth",
+    rating: 4,
+    price: 899,
+    review_comment:
+      "My husband and I enjoyed this wine over dinner (rotisserie chicken), with dinner we thought it was good. However when we had our second glass without food the wine flavors really shinned through and we enjoyed it much more. I recommend having this wine by itself.",
+    image_url:
+      "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
+    review_date: "2023-05-09",
+    location: "Costco",
+  },
+  {
+    wine_id: 17,
+    user_id: 3,
+    name: "Has spicy notes",
+    rating: 4,
+    price: 899,
+    review_comment:
+      "I felt this was very drinkable with a medium body. It has some spicy notes to it. For the price I'd certainly buy it again. ",
+    image_url:
+      "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
+    review_date: "2023-05-09",
+    location: "Costco",
   },
 ];
 
