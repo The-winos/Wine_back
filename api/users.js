@@ -10,6 +10,7 @@ const {
   deleteUser,
   updateUser,
   getUserById,
+  updateUserPassword,
 } = require("../db/users");
 const { requireAdmin, requireUser, requireUserOrAdmin } = require("./utils");
 
@@ -220,5 +221,17 @@ usersRouter.get("/:id/reviews", async (req, res, next) => {
     next({ name, message, error });
   }
 });
+
+usersRouter.patch("/:id/password", requireUser, async (req, res, next) => {
+  const { id } = req.params;
+  const { password } = req.body;
+  try {
+    const updatedUser = await updateUserPassword(id, password);
+    res.send(updatedUser);
+  } catch (error) {
+    next(error);
+  }
+});
+
 
 module.exports = usersRouter;

@@ -178,6 +178,27 @@ async function updateUser(id, fields = {}) {
     throw error;
   }
 }
+async function updateUserPassword(id, password) {
+  const hashedPassword = await bcrypt.hash(password, BCRYPT_WORK_FACTOR);
+  try {
+    const {
+      rows: [user],
+    } = await client.query(
+      `
+        UPDATE users
+        SET password = $1
+        WHERE id = $2
+        RETURNING *;
+      `,
+      [hashedPassword, id]
+    );
+    delete user.password;
+    return user;
+  } catch (error) {
+    throw error;
+  }
+}
+
 
 module.exports = {
   createUser,
@@ -187,4 +208,5 @@ module.exports = {
   getAllUsers,
   deleteUser,
   updateUser,
+  updateUserPassword
 };
