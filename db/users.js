@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 async function createUser({
   username,
   password,
+  name,
   state,
   avatar,
   role,
@@ -27,14 +28,15 @@ async function createUser({
       rows: [user],
     } = await client.query(
       `
-  INSERT INTO users(username, password, state, avatar, role, email, birthday, follower_count, following_count)
-  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+  INSERT INTO users(username, password, name, state, avatar, role, email, birthday, follower_count, following_count)
+  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
   ON CONFLICT (username) DO NOTHING
   RETURNING *;
   `,
       [
         username,
         bcryptPassword,
+        name,
         state,
         avatar,
         role,
