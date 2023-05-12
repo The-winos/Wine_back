@@ -538,6 +538,19 @@ const reviewData = [
     review_date: "2023-05-09",
     location: "Costco",
   },
+  {
+    wine_id: 2,
+    user_id: 4,
+    name: "Goes a long way at a party",
+    rating: 3,
+    price: 799,
+    review_comment:
+      "Nice flavor, goes well with a variety of things. It will never be my favorite but I'd never turn it down either. It's very drinkable. You wouldn't be embaressed to serve it. It's perfect for party as it's not super expensive but everyone enjoys this one. ",
+    image_url:
+      "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
+    review_date: "2023-05-09",
+    location: "Costco",
+  },
 ];
 
 module.exports = {
