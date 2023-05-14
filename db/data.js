@@ -69,7 +69,8 @@ const userData = [
     password: "Abcd1234",
     name: "Lex",
     state: "Virginia",
-    avatar: "https://cdn.pixabay.com/photo/2022/12/27/02/39/alien-7680107_1280.png",
+    avatar:
+      "https://cdn.pixabay.com/photo/2022/12/27/02/39/alien-7680107_1280.png",
     role: "admin",
     email: "alemulli@gmail.com",
     birthday: "1993-07-03",
@@ -81,7 +82,8 @@ const userData = [
     password: "Abcd1234",
     name: "Bryan",
     state: "Colorado",
-    avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTue0QzcbncaPSxMCpLhzOab4a1Sux6xXpow&usqp=CAU",
+    avatar:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTue0QzcbncaPSxMCpLhzOab4a1Sux6xXpow&usqp=CAU",
     role: "user",
     email: "bryan@bryan.com",
     birthday: "1986-10-06",
@@ -93,13 +95,14 @@ const userData = [
     password: "Abcd1234",
     name: "Mary",
     state: "Colorado",
-    avatar: "https://cdn5.vectorstock.com/i/1000x1000/01/69/businesswoman-character-avatar-icon-vector-12800169.jpg",
+    avatar:
+      "https://cdn5.vectorstock.com/i/1000x1000/01/69/businesswoman-character-avatar-icon-vector-12800169.jpg",
     role: "user",
     email: "mwdoptix@gmail.com",
     birthday: "1986-01-06",
     follower_count: 0,
     following_count: 0,
-  }
+  },
 ];
 
 //wine post
@@ -248,7 +251,14 @@ const wineData = [
     region: "Napa Valley",
     flavor: "Cabernet",
   },
-
+  {
+    author_id: 1,
+    name: "Astrale",
+    image_url:
+      "https://img.freepik.com/free-photo/bottle-wine-isolated-white_167946-4.jpg?size=338&ext=jpg&ga=GA1.2.1034222811.1663818713",
+    region: "Italy",
+    flavor: "Red Blend",
+  },
 ];
 
 const reviewData = [
@@ -259,8 +269,7 @@ const reviewData = [
     rating: 4,
     price: 879,
     review_comment:
-      //write an honest review of kirkland's malbec
-      "It wasn't my favorite wine but it was solid for the price",
+      "Malbec's are always promising. This one was very nice and easy to drink.",
     image_url:
       "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
     review_date: "2019-06-02",
@@ -411,8 +420,7 @@ const reviewData = [
     name: "Good balance",
     rating: 4,
     price: 799,
-    review_comment:
-      "Not overbearing and no aftertaste",
+    review_comment: "Not overbearing and no aftertaste",
     image_url:
       "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
     review_date: "2023-03-15",
@@ -423,8 +431,7 @@ const reviewData = [
     name: "Sipping alcohol",
     rating: 2,
     price: 699,
-    review_comment:
-      "To me this tastes like I'm sipping pure alcohol. Dry",
+    review_comment: "To me this tastes like I'm sipping pure alcohol. Dry",
     image_url:
       "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
     review_date: "2023-03-15",
@@ -435,8 +442,7 @@ const reviewData = [
     name: "Very Fruity",
     rating: 3,
     price: 699,
-    review_comment:
-      "Has a fruity taste, not bad though.",
+    review_comment: "Has a fruity taste, not bad though.",
     image_url:
       "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
     review_date: "2023-03-15",
@@ -447,8 +453,7 @@ const reviewData = [
     name: "It's grape!",
     rating: 4,
     price: 799,
-    review_comment:
-      "Definitely grape! I enjoyed it.",
+    review_comment: "Definitely grape! I enjoyed it.",
     image_url:
       "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
     review_date: "2023-03-15",
@@ -480,8 +485,7 @@ const reviewData = [
     user_id: 7,
     name: "It's good",
     rating: 3,
-    review_comment:
-      "Enjoyable wine, does in fact have a buttery texture",
+    review_comment: "Enjoyable wine, does in fact have a buttery texture",
     image_url:
       "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
     review_date: "2023-05-09",
@@ -492,8 +496,7 @@ const reviewData = [
     name: "So sweet",
     rating: 1,
     price: 799,
-    review_comment:
-      "It's sickly sweet and has a texture like mead",
+    review_comment: "It's sickly sweet and has a texture like mead",
     image_url:
       "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
     review_date: "2023-05-09",
@@ -505,8 +508,7 @@ const reviewData = [
     name: "Too sweet",
     rating: 1,
     price: 799,
-    review_comment:
-      "Just way too sweet",
+    review_comment: "Just way too sweet",
     image_url:
       "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
     review_date: "2023-05-09",
@@ -535,8 +537,20 @@ const reviewData = [
       "I felt this was very drinkable with a medium body. It has some spicy notes to it. For the price I'd certainly buy it again. ",
     image_url:
       "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
+    review_date: "2023-05-05",
+  },
+  {
+    wine_id: 18,
+    user_id: 3,
+    name: "Special Edition Italian Wine",
+    rating: 4,
+    price: 1299,
+    review_comment:
+      "Lovely wine, aged 5 years (2018). It was a celebratory gift and was very mild.",
+    image_url:
+      "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
     review_date: "2023-05-09",
-    location: "Costco",
+    location: "",
   },
 ];
 
