@@ -48,7 +48,7 @@ usersRouter.post("/login", async (req, res, next) => {
 // tested with error and refined password to all 1 if statement
 
 usersRouter.post("/register", async (req, res, next) => {
-  const {
+  let {
     username,
     password,
     state,
@@ -59,6 +59,7 @@ usersRouter.post("/register", async (req, res, next) => {
     follower_count,
     following_count,
   } = req.body;
+
   try {
     const user = await getUserByUsername(username);
 
@@ -77,32 +78,45 @@ usersRouter.post("/register", async (req, res, next) => {
           "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one digit. You can also include optional special characters.",
         name: "Password Requirements Not Met",
       });
-    } else if (new Date().getFullYear() - birthday < 21) {
-      next({
-        error: "UnderageRegistration",
-        message: "You must be at least 21 years old to register.",
-        name: "Underage Registration",
-      });
     } else {
-      const newUser = await createUser({
-        username,
-        password,
-        state,
-        avatar,
-        role,
-        email,
-        birthday,
-        follower_count,
-        following_count,
-      });
-      const token = jwt.sign(newUser, process.env.JWT_SECRET, {
-        expiresIn: "1w",
-      });
-      res.send({
-        message: "Thank you for registering!",
-        token,
-        user: newUser,
-      });
+      // Extract only the date part from the input string
+      birthday = birthday.substring(0, 10);
+
+      // Convert birthday to a Date object
+      birthday = new Date(birthday);
+
+      if (new Date().getFullYear() - birthday.getFullYear() < 21) {
+        next({
+          error: "UnderageRegistration",
+          message: "You must be at least 21 years old to register.",
+          name: "Underage Registration",
+        });
+      } else {
+        // Format birthday to "YYYY-MM-DD" without time stamp
+        birthday = birthday.toISOString().substring(0, 10);
+
+        const newUser = await createUser({
+          username,
+          password,
+          state,
+          avatar,
+          role,
+          email,
+          birthday,
+          follower_count,
+          following_count,
+        });
+
+        const token = jwt.sign(newUser, process.env.JWT_SECRET, {
+          expiresIn: "1w",
+        });
+
+        res.send({
+          message: "Thank you for registering!",
+          token,
+          user: newUser,
+        });
+      }
     }
   } catch ({ name, message }) {
     next({ name, message });
@@ -232,6 +246,5 @@ usersRouter.patch("/:id/password", requireUser, async (req, res, next) => {
     next(error);
   }
 });
-
 
 module.exports = usersRouter;
