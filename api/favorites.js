@@ -71,7 +71,7 @@ favoritesRouter.post("/", requireUser, async (req, res, next) => {
         error: "NotCorrectUser",
       };
     }
-    const favor = await addFavorite({ user_id, wine_id });
+    const favor = await addFavorite( user_id, wine_id );
     res.send(favor);
   } catch ({ name, message, error }) {
     next({
