@@ -8,6 +8,7 @@ const userData = [
     avatar: "character_7.png",
     role: "admin",
     email: "dumdum@dumdum.com",
+    bio: "Landscape Planner & ISA Arborist in Raleigh, North Carolina. International Relations student (FIU), software engineer and app developer!",
     birthday: "1992-01-01",
     follower_count: 0,
     following_count: 0,
@@ -17,8 +18,7 @@ const userData = [
     password: "ABCD1234",
     name: "Jessy",
     state: "Colorado",
-    avatar:
-      "character_8.png",
+    avatar: "character_8.png",
     role: "admin",
     email: "japarker0421@gmail.com",
     birthday: "1986-12-01",
@@ -31,8 +31,7 @@ const userData = [
     password: "ABCD1234",
     name: "Justin",
     state: "Colorado",
-    avatar:
-    "character_8.png",
+    avatar: "character_8.png",
     role: "admin",
     email: "thelastprince11@yahoo.com",
     birthday: "1975-04-15",
@@ -56,8 +55,7 @@ const userData = [
     password: "Abcd1234",
     name: "Joe",
     state: "Florida",
-    avatar:
-      "character_6.png",
+    avatar: "character_6.png",
     role: "merchant",
     email: "gapies55@yahoo.com",
     birthday: "1955-06-02",
@@ -69,8 +67,7 @@ const userData = [
     password: "Abcd1234",
     name: "Lex",
     state: "Virginia",
-    avatar:
-      "character_1.png",
+    avatar: "character_1.png",
     role: "admin",
     email: "alemulli@gmail.com",
     birthday: "1993-07-03",
@@ -82,8 +79,7 @@ const userData = [
     password: "Abcd1234",
     name: "Bryan",
     state: "Colorado",
-    avatar:
-      "character_3.png",
+    avatar: "character_3.png",
     role: "user",
     email: "bryan@bryan.com",
     birthday: "1986-10-06",
@@ -95,8 +91,7 @@ const userData = [
     password: "Abcd1234",
     name: "Mary",
     state: "Colorado",
-    avatar:
-      "character_5.png",
+    avatar: "character_5.png",
     role: "user",
     email: "mwdoptix@gmail.com",
     birthday: "1986-01-06",
