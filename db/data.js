@@ -31,7 +31,12 @@ const userData = [
     password: "ABCD1234",
     name: "Justin",
     state: "Colorado",
-    avatar: "character_8.png",
+
+    avatar:
+    "character_3.png",
+
+  
+
     role: "admin",
     email: "thelastprince11@yahoo.com",
     birthday: "1975-04-15",
@@ -278,6 +283,19 @@ const reviewData = [
     price: 999,
     review_comment:
       "This wine is just easy to drink. There's never a time when someone opens it that I'm disappointed",
+    image_url:
+      "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
+    review_date: "2019-06-02",
+    location: "local liquor store",
+  },
+  {
+    wine_id: 4,
+    user_id: 2,
+    name: "Always enjoyable",
+    rating: 4,
+    price: 999,
+    review_comment:
+      "I really really enjoy this wine, it's got a great body and smooth flavor. It's not the most breath takeing wine ever but it's super good",
     image_url:
       "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
     review_date: "2019-06-02",
@@ -536,7 +554,7 @@ const reviewData = [
   },
   {
     wine_id: 18,
-    user_id: 3,
+    user_id: 1,
     name: "Special Edition Italian Wine",
     rating: 4,
     price: 1299,
@@ -545,7 +563,6 @@ const reviewData = [
     image_url:
       "https://www.totalwine.com/dynamic/490x/media/sys_master/twmmedia/hc8/h27/12291781820446.png",
     review_date: "2023-05-09",
-    location: "",
   },
   {
     wine_id: 2,
