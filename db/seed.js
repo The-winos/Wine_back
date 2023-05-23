@@ -86,6 +86,7 @@ async function createTables() {
       avatar VARCHAR(255),
       role user_role DEFAULT 'user',
       email VARCHAR(255) UNIQUE NOT NULL,
+      bio VARCHAR(500),
       birthday DATE NOT NULL,
       follower_count INT NOT NULL DEFAULT (0),
       following_count INT NOT NULL DEFAULT (0)
