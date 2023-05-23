@@ -5,7 +5,7 @@ const userData = [
     password: "ABCD1234",
     name: "Jenniffer",
     state: "Florida",
-    avatar: "https://www.w3schools.com/w3images/avatar6.png",
+    avatar: "character_7.png",
     role: "admin",
     email: "dumdum@dumdum.com",
     birthday: "1992-01-01",
@@ -18,7 +18,7 @@ const userData = [
     name: "Jessy",
     state: "Colorado",
     avatar:
-      "https://cdn5.vectorstock.com/i/1000x1000/01/69/businesswoman-character-avatar-icon-vector-12800169.jpg",
+      "character_8.png",
     role: "admin",
     email: "japarker0421@gmail.com",
     birthday: "1986-12-01",
@@ -32,7 +32,7 @@ const userData = [
     name: "Justin",
     state: "Colorado",
     avatar:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTue0QzcbncaPSxMCpLhzOab4a1Sux6xXpow&usqp=CAU",
+    "character_8.png",
     role: "admin",
     email: "thelastprince11@yahoo.com",
     birthday: "1975-04-15",
@@ -44,7 +44,7 @@ const userData = [
     password: "Abcd1234",
     name: "Sue",
     state: "colorado",
-    avatar: "https://www.w3schools.com/howto/img_avatar2.png",
+    avatar: "character_5.png",
     role: "merchant",
     email: "sistersubie@gmail.com",
     birthday: "1956-09-18",
@@ -57,7 +57,7 @@ const userData = [
     name: "Joe",
     state: "Florida",
     avatar:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuFbUU_a4sv-K_cepk27hrSBc2PgISEEGQyojJ1rSECA&s",
+      "character_6.png",
     role: "merchant",
     email: "gapies55@yahoo.com",
     birthday: "1955-06-02",
@@ -70,7 +70,7 @@ const userData = [
     name: "Lex",
     state: "Virginia",
     avatar:
-      "https://cdn.pixabay.com/photo/2022/12/27/02/39/alien-7680107_1280.png",
+      "character_1.png",
     role: "admin",
     email: "alemulli@gmail.com",
     birthday: "1993-07-03",
@@ -83,7 +83,7 @@ const userData = [
     name: "Bryan",
     state: "Colorado",
     avatar:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTue0QzcbncaPSxMCpLhzOab4a1Sux6xXpow&usqp=CAU",
+      "character_3.png",
     role: "user",
     email: "bryan@bryan.com",
     birthday: "1986-10-06",
@@ -96,7 +96,7 @@ const userData = [
     name: "Mary",
     state: "Colorado",
     avatar:
-      "https://cdn5.vectorstock.com/i/1000x1000/01/69/businesswoman-character-avatar-icon-vector-12800169.jpg",
+      "character_5.png",
     role: "user",
     email: "mwdoptix@gmail.com",
     birthday: "1986-01-06",
