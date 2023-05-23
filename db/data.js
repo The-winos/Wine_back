@@ -31,12 +31,7 @@ const userData = [
     password: "ABCD1234",
     name: "Justin",
     state: "Colorado",
-
-    avatar:
-    "character_3.png",
-
-  
-
+    avatar: "character_3.png",
     role: "admin",
     email: "thelastprince11@yahoo.com",
     birthday: "1975-04-15",
