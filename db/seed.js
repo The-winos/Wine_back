@@ -471,9 +471,9 @@ async function testDB() {
     });
     console.log("Updated review", updatedReview);
 
-    console.log("Destroying review");
-    const deletedReview = await destroyReview(2);
-    console.log("Destroyed Review", deletedReview);
+    // console.log("Destroying review");
+    // const deletedReview = await destroyReview(2);
+    // console.log("Destroyed Review", deletedReview);
 
     console.log("getting all badges");
     const allBadges = await getAllBadges();
