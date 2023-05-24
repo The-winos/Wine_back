@@ -106,7 +106,7 @@ const wineData = [
     author_id: 2,
     name: "Apothic Dark",
     image_url:
-      "https://img.freepik.com/free-photo/bottle-wine-isolated-white_167946-4.jpg?size=338&ext=jpg&ga=GA1.2.1034222811.1663818713",
+      "3-reddish-purple_wine.png",
     region: "California",
     flavor: "Red Blend",
   },
@@ -115,7 +115,7 @@ const wineData = [
     author_id: 1,
     name: "Kirkland Malbec",
     image_url:
-      "https://img.freepik.com/free-photo/bottle-wine-isolated-white_167946-4.jpg?size=338&ext=jpg&ga=GA1.2.1034222811.1663818713",
+      "3-reddish-purple_wine.png",
     region: "Argentina",
     flavor: "Malbec",
   },
@@ -124,7 +124,7 @@ const wineData = [
     author_id: 1,
     name: "Yucky wine",
     image_url:
-      "https://img.freepik.com/free-photo/bottle-wine-isolated-white_167946-4.jpg?size=338&ext=jpg&ga=GA1.2.1034222811.1663818713",
+      "3-reddish-purple_wine.png",
     region: "Trash",
     flavor: "Malbec",
   },
@@ -132,7 +132,7 @@ const wineData = [
     author_id: 2,
     name: "19 Crimes, The Banished",
     image_url:
-      "https://img.freepik.com/free-photo/bottle-wine-isolated-white_167946-4.jpg?size=338&ext=jpg&ga=GA1.2.1034222811.1663818713",
+      "3-reddish-purple_wine.png",
     region: "Australia",
     flavor: "Red Blend",
   },
@@ -141,7 +141,7 @@ const wineData = [
     author_id: 2,
     name: "Chalkboard",
     image_url:
-      "https://img.freepik.com/free-photo/bottle-wine-isolated-white_167946-4.jpg?size=338&ext=jpg&ga=GA1.2.1034222811.1663818713",
+      "3-reddish-purple_wine.png",
     region: "California",
     flavor: "Cabernet",
   },
@@ -150,7 +150,7 @@ const wineData = [
     author_id: 5,
     name: "Palumbo Selezion Speciale",
     image_url:
-      "https://img.freepik.com/free-photo/bottle-wine-isolated-white_167946-4.jpg?size=338&ext=jpg&ga=GA1.2.1034222811.1663818713",
+      "3-reddish-purple_wine.png",
     region: "Puglia, IGT Italy",
     flavor: "TreTerzi",
   },
@@ -159,7 +159,7 @@ const wineData = [
     author_id: 2,
     name: "Bogle, Red Blend",
     image_url:
-      "https://img.freepik.com/free-photo/bottle-wine-isolated-white_167946-4.jpg?size=338&ext=jpg&ga=GA1.2.1034222811.1663818713",
+      "3-reddish-purple_wine.png",
     region: "California",
     flavor: "Red Blend",
   },
@@ -168,7 +168,7 @@ const wineData = [
     author_id: 4,
     name: "Petite Petite, by Michael David",
     image_url:
-      "https://img.freepik.com/free-photo/bottle-wine-isolated-white_167946-4.jpg?size=338&ext=jpg&ga=GA1.2.1034222811.1663818713",
+      "3-reddish-purple_wine.png",
     region: "California",
     flavor: "Petite Sirah",
   },
@@ -177,7 +177,7 @@ const wineData = [
     author_id: 4,
     name: "Meiomi",
     image_url:
-      "https://img.freepik.com/free-photo/bottle-wine-isolated-white_167946-4.jpg?size=338&ext=jpg&ga=GA1.2.1034222811.1663818713",
+      "3-reddish-purple_wine.png",
     region: "California",
     flavor: "Pinot Noir",
   },
@@ -186,7 +186,7 @@ const wineData = [
     author_id: 2,
     name: "Kirkland Cabernet",
     image_url:
-      "https://static6.depositphotos.com/1000261/645/i/600/depositphotos_6459418-stock-photo-white-wine-box.jpg",
+      "3-reddish-purple_wine.png",
     region: "California",
     flavor: "Cabernet",
   },
@@ -194,7 +194,7 @@ const wineData = [
     author_id: 2,
     name: "Amore Assoluto",
     image_url:
-      "https://img.freepik.com/free-photo/bottle-wine-isolated-white_167946-4.jpg?size=338&ext=jpg&ga=GA1.2.1034222811.1663818713",
+      "3-reddish-purple_wine.png",
     region: "Italy",
     flavor: "Red Blend",
   },
@@ -202,7 +202,7 @@ const wineData = [
     author_id: 7,
     name: "Friuli Grave",
     image_url:
-      "https://preview.free3d.com/img/2015/09/1868291155406357898/jx90iyj3.jpg",
+      "1-green_wine.png",
     region: "Italy",
     flavor: "Pinot Grigio",
   },
@@ -210,7 +210,7 @@ const wineData = [
     author_id: 8,
     name: "Mariborough",
     image_url:
-      "https://preview.free3d.com/img/2015/09/1868291155406357898/jx90iyj3.jpg",
+      "1-green_wine.png",
     region: "New Zealand",
     flavor: "Sauvignon Blanc",
   },
@@ -218,7 +218,7 @@ const wineData = [
     author_id: 8,
     name: "Milbrandt",
     image_url:
-      "https://preview.free3d.com/img/2015/09/1868291155406357898/jx90iyj3.jpg",
+      "1-green_wine.png",
     region: "Washington",
     flavor: "Riesling",
   },
@@ -226,7 +226,7 @@ const wineData = [
     author_id: 8,
     name: "Robert Mondavi",
     image_url:
-      "https://preview.free3d.com/img/2015/09/1868291155406357898/jx90iyj3.jpg",
+      "1-green_wine.png",
     region: "California",
     flavor: "Chardonnay",
   },
@@ -234,7 +234,7 @@ const wineData = [
     author_id: 8,
     name: "Barefoot Moscato",
     image_url:
-      "https://preview.free3d.com/img/2015/09/1868291155406357898/jx90iyj3.jpg",
+      "1-green_wine.png",
     region: "California",
     flavor: "Moscato",
   },
@@ -242,7 +242,7 @@ const wineData = [
     author_id: 2,
     name: "Uppercut",
     image_url:
-      "https://img.freepik.com/free-photo/bottle-wine-isolated-white_167946-4.jpg?size=338&ext=jpg&ga=GA1.2.1034222811.1663818713",
+      "3-reddish-purple_wine.png",
     region: "Napa Valley",
     flavor: "Cabernet",
   },
@@ -250,14 +250,14 @@ const wineData = [
     author_id: 1,
     name: "Astrale",
     image_url:
-      "https://img.freepik.com/free-photo/bottle-wine-isolated-white_167946-4.jpg?size=338&ext=jpg&ga=GA1.2.1034222811.1663818713",
+      "3-reddish-purple_wine.png",
     region: "Italy",
     flavor: "Red Blend",
   },
   {
     author_id: 6,
-    name: "Chateau Burgozone, Cote Du Danube",
-    image_url:       "https://img.freepik.com/free-photo/bottle-wine-isolated-white_167946-4.jpg?size=338&ext=jpg&ga=GA1.2.1034222811.1663818713",
+    name: "Chateu Burgozone, Cote Du Danube",
+    image_url:"3-reddish-purple_wine.png",
     region: "Bulgaria",
     flavor: "Cabernet",
   }
@@ -580,11 +580,11 @@ const reviewData = [
     location: "Costco",
   },
   {
-    wine_id: 19, 
-    user_id: 6, 
-    name: "Thankfully, does not taste like a burger...", 
-    rating: 4, 
-    price: 3000, 
+    wine_id: 19,
+    user_id: 6,
+    name: "Thankfully, does not taste like a burger...",
+    rating: 4,
+    price: 3000,
     review_comment: "Pretty sweet for a red wine! I like it.",
     review_date: "2023-05-23",
     location: "Restaurant"
