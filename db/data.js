@@ -254,6 +254,13 @@ const wineData = [
     region: "Italy",
     flavor: "Red Blend",
   },
+  {
+    author_id: 6,
+    name: "Chateu Burgozone, Cote Du Danube",
+    image_url:       "https://img.freepik.com/free-photo/bottle-wine-isolated-white_167946-4.jpg?size=338&ext=jpg&ga=GA1.2.1034222811.1663818713",
+    region: "Bulgaria",
+    flavor: "Cabernet",
+  }
 ];
 
 const reviewData = [
@@ -572,6 +579,16 @@ const reviewData = [
     review_date: "2023-05-09",
     location: "Costco",
   },
+  {
+    wine_id: 19, 
+    user_id: 6, 
+    name: "Thankfully, does not taste like a burger...", 
+    rating: 4, 
+    price: 3000, 
+    review_comment: "Pretty sweet for a red wine! I like it.",
+    review_date: "2023-05-23",
+    location: "Restaurant"
+  }
 ];
 
 module.exports = {
