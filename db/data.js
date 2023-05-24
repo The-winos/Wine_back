@@ -256,7 +256,7 @@ const wineData = [
   },
   {
     author_id: 6,
-    name: "Chateu Burgozone, Cote Du Danube",
+    name: "Chateau Burgozone, Cote Du Danube",
     image_url:       "https://img.freepik.com/free-photo/bottle-wine-isolated-white_167946-4.jpg?size=338&ext=jpg&ga=GA1.2.1034222811.1663818713",
     region: "Bulgaria",
     flavor: "Cabernet",
