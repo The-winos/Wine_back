@@ -8,7 +8,7 @@ const userData = [
     avatar: "character_7.png",
     role: "admin",
     email: "dumdum@dumdum.com",
-    bio: "Landscape Planner & ISA Arborist in Raleigh, North Carolina. International Relations student (FIU), software engineer and app developer!",
+    bio: "Landscape Planner & ISA Arborist in Raleigh, North Carolina. International Relations student (FIU), software engineer and app developer! Currently adapting to big data manipulation in Tableau and ArcGIS Pro.",
     birthday: "1992-01-01",
     follower_count: 0,
     following_count: 0,
@@ -105,8 +105,7 @@ const wineData = [
   {
     author_id: 2,
     name: "Apothic Dark",
-    image_url:
-      "3-reddish-purple_wine.png",
+    image_url: "3-reddish-purple_wine.png",
     region: "California",
     flavor: "Red Blend",
   },
@@ -114,8 +113,7 @@ const wineData = [
   {
     author_id: 1,
     name: "Kirkland Malbec",
-    image_url:
-      "3-reddish-purple_wine.png",
+    image_url: "3-reddish-purple_wine.png",
     region: "Argentina",
     flavor: "Malbec",
   },
@@ -123,16 +121,14 @@ const wineData = [
   {
     author_id: 1,
     name: "Yucky wine",
-    image_url:
-      "3-reddish-purple_wine.png",
+    image_url: "3-reddish-purple_wine.png",
     region: "Trash",
     flavor: "Malbec",
   },
   {
     author_id: 2,
     name: "19 Crimes, The Banished",
-    image_url:
-      "3-reddish-purple_wine.png",
+    image_url: "3-reddish-purple_wine.png",
     region: "Australia",
     flavor: "Red Blend",
   },
@@ -140,8 +136,7 @@ const wineData = [
   {
     author_id: 2,
     name: "Chalkboard",
-    image_url:
-      "3-reddish-purple_wine.png",
+    image_url: "3-reddish-purple_wine.png",
     region: "California",
     flavor: "Cabernet",
   },
@@ -149,8 +144,7 @@ const wineData = [
   {
     author_id: 5,
     name: "Palumbo Selezion Speciale",
-    image_url:
-      "3-reddish-purple_wine.png",
+    image_url: "3-reddish-purple_wine.png",
     region: "Puglia, IGT Italy",
     flavor: "TreTerzi",
   },
@@ -158,8 +152,7 @@ const wineData = [
   {
     author_id: 2,
     name: "Bogle, Red Blend",
-    image_url:
-      "3-reddish-purple_wine.png",
+    image_url: "3-reddish-purple_wine.png",
     region: "California",
     flavor: "Red Blend",
   },
@@ -167,8 +160,7 @@ const wineData = [
   {
     author_id: 4,
     name: "Petite Petite, by Michael David",
-    image_url:
-      "3-reddish-purple_wine.png",
+    image_url: "3-reddish-purple_wine.png",
     region: "California",
     flavor: "Petite Sirah",
   },
@@ -176,8 +168,7 @@ const wineData = [
   {
     author_id: 4,
     name: "Meiomi",
-    image_url:
-      "3-reddish-purple_wine.png",
+    image_url: "3-reddish-purple_wine.png",
     region: "California",
     flavor: "Pinot Noir",
   },
@@ -185,82 +176,73 @@ const wineData = [
   {
     author_id: 2,
     name: "Kirkland Cabernet",
-    image_url:
-      "3-reddish-purple_wine.png",
+    image_url: "3-reddish-purple_wine.png",
     region: "California",
     flavor: "Cabernet",
   },
   {
     author_id: 2,
     name: "Amore Assoluto",
-    image_url:
-      "3-reddish-purple_wine.png",
+    image_url: "3-reddish-purple_wine.png",
     region: "Italy",
     flavor: "Red Blend",
   },
   {
     author_id: 7,
     name: "Friuli Grave",
-    image_url:
-      "1-green_wine.png",
+    image_url: "1-green_wine.png",
     region: "Italy",
     flavor: "Pinot Grigio",
   },
   {
     author_id: 8,
     name: "Mariborough",
-    image_url:
-      "1-green_wine.png",
+    image_url: "1-green_wine.png",
     region: "New Zealand",
     flavor: "Sauvignon Blanc",
   },
   {
     author_id: 8,
     name: "Milbrandt",
-    image_url:
-      "1-green_wine.png",
+    image_url: "1-green_wine.png",
     region: "Washington",
     flavor: "Riesling",
   },
   {
     author_id: 8,
     name: "Robert Mondavi",
-    image_url:
-      "1-green_wine.png",
+    image_url: "1-green_wine.png",
     region: "California",
     flavor: "Chardonnay",
   },
   {
     author_id: 8,
     name: "Barefoot Moscato",
-    image_url:
-      "1-green_wine.png",
+    image_url: "1-green_wine.png",
     region: "California",
     flavor: "Moscato",
   },
   {
     author_id: 2,
     name: "Uppercut",
-    image_url:
-      "3-reddish-purple_wine.png",
+    image_url: "3-reddish-purple_wine.png",
     region: "Napa Valley",
     flavor: "Cabernet",
   },
   {
     author_id: 1,
     name: "Astrale",
-    image_url:
-      "3-reddish-purple_wine.png",
+    image_url: "3-reddish-purple_wine.png",
     region: "Italy",
     flavor: "Red Blend",
   },
   {
     author_id: 6,
     name: "Chateu Burgozone, Cote Du Danube",
-    image_url:"3-reddish-purple_wine.png",
+    image_url: "3-reddish-purple_wine.png",
     region: "Bulgaria",
     flavor: "Cabernet",
-  }
+  },
 ];
 
 const reviewData = [
@@ -587,8 +569,8 @@ const reviewData = [
     price: 3000,
     review_comment: "Pretty sweet for a red wine! I like it.",
     review_date: "2023-05-23",
-    location: "Restaurant"
-  }
+    location: "Restaurant",
+  },
 ];
 
 module.exports = {
