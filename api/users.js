@@ -249,4 +249,16 @@ usersRouter.patch("/:id/password", requireUser, async (req, res, next) => {
   }
 });
 
+usersRouter.patch("/:id/admin/password", requireAdmin, async (req, res, next) => {
+  const { id } = req.params;
+  const { password } = req.body;
+  try {
+    const updatedUser = await updateUserPassword(id, password);
+    res.send(updatedUser);
+  } catch (error) {
+    next(error);
+  }
+});
+
+
 module.exports = usersRouter;
