@@ -181,7 +181,11 @@ async function updateUser(id, fields = {}) {
   }
 }
 async function updateUserPassword(id, password) {
-  const hashedPassword = await bcrypt.hash(password, BCRYPT_WORK_FACTOR);
+  const saltRound=10;
+  const salt = await bcrypt.genSalt(saltRound);
+
+  const bcryptPassword = await bcrypt.hash(password, salt);
+  console.log(bcryptPassword, "bcrypt")
   try {
     const {
       rows: [user],
@@ -192,10 +196,13 @@ async function updateUserPassword(id, password) {
         WHERE id = $2
         RETURNING *;
       `,
-      [hashedPassword, id]
+      [bcryptPassword, id]
     );
+    console.log(user, "user")
     delete user.password;
-    return user;
+    return bcryptPassword;
+
+
   } catch (error) {
     throw error;
   }
