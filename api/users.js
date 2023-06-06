@@ -202,7 +202,7 @@ usersRouter.patch(
     const { username } = req.params;
     const updateFields = req.body;
     const isAdmin = req.user.role;
-    console.log(req.user, "lets look");
+
 
     if (isAdmin != "admin") {
       delete updateFields.role;
@@ -255,6 +255,7 @@ usersRouter.patch("/:id/admin/password", requireAdmin, async (req, res, next) =>
   try {
     const updatedUser = await updateUserPassword(id, password);
     res.send(updatedUser);
+
   } catch (error) {
     next(error);
   }
