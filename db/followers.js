@@ -70,19 +70,15 @@ async function getFollowingByUser({id}) {
 }
 
 
-
-
-
-
-async function destroyFollower(id) {
+async function deleteFollowersByFollowerId(userId) {
   try {
     const { rows: followers } = await client.query(
       `
-          DELETE FROM followers
-          WHERE id=$1
-          RETURNING *
-          `,
-      [id]
+      DELETE FROM followers
+      WHERE follower_id = $1
+      RETURNING *;
+      `,
+      [userId]
     );
     return followers;
   } catch (error) {
@@ -90,10 +86,52 @@ async function destroyFollower(id) {
   }
 }
 
+async function deleteFollowersByUserId(followerId) {
+  try {
+    const { rows: followers } = await client.query(
+      `
+      DELETE FROM followers
+      WHERE user_id = $1
+      RETURNING *;
+      `,
+      [followerId]
+    );
+    return followers;
+  } catch (error) {
+    throw error;
+  }
+}
+
+
+
+async function getFollowerById(id) {
+  try {
+    const { rows: [follow] } = await client.query(
+      `
+      SELECT *
+      FROM followers
+      WHERE follower_id = $1
+      `, [id]
+    );
+    if (!follow) {
+      throw {
+        name: "Follower not found",
+        message: `Could not find a follower with ID ${id}`
+      };
+    }
+    return follow;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+
 module.exports = {
   addFollower,
   getAllFollowers,
   getFollowerByUser,
-  destroyFollower,
-  getFollowingByUser
+  deleteFollowersByFollowerId,
+  deleteFollowersByUserId,
+  getFollowingByUser,
+  getFollowerById
 };

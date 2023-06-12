@@ -26,6 +26,19 @@ const userData = [
     follower_count: 0,
     following_count: 0,
   },
+  {
+    username: "Deleted User",
+    password: "AnyjbfhEnd89651",
+    name: "Deleted",
+    state: "Deleted",
+    avatar: "character_8.png",
+    role: "user",
+    email: "japarker0421@fake.com",
+    bio: "This is an error handling user, you shouldn't be here",
+    birthday: "1986-04-21",
+    follower_count: 0,
+    following_count: 0,
+  },
 
   {
     username: "iceman",

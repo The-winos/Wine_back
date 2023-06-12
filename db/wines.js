@@ -57,6 +57,22 @@ async function getWineByFlavor(flavor) {
   }
 }
 
+async function getWineByAuthor(userId) {
+  try {
+    const { rows: wines } = await client.query(
+      `
+  SELECT *
+  FROM wines
+  WHERE author_id = $1
+  `,
+      [userId]
+    );
+    return wines;
+  } catch (error) {
+    throw error;
+  }
+}
+
 async function getWineById(id) {
   try {
     const {
@@ -138,6 +154,26 @@ async function getWineByName(name) {
   }
 }
 
+async function updateWineAuthorId(wineId, authorId) {
+  try {
+    const {
+      rows: [wine],
+    } = await client.query(
+      `UPDATE wines
+      SET author_id = $2
+      WHERE id = $1
+      RETURNING *;
+      `,
+      [wineId, authorId]
+    );
+    return wine;
+  } catch (error) {
+    throw error;
+  }
+}
+
+
+
 module.exports = {
   createWine,
   getAllWines,
@@ -146,4 +182,6 @@ module.exports = {
   destroyWine,
   getWineByName,
   getWineByFlavor,
+  getWineByAuthor,
+  updateWineAuthorId
 };

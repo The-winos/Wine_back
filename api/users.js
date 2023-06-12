@@ -11,6 +11,7 @@ const {
   updateUser,
   getUserById,
   updateUserPassword,
+  updateUserForeignKeys,
 } = require("../db/users");
 const { requireAdmin, requireUser, requireUserOrAdmin } = require("./utils");
 
@@ -179,16 +180,22 @@ usersRouter.get("/", requireAdmin, async (req, res, next) => {
 });
 
 //tested with errors
-usersRouter.delete("/:username", requireAdmin, async (req, res, next) => {
+usersRouter.delete("/:id", requireAdmin, async (req, res, next) => {
   try {
-    const { username } = req.params;
-    const user = await getUserByUsername(username);
+    const { id } = req.params;
+    const user = await getUserById(id);
+
+    // Update foreign keys in reviews
+    await updateUserForeignKeys(user.id);
+
+    // Delete the user
     const deletedUser = deleteUser(user.id);
+
     res.send(deletedUser);
   } catch ({ name, message, error }) {
     next({
       name: "UnfoundUser",
-      message: "Couldn't find that username",
+      message: "Couldn't find that id",
       error: "errorDeletingUser",
     });
   }
