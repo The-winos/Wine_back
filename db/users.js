@@ -1,5 +1,7 @@
 const { client } = require("./client");
 const bcrypt = require("bcrypt");
+const { getReviewByUser, updateReview, updateReviewAuthorId } = require("./reviews");
+const { getWineByAuthor, updateWine, updateWineAuthorId } = require("./wines");
 
 async function createUser({
   username,
@@ -156,6 +158,41 @@ async function deleteUser(id) {
   return result.rows;
 }
 
+async function updateUserForeignKeys(userId) {
+  try {
+    // Fetch the reviews associated with the user
+    const reviews = await getReviewByUser(userId);
+
+    // Update the foreign keys in the reviews
+    const updatedReviews = reviews.map((review) => {
+      return { ...review, userId: 3 }; // user 3 is our deleted user
+    });
+
+    // Fetch the wines associated with the user
+    const wines = await getWineByAuthor(userId);
+
+    // Update the foreign keys in the wines
+    const updatedWines = wines.map((wine) => {
+      return { ...wine, author_id: 3 }; // user 3 is our deleted user
+    });
+
+    // Update the reviews in the backend
+    for (const review of updatedReviews) {
+      await updateReviewAuthorId(review.id, review.userId);
+    }
+
+    // Update the wines in the backend
+    for (const wine of updatedWines) {
+      await updateWineAuthorId(wine.id, wine.author_id);
+    }
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
+
+
 async function updateUser(id, fields = {}) {
   const setString = Object.keys(fields)
     .map((key, index) => `"${key}"=$${index + 1}`)
@@ -217,5 +254,6 @@ module.exports = {
   getAllUsers,
   deleteUser,
   updateUser,
-  updateUserPassword
+  updateUserPassword,
+  updateUserForeignKeys
 };

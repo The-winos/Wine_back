@@ -174,6 +174,24 @@ async function getReviewsByFollowers(user_id) {
   }
 }
 
+async function updateReviewAuthorId(reviewId, authorId) {
+  try {
+    const {
+      rows: [review],
+    } = await client.query(
+      `UPDATE reviews
+      SET user_id = $2
+      WHERE id = $1
+      RETURNING *;
+      `,
+      [reviewId, authorId]
+    );
+    return review;
+  } catch (error) {
+    throw error;
+  }
+}
+
 
 module.exports = {
   createReview,
@@ -184,5 +202,6 @@ module.exports = {
   getReviewById,
   getReviewByIdAndUserId,
   getReviewByWineId,
-  getReviewsByFollowers
+  getReviewsByFollowers,
+  updateReviewAuthorId
 };

@@ -104,6 +104,7 @@ async function createTables() {
       region TEXT,
       flavor wine_type
     );
+
     CREATE TABLE reviews(
       id SERIAL PRIMARY KEY,
       wine_id INTEGER REFERENCES wines(id),
