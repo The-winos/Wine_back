@@ -60,9 +60,7 @@ savedRouter.post("/", requireUser, async (req, res, next) => {
 savedRouter.delete("/:savedId", requireUser || requireAdmin, async (req, res, next)=>{
   try {
     const {savedId}= req.params;
-    console.log(req.params, "params")
     const save = await getSavedById(savedId);
-    console.log(save, "save")
     const deletedSave= await removeSaved(save.id)
     res.send(deletedSave);
   } catch ({name, message, error}) {
