@@ -36,10 +36,11 @@ async function getAllFollowers() {
 }
 
 async function getFollowerByUser({id}) {
+  console.log(id, "this is id for followers")
   try {
     const { rows: followers } = await client.query(
       `
-      SELECT follower_id
+      SELECT *
       FROM followers
       WHERE user_id = $1;
           `,
@@ -52,11 +53,12 @@ async function getFollowerByUser({id}) {
   }
 }
 
-async function getFollowingByUser({id}) {
+async function getFollowingByUser(id) {
+  console.log(id, "this is ID for Following");
   try {
     const { rows: followers } = await client.query(
       `
-      SELECT user_id
+      SELECT *
       FROM followers
       WHERE follower_id = $1;
           `,
@@ -70,12 +72,15 @@ async function getFollowingByUser({id}) {
 }
 
 
-async function deleteFollowersByFollowerId(userId) {
+
+
+
+async function deleteFollowersByUserId(userId) {
   try {
     const { rows: followers } = await client.query(
       `
       DELETE FROM followers
-      WHERE follower_id = $1
+      WHERE id = $1
       RETURNING *;
       `,
       [userId]
@@ -86,12 +91,13 @@ async function deleteFollowersByFollowerId(userId) {
   }
 }
 
-async function deleteFollowersByUserId(followerId) {
+async function deleteFollowersByFollowerId(followerId) {
+  console.log(followerId, "db following id")
   try {
     const { rows: followers } = await client.query(
       `
       DELETE FROM followers
-      WHERE user_id = $1
+      WHERE id = $1
       RETURNING *;
       `,
       [followerId]

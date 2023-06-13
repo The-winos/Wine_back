@@ -131,13 +131,11 @@ async function createTables() {
 
     CREATE TABLE followers(
       id SERIAL PRIMARY KEY,
-      user_id INT NOT NULL,
-      follower_id INT NOT NULL,
+      user_id INT NOT NULL REFERENCES users(id),
+      follower_id INT NOT NULL REFERENCES users(id),
       created_at TIMESTAMP NOT NULL DEFAULT NOW(),
       updated_at TIMESTAMP DEFAULT NOW(),
-      UNIQUE (user_id, follower_id),
-      FOREIGN KEY (user_id) REFERENCES users(id),
-      FOREIGN KEY (follower_id) REFERENCES users(id)
+      UNIQUE (user_id, follower_id)
     );
 
     CREATE TABLE favorites(

@@ -156,7 +156,7 @@ const wineData = [
   },
 
   {
-    author_id: 5,
+    author_id: 6,
     name: "Palumbo Selezion Speciale",
     image_url: "3-reddish-purple_wine.png",
     region: "Puglia, IGT Italy",
@@ -172,7 +172,7 @@ const wineData = [
   },
 
   {
-    author_id: 4,
+    author_id: 5,
     name: "Petite Petite, by Michael David",
     image_url: "3-reddish-purple_wine.png",
     region: "California",
@@ -180,7 +180,7 @@ const wineData = [
   },
 
   {
-    author_id: 4,
+    author_id: 5,
     name: "Meiomi",
     image_url: "3-reddish-purple_wine.png",
     region: "California",
@@ -202,7 +202,7 @@ const wineData = [
     flavor: "Red Blend",
   },
   {
-    author_id: 7,
+    author_id: 8,
     name: "Friuli Grave",
     image_url: "1-green_wine.png",
     region: "Italy",
@@ -216,21 +216,21 @@ const wineData = [
     flavor: "Sauvignon Blanc",
   },
   {
-    author_id: 8,
+    author_id: 9,
     name: "Milbrandt",
     image_url: "1-green_wine.png",
     region: "Washington",
     flavor: "Riesling",
   },
   {
-    author_id: 8,
+    author_id: 9,
     name: "Robert Mondavi",
     image_url: "1-green_wine.png",
     region: "California",
     flavor: "Chardonnay",
   },
   {
-    author_id: 8,
+    author_id: 9,
     name: "Barefoot Moscato",
     image_url: "1-green_wine.png",
     region: "California",
@@ -251,7 +251,7 @@ const wineData = [
     flavor: "Red Blend",
   },
   {
-    author_id: 6,
+    author_id: 7,
     name: "Chateu Burgozone, Cote Du Danube",
     image_url: "3-reddish-purple_wine.png",
     region: "Bulgaria",
@@ -275,7 +275,7 @@ const reviewData = [
   },
   {
     wine_id: 4,
-    user_id: 3,
+    user_id: 4,
     name: "Solid",
     rating: 4,
     price: 999,
@@ -314,7 +314,7 @@ const reviewData = [
   },
   {
     wine_id: 5,
-    user_id: 3,
+    user_id: 4,
     name: "A good go to!",
     rating: 3,
     price: 999,
@@ -340,7 +340,7 @@ const reviewData = [
   },
   {
     wine_id: 6,
-    user_id: 5,
+    user_id: 6,
     name: "One of my favorites",
     rating: 5,
     price: 1400,
@@ -353,7 +353,7 @@ const reviewData = [
   },
   {
     wine_id: 7,
-    user_id: 4,
+    user_id: 5,
     name: "Perfect for a party",
     rating: 3,
     price: 800,
@@ -366,7 +366,7 @@ const reviewData = [
   },
   {
     wine_id: 8,
-    user_id: 4,
+    user_id: 5,
     name: "REALLY good for price!",
     rating: 4,
     price: 1200,
@@ -378,7 +378,7 @@ const reviewData = [
   },
   {
     wine_id: 9,
-    user_id: 4,
+    user_id: 5,
     name: "It's so yummy",
     rating: 5,
     price: 2000,
@@ -390,7 +390,7 @@ const reviewData = [
   },
   {
     wine_id: 10,
-    user_id: 4,
+    user_id: 5,
     name: "Small amounts...",
     rating: 2,
     price: 1400,
@@ -427,7 +427,7 @@ const reviewData = [
   },
   {
     wine_id: 12,
-    user_id: 7,
+    user_id: 8,
     name: "Good balance",
     rating: 4,
     price: 799,
@@ -438,7 +438,7 @@ const reviewData = [
   },
   {
     wine_id: 12,
-    user_id: 8,
+    user_id: 9,
     name: "Sipping alcohol",
     rating: 2,
     price: 699,
@@ -449,7 +449,7 @@ const reviewData = [
   },
   {
     wine_id: 13,
-    user_id: 7,
+    user_id: 8,
     name: "Very Fruity",
     rating: 3,
     price: 699,
@@ -460,7 +460,7 @@ const reviewData = [
   },
   {
     wine_id: 13,
-    user_id: 8,
+    user_id: 9,
     name: "It's grape!",
     rating: 4,
     price: 799,
@@ -471,7 +471,7 @@ const reviewData = [
   },
   {
     wine_id: 14,
-    user_id: 8,
+    user_id: 9,
     name: "Not overly sweet",
     rating: 4,
     review_comment:
@@ -482,7 +482,7 @@ const reviewData = [
   },
   {
     wine_id: 15,
-    user_id: 8,
+    user_id: 9,
     name: "Cookies",
     rating: 2,
     review_comment:
@@ -493,7 +493,7 @@ const reviewData = [
   },
   {
     wine_id: 15,
-    user_id: 7,
+    user_id: 8,
     name: "It's good",
     rating: 3,
     review_comment: "Enjoyable wine, does in fact have a buttery texture",
@@ -503,7 +503,7 @@ const reviewData = [
   },
   {
     wine_id: 16,
-    user_id: 8,
+    user_id: 9,
     name: "So sweet",
     rating: 1,
     price: 799,
@@ -515,7 +515,7 @@ const reviewData = [
   },
   {
     wine_id: 16,
-    user_id: 7,
+    user_id: 8,
     name: "Too sweet",
     rating: 1,
     price: 799,
@@ -540,7 +540,7 @@ const reviewData = [
   },
   {
     wine_id: 17,
-    user_id: 3,
+    user_id: 4,
     name: "Has spicy notes",
     rating: 4,
     price: 899,
@@ -564,7 +564,7 @@ const reviewData = [
   },
   {
     wine_id: 2,
-    user_id: 4,
+    user_id: 5,
     name: "Goes a long way at a party",
     rating: 3,
     price: 799,
@@ -577,7 +577,7 @@ const reviewData = [
   },
   {
     wine_id: 19,
-    user_id: 6,
+    user_id: 7,
     name: "Thankfully, does not taste like a burger...",
     rating: 4,
     price: 3000,

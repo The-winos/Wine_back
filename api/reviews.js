@@ -96,7 +96,7 @@ reviewsRouter.delete("/:reviewId", requireUser, async (req, res, next) => {
     const review = await getReviewById(reviewId);
     console.log("review?", review.user_id);
     console.log("which user?", req.user.id);
-    if (req.user.id == review.user_id) {
+    if (req.user.id == review.user_id || req.user.role=="admin") {
       const deletedReview = await destroyReview(reviewId);
       res.send(deletedReview);
     } else {
