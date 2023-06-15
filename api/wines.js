@@ -112,8 +112,9 @@ winesRouter.post("/", requireUser, async(req, res, next)=>{
 winesRouter.delete("/:wineId", requireAdmin, async(req, res, next)=>{
   const { wineId } = req.params;
   try {
-   const wine= await getWineById(wineId);
-   const deletedWine= await destroyWine(wine.id);
+  //  const wine= await getWineById(wineId);
+  console.log(wineId, "delete route")
+   const deletedWine= await destroyWine(wineId);
    res.send(deletedWine);
   } catch ({name, message, error}) {
     next({

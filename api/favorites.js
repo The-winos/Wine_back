@@ -1,8 +1,9 @@
 const express = require("express");
-const { getAllFavoritesByUserId, removeFavorite, getFavoritedById, addFavorite } = require("../db/favorites");
+const { getAllFavoritesByUserId, removeFavorite, getFavoritedById, addFavorite, getAllFavoritesByWineId } = require("../db/favorites");
 const { getUserById } = require("../db/users");
 const favoritesRouter = express.Router();
 const { requireUser, requireAdmin } = require("./utils");
+const { getWineById } = require("../db/wines");
 
 favoritesRouter.use((req, res, next) => {
   console.log("A request is being made to /favorites");
@@ -31,6 +32,31 @@ favoritesRouter.get("/:userId", async (req, res, next) => {
       name: "CantFindUser",
       message: "No user by that id",
       error: "NoUser",
+    });
+  }
+});
+
+// GET /api/favorites/wine/:wineId
+favoritesRouter.get("/wine/:wineId", async (req, res, next) => {
+  const  wineId  = req.params.wineId;
+  console.log(wineId, "wineId")
+  const wine = await getWineById(wineId)
+  console.log(wine, "wine")
+  try {
+    const favoriteWines = await getAllFavoritesByWineId({wine_id:wine.id});
+    if(!favoriteWines.length){
+      next({
+        name: "NoWines favored",
+        message: "No wines favorited",
+        error: "NoFavor",
+      });
+    }
+    res.send(favoriteWines);
+  } catch ({ name, message, error }) {
+    next({
+      name: "CantFindwine",
+      message: "No wine by that id",
+      error: "Nowine",
     });
   }
 });

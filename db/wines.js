@@ -123,18 +123,18 @@ async function updateWine(id, fields = {}) {
 }
 
 async function destroyWine(id) {
-  const {
-    rows: [wine],
-  } = await client.query(
+ try {
+  const{ rows: wine}= await client.query(
     `
-  DELETE FROM wines
-  WHERE id = $1
-  RETURNING *
-  `,
-    [id]
+    DELETE FROM wines
+    WHERE id=$1
+    RETURNING *
+    `, [id]
   );
-  return [wine];
-}
+  return wine;
+ } catch (error) {
+  throw error
+ }}
 
 async function getWineByName(name) {
   try {
