@@ -43,6 +43,19 @@ async function getAllFavoritesByUserId({user_id}){
   }
 }
 
+async function getAllFavoritesByWineId({wine_id}){
+  try {
+    const {rows: favorites}= await client.query(`
+    SELECT *
+    FROM favorites
+    WHERE wine_id=$1
+    `, [wine_id]);
+    return favorites;
+  } catch (error) {
+    throw error;
+  }
+}
+
 async function getFavoritedById(id){
   try {
     const { rows:[favorite]}=await client.query(
@@ -68,5 +81,6 @@ module.exports = {
 addFavorite,
 removeFavorite,
 getAllFavoritesByUserId,
-getFavoritedById
+getFavoritedById,
+getAllFavoritesByWineId
 };
