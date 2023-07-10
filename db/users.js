@@ -200,6 +200,7 @@ async function updateUser(id, fields = {}) {
   if (setString.length === 0) {
     return;
   }
+  console.log(id, 'user id')
   try {
     const {
       rows: [user],
@@ -212,9 +213,10 @@ async function updateUser(id, fields = {}) {
       Object.values(fields)
     );
     delete user.password;
+    console.log(user, "whats this user?")
     return user;
   } catch (error) {
-    throw error;
+    console.error(error);
   }
 }
 async function updateUserPassword(id, password) {

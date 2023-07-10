@@ -236,50 +236,27 @@ usersRouter.patch(
   requireUser || requireAdmin,
   async (req, res, next) => {
     const { username } = req.params;
-    const { oldPassword, newPassword } = req.body;
+    const updateFields = req.body;
     const isAdmin = req.user.role;
 
     if (isAdmin != "admin") {
-      delete req.body.role;
+      delete updateFields.role;
     }
 
     try {
       const originalUser = await getUserByUsername(username);
-
+      console.log(originalUser, "orgininal user")
+      console.log(updateFields, 'updated fields')
       if (originalUser) {
-        // Validate the old password
-        const isPasswordValid = await validatePassword(username, oldPassword);
+        const updatedUser = await updateUser(originalUser.id, updateFields);
+        console.log(updatedUser,  "this user")
 
-        if (isPasswordValid) {
-          // Check if the new password meets the requirements
-          if (!/(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}/.test(newPassword)) {
-            next({
-              error: "PasswordRequirementsNotMet",
-              message:
-                "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one digit. You can also include optional special characters.",
-              name: "Password Requirements Not Met",
-            });
-            return; // Stop execution if the new password requirements are not met
-          }
-
-          // Update the user's password
-          const updatedUser = await updateUserPassword(
-            originalUser.id,
-            newPassword
-          );
-          res.send(updatedUser);
-        } else {
-          next({
-            name: "InvalidPassword",
-            message: "Invalid old password",
-            error: "Invalid Password",
-          });
-        }
+        res.send(updatedUser);
       } else {
         next({
           name: "UserDoesNotExist",
           message: `User ${username} not found`,
-          error: "User does not exist",
+          Error: "User does not exist",
         });
       }
     } catch ({ name, message, error }) {
