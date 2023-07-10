@@ -201,35 +201,6 @@ usersRouter.delete("/:id", requireAdmin, async (req, res, next) => {
   }
 });
 
-//tested with errors, made new middleware for requireuser or admin
-// usersRouter.patch(
-//   "/:username",
-//   requireUser || requireAdmin,
-//   async (req, res, next) => {
-//     const { username } = req.params;
-//     const updateFields = req.body;
-//     const isAdmin = req.user.role;
-
-//     if (isAdmin != "admin") {
-//       delete updateFields.role;
-//     }
-//     try {
-//       const originalUser = await getUserByUsername(username);
-//       if (originalUser) {
-//         const updatedUser = await updateUser(originalUser.id, updateFields);
-//         res.send(updatedUser);
-//       } else {
-//         next({
-//           name: "UserDoesNotExist",
-//           message: `User ${username} not found`,
-//           Error: "User does not exist",
-//         });
-//       }
-//     } catch ({ name, message, error }) {
-//       next({ name, message, error });
-//     }
-//   }
-// );
 
 usersRouter.patch(
   "/:username",
@@ -245,11 +216,10 @@ usersRouter.patch(
 
     try {
       const originalUser = await getUserByUsername(username);
-      console.log(originalUser, "orgininal user")
-      console.log(updateFields, 'updated fields')
+
       if (originalUser) {
         const updatedUser = await updateUser(originalUser.id, updateFields);
-        console.log(updatedUser,  "this user")
+
 
         res.send(updatedUser);
       } else {
