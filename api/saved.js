@@ -13,8 +13,18 @@ savedRouter.use((req, res, next) => {
 savedRouter.get("/:userId", async (req, res, next) => {
   const  userId  = req.params.userId;
   const user = await getUserById(userId)
+  console.log(userId, "userId")
+  console.log(user, "user in back")
   try {
     const savedWines = await getAllSavedByUserId(user.id);
+    console.log(savedWines)
+    if(!savedWines.length){
+      next({
+        name:"No saved wines",
+        message:"No Saved wines",
+        error:"emptySaved"
+      })
+    }
     res.send(savedWines);
   } catch ({ name, message, error }) {
     next({
