@@ -1,6 +1,10 @@
 const { client } = require("./client");
 const bcrypt = require("bcrypt");
-const { getReviewByUser, updateReview, updateReviewAuthorId } = require("./reviews");
+const {
+  getReviewByUser,
+  updateReview,
+  updateReviewAuthorId,
+} = require("./reviews");
 const { getWineByAuthor, updateWine, updateWineAuthorId } = require("./wines");
 
 async function createUser({
@@ -191,8 +195,6 @@ async function updateUserForeignKeys(userId) {
   }
 }
 
-
-
 async function updateUser(id, fields = {}) {
   const setString = Object.keys(fields)
     .map((key, index) => `"${key}"=$${index + 1}`)
@@ -200,7 +202,7 @@ async function updateUser(id, fields = {}) {
   if (setString.length === 0) {
     return;
   }
-  console.log(id, 'user id')
+  console.log(id, "user id");
   try {
     const {
       rows: [user],
@@ -213,21 +215,46 @@ async function updateUser(id, fields = {}) {
       Object.values(fields)
     );
     delete user.password;
-    console.log(user, "whats this user?")
+    console.log(user, "whats this user?");
     return user;
   } catch (error) {
     console.error(error);
   }
 }
-async function updateUserPassword(id, password) {
-  const saltRound=10;
-  const salt = await bcrypt.genSalt(saltRound);
-
-  const bcryptPassword = await bcrypt.hash(password, salt);
-  console.log(bcryptPassword, "bcrypt")
+async function updateUserPassword(id, oldPassword, newPassword) {
   try {
+    // Fetch the user from the database using the user id
     const {
       rows: [user],
+    } = await client.query(
+      `
+        SELECT * FROM users
+        WHERE id = $1;
+      `,
+      [id]
+    );
+
+    // Check if the user exists
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    // Compare the old password provided by the user with the hashed password stored in the database
+    const isPasswordMatch = await bcrypt.compare(oldPassword, user.password);
+
+    // If the old password doesn't match, throw an error
+    if (!isPasswordMatch) {
+      throw new Error("Invalid old password");
+    }
+
+    // If the old password is verified, hash the new password
+    const saltRound = 10;
+    const salt = await bcrypt.genSalt(saltRound);
+    const bcryptPassword = await bcrypt.hash(newPassword, salt);
+
+    // Update the user's password in the database
+    const {
+      rows: [updatedUser],
     } = await client.query(
       `
         UPDATE users
@@ -237,16 +264,15 @@ async function updateUserPassword(id, password) {
       `,
       [bcryptPassword, id]
     );
-    console.log(user, "user")
-    delete user.password;
-    return bcryptPassword;
 
+    // Remove the hashed password from the updated user object
+    delete updatedUser.password;
 
+    return updatedUser;
   } catch (error) {
     throw error;
   }
 }
-
 
 module.exports = {
   createUser,
@@ -257,5 +283,5 @@ module.exports = {
   deleteUser,
   updateUser,
   updateUserPassword,
-  updateUserForeignKeys
+  updateUserForeignKeys,
 };
