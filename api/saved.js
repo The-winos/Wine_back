@@ -67,11 +67,12 @@ savedRouter.post("/", requireUser, async (req, res, next) => {
 });
 
 // tested requireUserOrAdmin didn't work so we will need to safe gaurd that in the front end to ensure the loggedin user is the one that posted, added, ect
-savedRouter.delete("/:savedId", requireUser || requireAdmin, async (req, res, next)=>{
+savedRouter.delete("/:savedID", requireUser || requireAdmin, async (req, res, next)=>{
+  const {savedID}= req.params;
+  console.log(savedID, "saved Id in API")
   try {
-    const {savedId}= req.params;
-    const save = await getSavedById(savedId);
-    const deletedSave= await removeSaved(save.id)
+    console.log(savedID, "saved Id in API")
+    const deletedSave= await removeSaved(savedID)
     res.send(deletedSave);
   } catch ({name, message, error}) {
     next({

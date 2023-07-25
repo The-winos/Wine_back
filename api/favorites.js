@@ -66,8 +66,7 @@ favoritesRouter.get("/wine/:wineId", async (req, res, next) => {
 favoritesRouter.delete("/:favoriteId", requireUser || requireAdmin, async (req, res, next)=>{
   try {
     const {favoriteId}= req.params;
-    const favorite = await getFavoritedById(favoriteId);
-    const deletedFavorite= await removeFavorite(favorite.id)
+    const deletedFavorite= await removeFavorite(favoriteId)
     res.send(deletedFavorite);
   } catch ({name, message, error}) {
     next({
