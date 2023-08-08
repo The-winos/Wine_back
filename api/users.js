@@ -1,6 +1,7 @@
 const express = require("express");
 const usersRouter = express.Router();
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 const { getReviewByUser } = require("../db/reviews");
 const {
   getUser,
@@ -248,16 +249,36 @@ usersRouter.get("/:id/reviews", async (req, res, next) => {
   }
 });
 
+
 usersRouter.patch("/:id/password", requireUser, async (req, res, next) => {
   const { id } = req.params;
-  const { password } = req.body;
+  const { password, newPassword } = req.body;
+  console.log("I'm getting in")
+
   try {
-    const updatedUser = await updateUserPassword(id, password);
-    res.send(updatedUser);
+    // Get the current user's hashed password from the database
+    const currentUser = await getUserById(id);
+    console.log(currentUser, "CurrentUser")
+    const username = currentUser.username
+    const userNameUser = await getUser({username, password})
+
+    console.log("I'm at try")
+    if (userNameUser) {
+      // Hash the new password
+      const hashedNewPassword = await bcrypt.hash(newPassword, 10); // 10 is the number of rounds for hashing
+
+      // Update the user's password
+      const updatedUser = await updateUserPassword(id, hashedNewPassword);
+      console.log("I'm at updateUser", updateUser)
+      res.send(updatedUser);
+    } else {
+      res.status(400).send("Current password does not match.");
+    }
   } catch (error) {
     next(error);
   }
 });
+
 
 usersRouter.patch(
   "/:id/admin/password",

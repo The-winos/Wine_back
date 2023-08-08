@@ -74,6 +74,8 @@ async function createUser({
 }
 
 async function getUser({ username, password }) {
+  console.log("Hello??")
+  console.log(username, password)
   try {
     const user = await getUserByUsername(username);
     const hashedPassword = user.password;
@@ -221,7 +223,7 @@ async function updateUser(id, fields = {}) {
     console.error(error);
   }
 }
-async function updateUserPassword(id, oldPassword, newPassword) {
+async function updateUserPassword(id, password ) {
   try {
     // Fetch the user from the database using the user id
     const {
@@ -239,18 +241,6 @@ async function updateUserPassword(id, oldPassword, newPassword) {
       throw new Error("User not found");
     }
 
-    // Compare the old password provided by the user with the hashed password stored in the database
-    const isPasswordMatch = await bcrypt.compare(oldPassword, user.password);
-
-    // If the old password doesn't match, throw an error
-    if (!isPasswordMatch) {
-      throw new Error("Invalid old password");
-    }
-
-    // If the old password is verified, hash the new password
-    const saltRound = 10;
-    const salt = await bcrypt.genSalt(saltRound);
-    const bcryptPassword = await bcrypt.hash(newPassword, salt);
 
     // Update the user's password in the database
     const {
@@ -262,13 +252,13 @@ async function updateUserPassword(id, oldPassword, newPassword) {
         WHERE id = $2
         RETURNING *;
       `,
-      [bcryptPassword, id]
+      [password, id]
     );
 
     // Remove the hashed password from the updated user object
-    delete updatedUser.password;
 
-    return updatedUser;
+
+    return updatedUser.password;
   } catch (error) {
     throw error;
   }
