@@ -36,7 +36,7 @@ async function createUser({
       rows: [user],
     } = await client.query(
       `
-  INSERT INTO users(username, password, name, state, avatar, role, email, bio, birthday, follower_count, following_count)
+  INSERT INTO users(username, password, name, state, avatar, role, email, bio, birthday, follower_count, following_count, join_date)
   VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
   ON CONFLICT (username) DO NOTHING
   RETURNING *;
