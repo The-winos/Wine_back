@@ -12,6 +12,7 @@ const userData = [
     birthday: "1992-01-01",
     follower_count: 0,
     following_count: 0,
+    join_date: "2023-01-01"
   },
   {
     username: "cutegeek",
@@ -25,6 +26,7 @@ const userData = [
     birthday: "1986-04-21",
     follower_count: 0,
     following_count: 0,
+    join_date: "2023-01-01",
   },
   {
     username: "Deleted User",
@@ -38,6 +40,7 @@ const userData = [
     birthday: "1986-04-21",
     follower_count: 0,
     following_count: 0,
+    join_date: "2023-01-01",
   },
 
   {
@@ -51,6 +54,7 @@ const userData = [
     birthday: "1975-04-15",
     follower_count: 0,
     following_count: 0,
+    join_date: "2023-01-01",
   },
   {
     username: "sistersubie",
@@ -63,6 +67,7 @@ const userData = [
     birthday: "1956-09-18",
     follower_count: 0,
     following_count: 0,
+    join_date: "2023-01-01",
   },
   {
     username: "gapiesco",
@@ -75,6 +80,7 @@ const userData = [
     birthday: "1955-06-02",
     follower_count: 0,
     following_count: 0,
+    join_date: "2023-01-01",
   },
   {
     username: "lexsan7393",
@@ -87,6 +93,7 @@ const userData = [
     birthday: "1993-07-03",
     follower_count: 0,
     following_count: 0,
+    join_date: "2023-01-01",
   },
   {
     username: "bdizzle",
@@ -99,6 +106,7 @@ const userData = [
     birthday: "1986-10-06",
     follower_count: 0,
     following_count: 0,
+    join_date: "2023-01-01",
   },
   {
     username: "anthrogirl80",
@@ -111,6 +119,7 @@ const userData = [
     birthday: "1986-01-06",
     follower_count: 0,
     following_count: 0,
+    join_date: "2023-01-01",
   },
 ];
 
