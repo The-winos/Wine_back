@@ -61,6 +61,7 @@ usersRouter.post("/register", async (req, res, next) => {
     birthday,
     follower_count,
     following_count,
+    join_date
   } = req.body;
 
   try {
@@ -109,6 +110,7 @@ usersRouter.post("/register", async (req, res, next) => {
           birthday,
           follower_count,
           following_count,
+          join_date,
         });
 
         const token = jwt.sign(newUser, process.env.JWT_SECRET, {

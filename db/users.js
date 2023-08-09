@@ -19,6 +19,7 @@ async function createUser({
   birthday,
   follower_count,
   following_count,
+  join_date,
   welcome,
   total_reviews,
   total_uploads,
@@ -36,7 +37,7 @@ async function createUser({
     } = await client.query(
       `
   INSERT INTO users(username, password, name, state, avatar, role, email, bio, birthday, follower_count, following_count)
-  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
   ON CONFLICT (username) DO NOTHING
   RETURNING *;
   `,
@@ -52,6 +53,7 @@ async function createUser({
         birthday,
         follower_count,
         following_count,
+        join_date,
       ]
     );
     delete user.password;

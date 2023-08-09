@@ -89,7 +89,8 @@ async function createTables() {
       bio VARCHAR(500),
       birthday DATE NOT NULL,
       follower_count INT NOT NULL DEFAULT (0),
-      following_count INT NOT NULL DEFAULT (0)
+      following_count INT NOT NULL DEFAULT (0),
+      join_date DATE
     );
 
     CREATE TYPE wine_type AS ENUM ('Cabernet','Syrah','Zinfandel','Pinot Noir','Merlot','Malbec','Tempranillo','Riesling','Pinot Grigio','Sauvignon Blanc','Chardonnay','Moscato','Red Blend','White Blend','TreTerzi', 'Petite Sirah', 'Rose', 'White Zinfandel', 'Other');
