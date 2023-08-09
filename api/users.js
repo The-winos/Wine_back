@@ -253,10 +253,10 @@ usersRouter.get("/:id/reviews", async (req, res, next) => {
 usersRouter.patch("/:id/password", requireUser, async (req, res, next) => {
   const { id } = req.params;
   const { password, newPassword } = req.body;
-  console.log("I'm getting in")
+
 
   try {
-    // Get the current user's hashed password from the database
+
     const currentUser = await getUserById(id);
     console.log(currentUser, "CurrentUser")
     const username = currentUser.username
@@ -264,10 +264,10 @@ usersRouter.patch("/:id/password", requireUser, async (req, res, next) => {
 
     console.log("I'm at try")
     if (userNameUser) {
-      // Hash the new password
-      const hashedNewPassword = await bcrypt.hash(newPassword, 10); // 10 is the number of rounds for hashing
 
-      // Update the user's password
+      const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+
+
       const updatedUser = await updateUserPassword(id, hashedNewPassword);
       console.log("I'm at updateUser", updateUser)
       res.send(updatedUser);
@@ -287,7 +287,8 @@ usersRouter.patch(
     const { id } = req.params;
     const { password } = req.body;
     try {
-      const updatedUser = await updateUserPassword(id, password);
+      const hashedPassword= await bcrypt.hash(password, 10);
+      const updatedUser = await updateUserPassword(id, hashedPassword);
       res.send(updatedUser);
     } catch (error) {
       next(error);
