@@ -121,6 +121,19 @@ const userData = [
     following_count: 0,
     join_date: "2023-01-01",
   },
+  {
+    username: "corkstester",
+    password: "Test1234",
+    name: "Corks",
+    state: "Colorado",
+    avatar: "character_1.png",
+    role: "user",
+    email: "corkstester@gmail.com",
+    birthday: "1990-07-04",
+    follower_count: 0,
+    following_count: 0,
+    join_date: "2023-09-11",
+  },
 ];
 
 //wine post
