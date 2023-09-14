@@ -93,7 +93,7 @@ async function createTables() {
       join_date DATE
     );
 
-    CREATE TYPE wine_type AS ENUM ('Cabernet','Syrah','Zinfandel','Pinot Noir','Merlot','Malbec','Tempranillo','Riesling','Pinot Grigio','Sauvignon Blanc','Chardonnay','Moscato','Red Blend','White Blend','TreTerzi', 'Petite Sirah', 'Rose', 'White Zinfandel', 'Other');
+    CREATE TYPE wine_type AS ENUM ('Cabernet','Syrah','Zinfandel','Pinot Noir','Merlot','Malbec','Tempranillo','Riesling','Pinot Grigio','Sauvignon Blanc','Chardonnay','Moscato','Red Blend','White Blend','TreTerzi', 'Petite Sirah', 'Rose', 'White Zinfandel', 'Sparkling', 'Champagne', 'Other');
 
     CREATE TABLE wines(
       id SERIAL PRIMARY KEY,
