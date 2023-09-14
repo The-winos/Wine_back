@@ -296,7 +296,7 @@ const wineData = [
   {
     author_id: 1,
     name: "Moet & Chandon Imperial",
-    image_url: "3-reddish-purple_wine.png",
+    image_url: "2-purple_wine.png",
     region: "France",
     flavor: "Champagne",
   },
@@ -359,7 +359,7 @@ const wineData = [
   {
     author_id: 1,
     name: "Anton Bauer Ried Gmirk Grüner Veltliner",
-    image_url: "3-reddish-purple_wine.png",
+    image_url: "1-green_wine.png",
     region: "Austria",
     flavor: "Other",
   },
