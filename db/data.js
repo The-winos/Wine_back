@@ -279,6 +279,20 @@ const wineData = [
     region: "Bulgaria",
     flavor: "Cabernet",
   },
+  {
+    author_id: 5,
+    name: "Chateau Haut-Landon Bordeaux",
+    image_url: "3-reddish-purple_wine.png",
+    region: "France",
+    flavor: "Red Blend",
+  },
+  {
+    author_id: 2,
+    name: "Kirkland Sangria",
+    image_url: "3-reddish-purple_wine.png",
+    region: "Spain",
+    flavor: "Other",
+  },
 ];
 
 const reviewData = [
@@ -606,6 +620,26 @@ const reviewData = [
     review_comment: "Pretty sweet for a red wine! I like it.",
     review_date: "2023-05-23",
     location: "Restaurant",
+  },
+  {
+    wine_id: 20,
+    user_id: 5,
+    name: "Nice low priced French wine",
+    rating: 4,
+    price: 800,
+    review_comment: "Maybe not for you connoisseur but definitely good enough for your nightly glass.",
+    review_date: "2023-09-14",
+    location: "Costco",
+  },
+  {
+    wine_id: 21,
+    user_id: 2,
+    name: "Bit sweet",
+    rating: 2,
+    price: 799,
+    review_comment: "It's a bit sweet for my taste but it's really good mixed with a seltzer, hard or non alcoholic. Put with some ice it's a really nice drink. Rated low as you have to doctor it to make it good.",
+    review_date: "2023-09-14",
+    location: "Costco",
   },
 ];
 
