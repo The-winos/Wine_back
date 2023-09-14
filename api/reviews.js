@@ -65,7 +65,6 @@ reviewsRouter.post("/", requireUser, async (req, res, next) => {
       location,
     };
     const possibleReview = await getReviewByUser(user_id);
-    console.log("Review?", possibleReview.wine_id);
     if (possibleReview.length > 0) {
       const existingReview = possibleReview.some(
         (review) => review.wine_id === wine_id
@@ -78,7 +77,7 @@ reviewsRouter.post("/", requireUser, async (req, res, next) => {
       } else {
         next({
           name: "UserReviewExists",
-          message: `A review with that wine ${wine_id} already exists`,
+          message: `You have already reviewed this wine.`,
           error: "UserReviewExists",
         });
       }
