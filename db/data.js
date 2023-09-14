@@ -136,6 +136,10 @@ const userData = [
   },
 ];
 
+//////////////////
+//*WINE*CELLAR*//
+////////////////
+
 //wine post
 const wineData = [
   {
@@ -365,12 +369,16 @@ const wineData = [
   },
   {
     author_id: 1,
-    name: "Viña Albali ",
+    name: "Viña Albali",
     image_url: "3-reddish-purple_wine.png",
     region: "Spain",
     flavor: "Tempranillo",
   },
 ];
+
+//////////////////
+//*USER*REVIEWS//
+////////////////
 
 const reviewData = [
   {
@@ -719,6 +727,65 @@ const reviewData = [
       "It's a bit sweet for my taste but it's really good mixed with a seltzer, hard or non alcoholic. Put with some ice it's a really nice drink. Rated low as you have to doctor it to make it good.",
     review_date: "2023-09-14",
     location: "Costco",
+  },
+  {
+    wine_id: 32,
+    user_id: 1,
+    name: "Airplane wine",
+    rating: 3,
+    price: 799,
+    review_comment:
+      "I had it on a flight. Can't say I was too impressed nor was it bad.",
+    review_date: "2021-10-05",
+  },
+  {
+    wine_id: 31,
+    user_id: 1,
+    name: "Small town hotel bar wine",
+    rating: 3,
+    price: 1299,
+    review_comment:
+      "I found a new bar to study and work from. The bartender recommended this one.",
+    review_date: "2023-07-13",
+  },
+  {
+    wine_id: 30,
+    user_id: 1,
+    name: "Rolling Pin",
+    rating: 5,
+    price: 499,
+    review_comment:
+      "Nice after rolling pastry dough. Was my best friend's birthday.",
+    review_date: "2022-06-02",
+  },
+  {
+    wine_id: 29,
+    user_id: 1,
+    name: "When in Rome",
+    rating: 5,
+    price: 1099,
+    review_comment:
+      "Actually this was in Toledo. Went by train to salute with a wine bottle at each tapa! This wine was great, and not too expensive.",
+    review_date: "2021-10-13",
+  },
+  {
+    wine_id: 28,
+    user_id: 1,
+    name: "Madrid",
+    rating: 4,
+    price: 1099,
+    review_comment:
+      "A pit stop to a cute bar in Cortes. Tempranillo is a common wine in this area. It a subtle wine.",
+    review_date: "2021-10-11",
+  },
+  {
+    wine_id: 27,
+    user_id: 1,
+    name: "Seville",
+    rating: 5,
+    price: 1099,
+    review_comment: "Awesome wine at an awesome restaurant for fish tapas.",
+    review_date: "2021-10-11",
   },
 ];
 
