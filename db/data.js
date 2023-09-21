@@ -736,7 +736,7 @@ const reviewData = [
     price: 799,
     review_comment:
       "I had it on a flight. Can't say I was too impressed nor was it bad.",
-    review_date: "2021-10-05",
+    review_date: "2023-09-05",
   },
   {
     wine_id: 31,
@@ -756,7 +756,7 @@ const reviewData = [
     price: 499,
     review_comment:
       "Nice after rolling pastry dough. Was my best friend's birthday.",
-    review_date: "2022-06-02",
+    review_date: "2023-06-02",
   },
   {
     wine_id: 29,
@@ -766,7 +766,7 @@ const reviewData = [
     price: 1099,
     review_comment:
       "Actually this was in Toledo. Went by train to salute with a wine bottle at each tapa! This wine was great, and not too expensive.",
-    review_date: "2021-10-13",
+    review_date: "2023-09-13",
   },
   {
     wine_id: 28,
@@ -776,7 +776,7 @@ const reviewData = [
     price: 1099,
     review_comment:
       "A pit stop to a cute bar in Cortes. Tempranillo is a common wine in this area. It a subtle wine.",
-    review_date: "2021-10-11",
+    review_date: "2023-09-11",
   },
   {
     wine_id: 26,
@@ -785,7 +785,7 @@ const reviewData = [
     rating: 5,
     price: 1099,
     review_comment: "Awesome wine at an awesome restaurant for fish tapas.",
-    review_date: "2021-10-11",
+    review_date: "2023-09-11",
   },
   {
     wine_id: 25,
@@ -794,7 +794,7 @@ const reviewData = [
     rating: 3,
     price: 2099,
     review_comment: "Paired nicely with anchovies, but a little pricey.",
-    review_date: "2021-10-08",
+    review_date: "2023-09-08",
   },
   {
     wine_id: 24,
@@ -803,7 +803,7 @@ const reviewData = [
     rating: 4,
     price: 1399,
     review_comment: "Nice price, good with typical tapas and seafood.",
-    review_date: "2021-10-06",
+    review_date: "2023-09-06",
   },
   {
     wine_id: 23,
@@ -813,7 +813,7 @@ const reviewData = [
     price: 2099,
     review_comment:
       "I'm not sure how much we spent since it was overseas. We briefly stayed in Bern and made a picnic in our hotel. This was nice with some local bread, cheese, chestnuts, and sausage.",
-    review_date: "2021-10-01",
+    review_date: "2023-09-01",
   },
   {
     wine_id: 22,
@@ -823,7 +823,7 @@ const reviewData = [
     price: 599,
     review_comment:
       "Oh my god. I was traveling in Japan on a solo trip however I met friends in Sapporo for the 69th snow festival. After plenty of walking and celebrating, we saluted with a good champagne. Memorable!",
-    review_date: "2018-02-07",
+    review_date: "2023-02-07",
   },
 ];
 
