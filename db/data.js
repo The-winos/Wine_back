@@ -293,7 +293,7 @@ const wineData = [
   {
     author_id: 2,
     name: "Kirkland Sangria",
-    image_url: "3-reddish-purple_wine.png",
+    image_url: "2-purple_wine.png",
     region: "Spain",
     flavor: "Other",
   },
@@ -363,7 +363,7 @@ const wineData = [
   {
     author_id: 1,
     name: "Anton Bauer Ried Gmirk Grüner Veltliner",
-    image_url: "1-green_wine.png",
+    image_url: "2-purple_wine.png",
     region: "Austria",
     flavor: "Other",
   },

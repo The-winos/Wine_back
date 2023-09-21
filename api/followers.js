@@ -8,6 +8,7 @@ const {
   getFollowerById,
   deleteFollowersByUserId,
   deleteFollowersByFollowerId,
+  getAllFollowers,
 } = require("../db/followers");
 const followersRouter = express.Router();
 const { requireUser } = require("./utils");
@@ -87,8 +88,10 @@ followersRouter.post("/:user_id", requireUser, async (req, res, next) => {
   const { user_id } = req.params;
   const { follower_id } = req.body; // retrieve the follower ID from the request body
   const updateFields = req.body;
+  console.log(user_id, "what's this?")
   try {
-    const originalFollower = await getFollowingByUser({ user_id });
+    const originalFollower = await getFollowingByUser(user_id );
+    console.log(originalFollower, "orginalFollower")
 
     if (originalFollower) {
       const updatedFollower = await addFollower({user_id, follower_id}); // pass in the user ID and follower ID
