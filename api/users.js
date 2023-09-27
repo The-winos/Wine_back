@@ -53,6 +53,7 @@ usersRouter.post("/register", async (req, res, next) => {
   let {
     username,
     password,
+    name,
     state,
     avatar,
     role,
@@ -61,9 +62,9 @@ usersRouter.post("/register", async (req, res, next) => {
     birthday,
     follower_count,
     following_count,
-    join_date
+    join_date,
   } = req.body;
-
+  console.log("This is the API bDAY", birthday);
   try {
     const user = await getUserByUsername(username);
 
@@ -87,21 +88,24 @@ usersRouter.post("/register", async (req, res, next) => {
       birthday = birthday.substring(0, 10);
 
       // Convert birthday to a Date object
-      birthday = new Date(birthday);
+      checkBirthday = new Date(birthday);
 
-      if (new Date().getFullYear() - birthday.getFullYear() < 21) {
+      if (new Date().getFullYear() - checkBirthday.getFullYear() < 21) {
         next({
           error: "UnderageRegistration",
           message: "You must be at least 21 years old to register.",
           name: "Underage Registration",
         });
       } else {
-        // Format birthday to "YYYY-MM-DD" without time stamp
-        birthday = birthday.toISOString().substring(0, 10);
+        console.log("Received birthday:", birthday);
+        console.log("Received join_date:", join_date);
+
+        console.log("Formatted join_date:", join_date);
 
         const newUser = await createUser({
           username,
           password,
+          name,
           state,
           avatar,
           role,
@@ -204,7 +208,6 @@ usersRouter.delete("/:id", requireAdmin, async (req, res, next) => {
   }
 });
 
-
 usersRouter.patch(
   "/:username",
   requireUser || requireAdmin,
@@ -222,7 +225,6 @@ usersRouter.patch(
 
       if (originalUser) {
         const updatedUser = await updateUser(originalUser.id, updateFields);
-
 
         res.send(updatedUser);
       } else {
@@ -251,27 +253,22 @@ usersRouter.get("/:id/reviews", async (req, res, next) => {
   }
 });
 
-
 usersRouter.patch("/:id/password", requireUser, async (req, res, next) => {
   const { id } = req.params;
   const { password, newPassword } = req.body;
 
-
   try {
-
     const currentUser = await getUserById(id);
-    console.log(currentUser, "CurrentUser")
-    const username = currentUser.username
-    const userNameUser = await getUser({username, password})
+    console.log(currentUser, "CurrentUser");
+    const username = currentUser.username;
+    const userNameUser = await getUser({ username, password });
 
-    console.log("I'm at try")
+    console.log("I'm at try");
     if (userNameUser) {
-
       const hashedNewPassword = await bcrypt.hash(newPassword, 10);
 
-
       const updatedUser = await updateUserPassword(id, hashedNewPassword);
-      console.log("I'm at updateUser", updateUser)
+      console.log("I'm at updateUser", updateUser);
       res.send(updatedUser);
     } else {
       res.status(400).send("Current password does not match.");
@@ -281,7 +278,6 @@ usersRouter.patch("/:id/password", requireUser, async (req, res, next) => {
   }
 });
 
-
 usersRouter.patch(
   "/:id/admin/password",
   requireAdmin,
@@ -289,7 +285,7 @@ usersRouter.patch(
     const { id } = req.params;
     const { password } = req.body;
     try {
-      const hashedPassword= await bcrypt.hash(password, 10);
+      const hashedPassword = await bcrypt.hash(password, 10);
       const updatedUser = await updateUserPassword(id, hashedPassword);
       res.send(updatedUser);
     } catch (error) {
