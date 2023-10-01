@@ -374,6 +374,13 @@ const wineData = [
     region: "Spain",
     flavor: "Tempranillo",
   },
+  {
+    author_id: 5,
+    name: "Carnivor",
+    image_url: "3-reddish-purple_wine.png",
+    region: "California",
+    flavor: "Cabernet",
+  },
 ];
 
 //////////////////
@@ -824,6 +831,25 @@ const reviewData = [
     review_comment:
       "Oh my god. I was traveling in Japan on a solo trip however I met friends in Sapporo for the 69th snow festival. After plenty of walking and celebrating, we saluted with a good champagne. Memorable!",
     review_date: "2023-02-07",
+  },
+  {
+    wine_id: 33,
+    user_id: 5,
+    name: "Nice change of pace",
+    rating: 4,
+    price: 1199,
+    review_comment:
+      "I really enjoy this wine, its a different flavor than other Cabs.",
+    review_date: "2023-10-01",
+  },
+  {
+    wine_id: 33,
+    user_id: 2,
+    name: "Too dry for me",
+    rating: 3,
+    review_comment:
+      "It's a good wine but it's a bit too dry for me. It used to be one of my favorites but my taste buds have changed. It's still a good wine but no longer a favorite.",
+    review_date: "2023-10-01",
   },
 ];
 
