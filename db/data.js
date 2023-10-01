@@ -872,6 +872,7 @@ const reviewData = [
     review_comment:
       "I really enjoy this wine, its a different flavor than other Cabs.",
     review_date: "2023-10-01",
+    location:"Liquor Store"
   },
   {
     wine_id: 33,
