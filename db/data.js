@@ -736,6 +736,27 @@ const reviewData = [
     location: "Costco",
   },
   {
+    wine_id: 22,
+    user_id: 1,
+    name: "Sapporo Odori Park with friends",
+    rating: 5,
+    price: 599,
+    review_comment:
+      "Oh my god. I was traveling in Japan on a solo trip however I met friends in Sapporo for the 69th snow festival. After plenty of walking and celebrating, we saluted with a good champagne. Memorable!",
+    review_date: "2023-02-07",
+  },
+  {
+    wine_id: 23,
+    user_id: 1,
+    name: "When in Bern, Switzerland",
+    rating: 5,
+    price: 2099,
+    review_comment:
+      "I'm not sure how much we spent since it was overseas. We briefly stayed in Bern and made a picnic in our hotel. This was nice with some local bread, cheese, chestnuts, and sausage.",
+    review_date: "2023-09-01",
+  },
+
+  {
     wine_id: 32,
     user_id: 1,
     name: "Airplane wine",
@@ -786,12 +807,21 @@ const reviewData = [
     review_date: "2023-09-11",
   },
   {
-    wine_id: 26,
+    wine_id: 27,
     user_id: 1,
     name: "Seville",
     rating: 5,
     price: 1099,
     review_comment: "Awesome wine at an awesome restaurant for fish tapas.",
+    review_date: "2023-09-09",
+  },
+  {
+    wine_id: 26,
+    user_id: 1,
+    name: "Santa Cruz Seville",
+    rating: 5,
+    price: 1099,
+    review_comment: "Paired nicely with anchovies, but a little pricey.",
     review_date: "2023-09-11",
   },
   {
@@ -812,6 +842,7 @@ const reviewData = [
     review_comment: "Nice price, good with typical tapas and seafood.",
     review_date: "2023-09-06",
   },
+
   {
     wine_id: 23,
     user_id: 1,
@@ -851,6 +882,7 @@ const reviewData = [
       "It's a good wine but it's a bit too dry for me. It used to be one of my favorites but my taste buds have changed. It's still a good wine but no longer a favorite.",
     review_date: "2023-10-01",
   },
+
 ];
 
 module.exports = {
