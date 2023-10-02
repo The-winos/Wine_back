@@ -6,6 +6,13 @@ const {
   updateReviewAuthorId,
 } = require("./reviews");
 const { getWineByAuthor, updateWine, updateWineAuthorId } = require("./wines");
+const nodemailer = require('nodemailer');
+const transporter = nodemailer.createTransport({
+  service: 'outlook',
+  auth: {
+    user: 'corks_connect',
+    pass: process.env.EMAIL_PASS,}
+});
 
 async function createUser({
   username,
@@ -99,6 +106,25 @@ async function getUserById(user_id) {
     SELECT*
     FROM users
     WHERE id=${user_id}
+    `);
+    if (!user) {
+      return null;
+    }
+    delete user.password;
+    return user;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function getUserByEmail(email) {
+  try {
+    const {
+      rows: [user],
+    } = await client.query(`
+    SELECT*
+    FROM users
+    WHERE email=${email}
     `);
     if (!user) {
       return null;
@@ -265,6 +291,31 @@ async function updateUserPassword(id, password ) {
     throw error;
   }
 }
+async function sendPasswordResetEmail (toEmail, resetToken) {
+    // Email content
+    const mailOptions = {
+      from: 'corks_connect@outlook.com',
+      to: toEmail,
+      subject: 'Password Reset',
+      html: `
+        <p>You have requested to reset your password.</p>
+        <p>Click the following link to reset your password:</p>
+        <a href="http://localhost:3000//reset-password/${resetToken}">Reset Password</a>
+      `,
+    };
+
+    // Send the email
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error('Error sending password reset email:', error);
+      } else {
+        console.log('Password reset email sent:', info.response);
+      }
+    });
+  };
+
+
+
 
 module.exports = {
   createUser,
@@ -276,4 +327,6 @@ module.exports = {
   updateUser,
   updateUserPassword,
   updateUserForeignKeys,
+  getUserByEmail,
+  sendPasswordResetEmail
 };
