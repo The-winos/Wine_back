@@ -2,6 +2,7 @@ const express = require("express");
 const usersRouter = express.Router();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const crypto = require('crypto');
 const { getReviewByUser } = require("../db/reviews");
 const {
   getUser,
@@ -13,6 +14,7 @@ const {
   getUserById,
   updateUserPassword,
   updateUserForeignKeys,
+  getUserByEmail,
 } = require("../db/users");
 const { requireAdmin, requireUser, requireUserOrAdmin } = require("./utils");
 
@@ -288,6 +290,30 @@ usersRouter.patch(
       const hashedPassword = await bcrypt.hash(password, 10);
       const updatedUser = await updateUserPassword(id, hashedPassword);
       res.send(updatedUser);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+usersRouter.post(
+  "/password-reset",
+  async (req, res, next) => {
+    const { email } = req.body;
+    const user = getUserByEmail(email)
+
+    if(!user){
+      return res.status(404).json({ message: "email not found" });
+
+    }
+    try {
+      if (user) {
+        const resetToken = crypto.randomBytes(32).toString('hex');
+         sendPasswordResetEmail(user.email, resetToken);
+        res.status(200).json({ message: "Password reset email sent" });
+      }
+
+
     } catch (error) {
       next(error);
     }
