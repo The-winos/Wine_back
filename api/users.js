@@ -297,7 +297,7 @@ usersRouter.patch(
 );
 
 usersRouter.post(
-  "/reset-password",
+  "/password-reset",
   async (req, res, next) => {
     const { email } = req.body;
     const user = getUserByEmail(email)
