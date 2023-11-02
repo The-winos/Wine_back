@@ -8,7 +8,7 @@ const userData = [
     avatar: "avatarJen.png",
     role: "admin",
     email: "dumdum@dumdum.com",
-    bio: "Hi, bom dia, bonjour, ciao, I'm a co-creator of CORKS! I'm a landscape architect, planner, licensed arborist and software engineer based in Raleigh, North Carolina. Developing this wine App is a fun challenge; Through sharing wine reviews, CORKS invites other developers and users to grow our cyber-cellar... Welcome to the CORKS database!",
+    bio: "Hi, bom dia, bonjour, ciao, I'm a co-creator of CORKS! I'm a landscape architect planner, licensed arborist and software engineer based in Raleigh, North Carolina. Developing this wine App is a fun challenge; Through sharing wine reviews, CORKS invites other developers and users to grow our cyber-cellar... Welcome to the CORKS database!",
     birthday: "1992-01-01",
     follower_count: 0,
     following_count: 0,
