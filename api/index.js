@@ -62,6 +62,9 @@ apiRouter.use("/users", usersRouter);
 const winesRouter = require("./wines");
 apiRouter.use("/wines", winesRouter);
 
+const tokenRouter = require("./token");
+apiRouter.use("/token", tokenRouter);
+
 apiRouter.use((error, req, res, next) => {
   error.error == "Unauthorized" && res.status(401);
   const errorObj = {
