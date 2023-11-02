@@ -60,6 +60,7 @@ async function dropTables() {
       DROP TABLE IF EXISTS reviews;
       DROP TABLE IF EXISTS wines;
       DROP TABLE IF EXISTS followers;
+      DROP TABLE IF EXISTS password_reset_tokens;
       DROP TABLE IF EXISTS users;
       DROP TYPE IF EXISTS user_role;
       DROP TYPE IF EXISTS wine_type;
@@ -92,6 +93,15 @@ async function createTables() {
       following_count INT NOT NULL DEFAULT (0),
       join_date DATE
     );
+
+    CREATE TABLE password_reset_tokens (
+      id SERIAL PRIMARY KEY,
+      user_id INT REFERENCES users(id),
+      token VARCHAR(255) NOT NULL,
+      created_at TIMESTAMPTZ DEFAULT NOW(),
+      expires_at TIMESTAMPTZ
+    );
+
 
     CREATE TYPE wine_type AS ENUM ('Cabernet','Syrah','Zinfandel','Pinot Noir','Merlot','Malbec','Tempranillo','Riesling','Pinot Grigio','Sauvignon Blanc','Chardonnay','Moscato','Red Blend','White Blend','TreTerzi', 'Petite Sirah', 'Rose', 'White Zinfandel', 'Sparkling', 'Champagne', 'Other');
 

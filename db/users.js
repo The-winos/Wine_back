@@ -291,28 +291,29 @@ async function updateUserPassword(id, password ) {
     throw error;
   }
 }
-async function sendPasswordResetEmail (toEmail, resetToken) {
-    // Email content
-    const mailOptions = {
-      from: 'corks_connect@outlook.com',
-      to: toEmail,
-      subject: 'Password Reset',
-      html: `
-        <p>You have requested to reset your password.</p>
-        <p>Click the following link to reset your password:</p>
-        <a href="http://localhost:3000//reset-password/${resetToken}">Reset Password</a>
-      `,
-    };
-
-    // Send the email
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        console.error('Error sending password reset email:', error);
-      } else {
-        console.log('Password reset email sent:', info.response);
-      }
-    });
+async function sendPasswordResetEmail(toEmail, resetToken) {
+  // Email content
+  const mailOptions = {
+    from: 'corks_connect@outlook.com',
+    to: toEmail,
+    subject: 'Password Reset',
+    html: `
+      <p>You have requested to reset your password.</p>
+      <p>Click the following link to reset your password, this link will expire in one hour:</p>
+      <a href="http://localhost:3000/reset-password/${resetToken}">Reset Password</a>
+    `,
   };
+
+  // Send the email
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error('Error sending password reset email:', error);
+    } else {
+      console.log('Password reset email sent:', info.response);
+    }
+  });
+}
+
 
 
 
