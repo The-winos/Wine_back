@@ -311,12 +311,10 @@ usersRouter.post("/password-reset", async (req, res, next) => {
   try {
     if (user) {
       const resetToken = crypto.randomBytes(32).toString("hex");
-      console.log(user.id, "do you see it here?");
       await createToken(user.id, resetToken);
 
       try {
         // Send the password reset email with the generated token
-        console.log(user.email, "try here");
         sendPasswordResetEmail(user.email, resetToken);
 
         res.status(200).json({ message: "Password reset email sent" });
