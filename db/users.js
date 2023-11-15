@@ -1,5 +1,6 @@
 const { client } = require("./client");
 const bcrypt = require("bcrypt");
+
 const {
   getReviewByUser,
   updateReview,
@@ -10,7 +11,7 @@ const nodemailer = require('nodemailer');
 const transporter = nodemailer.createTransport({
   service: 'outlook',
   auth: {
-    user: 'corks_connect',
+    user: 'corks_connect@outlook.com',
     pass: process.env.EMAIL_PASS,}
 });
 
@@ -121,20 +122,28 @@ async function getUserByEmail(email) {
   try {
     const {
       rows: [user],
-    } = await client.query(`
-    SELECT*
-    FROM users
-    WHERE email=${email}
-    `);
+    } = await client.query(
+      `
+      SELECT *
+      FROM users
+      WHERE email = $1
+      `,
+      [email]
+    );
+
     if (!user) {
       return null;
     }
+
     delete user.password;
+    console.log(user, "this is user")
     return user;
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    throw error;
   }
 }
+
 
 async function getUserByUsername(username) {
   try {
@@ -293,14 +302,16 @@ async function updateUserPassword(id, password ) {
 }
 async function sendPasswordResetEmail(toEmail, resetToken) {
   // Email content
+  console.log(toEmail, "should be email")
   const mailOptions = {
     from: 'corks_connect@outlook.com',
     to: toEmail,
     subject: 'Password Reset',
     html: `
-      <p>You have requested to reset your password.</p>
+      <p>You have requested to reset your password for CORKS.</p>
       <p>Click the following link to reset your password, this link will expire in one hour:</p>
       <a href="http://localhost:3000/reset-password/${resetToken}">Reset Password</a>
+      <p>If you did not request this, please disregard this email. </p>
     `,
   };
 
@@ -312,6 +323,31 @@ async function sendPasswordResetEmail(toEmail, resetToken) {
       console.log('Password reset email sent:', info.response);
     }
   });
+}
+
+async function createToken(user_id, resetToken
+) {
+
+
+  // Set the token expiration to 1 hour from the current time
+  const expirationTime = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
+
+  try {
+    const {
+      rows: [password_reset],
+    } = await client.query(
+      `
+  INSERT INTO password_reset_tokens(user_id, token, expires_at)
+  VALUES ($1, $2, $3)
+  RETURNING *;
+  `,
+      [user_id, resetToken, expirationTime]
+    );
+
+    return password_reset;
+  } catch (error) {
+    throw error;
+  }
 }
 
 
@@ -329,5 +365,6 @@ module.exports = {
   updateUserPassword,
   updateUserForeignKeys,
   getUserByEmail,
-  sendPasswordResetEmail
+  sendPasswordResetEmail,
+  createToken
 };

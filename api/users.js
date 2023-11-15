@@ -2,7 +2,8 @@ const express = require("express");
 const usersRouter = express.Router();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const crypto = require('crypto');
+const crypto = require("crypto");
+const { client } = require("../db/client");
 const { getReviewByUser } = require("../db/reviews");
 
 const {
@@ -17,6 +18,7 @@ const {
   updateUserForeignKeys,
   getUserByEmail,
   sendPasswordResetEmail,
+  createToken,
 } = require("../db/users");
 const { requireAdmin, requireUser, requireUserOrAdmin } = require("./utils");
 
@@ -298,11 +300,9 @@ usersRouter.patch(
   }
 );
 
-
-
 usersRouter.post("/password-reset", async (req, res, next) => {
   const { email } = req.body;
-  const user = getUserByEmail(email);
+  const user = await getUserByEmail(email);
 
   if (!user) {
     return res.status(404).json({ message: "Email not found" });
@@ -310,21 +310,10 @@ usersRouter.post("/password-reset", async (req, res, next) => {
 
   try {
     if (user) {
-      // Generate a unique token
-      const resetToken = crypto.randomBytes(32).toString('hex');
-
-      // Set the token expiration to 1 hour from the current time
-      const expirationTime = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
-
-      // Store the token and its expiration time in the database
-      const query = {
-        text: 'INSERT INTO password_reset_tokens (user_id, token, expires_at) VALUES ($1, $2, $3)',
-        values: [user.id, resetToken, expirationTime],
-      };
+      const resetToken = crypto.randomBytes(32).toString("hex");
+      await createToken(user.id, resetToken);
 
       try {
-        await client.query(query);
-
         // Send the password reset email with the generated token
         sendPasswordResetEmail(user.email, resetToken);
 
