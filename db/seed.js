@@ -1,5 +1,19 @@
 const { client } = require("./client");
 const bcrypt = require("bcrypt");
+const cron = require('node-cron');
+cron.schedule('0 0 * * *', async () => {
+
+  try {
+    await client.query(`
+      DELETE FROM password_reset_tokens
+      WHERE expires_at < NOW()
+    `);
+
+    console.log('Expired password reset tokens deleted.');
+  } catch (error) {
+    console.error('Error deleting expired password reset tokens:', error);
+  }
+});
 
 const {
   createUser,
