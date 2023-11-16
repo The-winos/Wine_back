@@ -350,6 +350,25 @@ async function createToken(user_id, resetToken
   }
 }
 
+async function getUserByToken(token) {
+  try {
+    const {
+      rows: [user],
+    } = await client.query(`
+      SELECT *
+      FROM password_reset_tokens
+      WHERE token = $1
+    `, [token]);
+    if (!user) {
+      return null;
+    }
+    delete user.password;
+    return user;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 
 
 
@@ -366,5 +385,6 @@ module.exports = {
   updateUserForeignKeys,
   getUserByEmail,
   sendPasswordResetEmail,
-  createToken
+  createToken,
+  getUserByToken
 };
