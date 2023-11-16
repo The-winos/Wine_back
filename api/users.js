@@ -19,6 +19,7 @@ const {
   getUserByEmail,
   sendPasswordResetEmail,
   createToken,
+  getUserByToken,
 } = require("../db/users");
 const { requireAdmin, requireUser, requireUserOrAdmin } = require("./utils");
 
@@ -298,6 +299,29 @@ usersRouter.patch(
       next(error);
     }
   }
+);
+
+usersRouter.patch(
+  "/forgot/:token/password",
+  async (req, res, next) => {
+    const { token } = req.params;
+    const { password } = req.body;
+    const user= await getUserByToken(token)
+    console.log(user, "user?")
+   if(user){
+    try {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const updatedUser = await updateUserPassword(user.user_id, hashedPassword);
+      console.log(updatedUser, "what's this?")
+      res.send(updatedUser);
+    } catch (error) {
+      next(error);
+    }
+  }
+  else{
+    console.error("error updating password")
+  }
+}
 );
 
 usersRouter.post("/password-reset", async (req, res, next) => {
