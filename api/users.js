@@ -310,10 +310,21 @@ usersRouter.patch(
     console.log(user, "user?")
    if(user){
     try {
+      if (!/(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}/.test(password)) {
+        throw {
+          status: 400,
+          error: "PasswordRequirementsNotMet",
+          message:
+            "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one digit. You can also include optional special characters.",
+          name: "PasswordRequirements",
+        }}
+      else{
       const hashedPassword = await bcrypt.hash(password, 10);
       const updatedUser = await updateUserPassword(user.user_id, hashedPassword);
+
       console.log(updatedUser, "what's this?")
       res.send(updatedUser);
+      }
     } catch (error) {
       next(error);
     }
