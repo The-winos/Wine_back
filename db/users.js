@@ -294,8 +294,8 @@ async function updateUserPassword(id, password ) {
 
     // Remove the hashed password from the updated user object
 
-
-    return updatedUser.password;
+delete updatedUser.password
+    return updatedUser;
   } catch (error) {
     throw error;
   }
