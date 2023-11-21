@@ -13,7 +13,7 @@ badgesRouter.get("/:userId", async (req, res, next) => {
   const { userId } = req.params;
   try {
     const badgesId = await getBadgeById(userId);
-    console.log("this is the badges object", badgesId);
+
     delete badgesId.id;
     delete badgesId.author_id;
     res.send(badgesId);
@@ -46,7 +46,7 @@ badgesRouter.patch("/:badgesId", requireAdmin, async (req, res, next) => {
 
     if (originalBadges) {
       const updatedBadge = await updateBadge(badgesId, updateFields);
-      console.log("this is updated badge", updatedBadge);
+
       delete updatedBadge.id;
       delete updatedBadge.author_id;
       res.send(updatedBadge);
