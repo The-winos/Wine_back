@@ -7,7 +7,7 @@ const userData = [
     state: "Florida",
     avatar: "avatarJen.png",
     role: "admin",
-    email: "dumdum@dumdum.com",
+    email: "jdenisemelch@gmail.com",
     bio: "Hi, bom dia, bonjour, ciao, I'm a co-creator of CORKS! I'm a landscape architect planner, licensed arborist and software engineer based in Raleigh, North Carolina. Developing this wine App is a fun challenge; Through sharing wine reviews, CORKS invites other developers and users to grow our cyber-cellar... Welcome to the CORKS database!",
     birthday: "1992-01-01",
     follower_count: 0,
@@ -872,7 +872,7 @@ const reviewData = [
     review_comment:
       "I really enjoy this wine, its a different flavor than other Cabs.",
     review_date: "2023-10-01",
-    location:"Liquor Store"
+    location: "Liquor Store",
   },
   {
     wine_id: 33,
@@ -883,7 +883,6 @@ const reviewData = [
       "It's a good wine but it's a bit too dry for me. It used to be one of my favorites but my taste buds have changed. It's still a good wine but no longer a favorite.",
     review_date: "2023-10-01",
   },
-
 ];
 
 module.exports = {
