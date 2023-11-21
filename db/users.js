@@ -302,11 +302,11 @@ delete updatedUser.password
 }
 async function sendPasswordResetEmail(toEmail, resetToken) {
   // Email content
-  console.log(toEmail, "should be email")
+
   const mailOptions = {
     from: 'corks_connect@outlook.com',
     to: toEmail,
-    subject: 'Password Reset',
+    subject: 'Password Reset for Corks',
     html: `
       <p>You have requested to reset your password for CORKS.</p>
       <p>Click the following link to reset your password, this link will expire in one hour:</p>
@@ -369,6 +369,49 @@ async function getUserByToken(token) {
   }
 }
 
+async function isItExpired(token) {
+  console.log("in isItExpired")
+  try {
+    const tokenDetails = await getToken(token);
+    console.log(tokenDetails, "tokenDets")
+    console.log(tokenDetails.expires_at)
+
+    if (tokenDetails && tokenDetails.expires_at) {
+      // Get the current time
+      const currentTime = new Date();
+
+      // Parse the expiration time from the database
+      const expirationTime = new Date(tokenDetails.expires_at);
+
+      // Compare the current time with the expiration time
+      return currentTime > expirationTime;
+    } else {
+      // Token details or expiration time not found
+      return true; // Treat it as expired for safety
+    }
+  } catch (error) {
+    console.error("Error checking token expiration:", error);
+    return true;
+  }
+}
+
+async function getToken(token){
+  try {
+    const { rows: [resetToken]}= await client.query(
+      `
+      SELECT *
+      FROM password_reset_tokens
+      WHERE token= $1
+      `,
+      [token]
+    );
+    return resetToken;
+
+  } catch (error) {
+    throw error;
+  }
+}
+
 
 
 
@@ -386,5 +429,7 @@ module.exports = {
   getUserByEmail,
   sendPasswordResetEmail,
   createToken,
-  getUserByToken
+  getUserByToken,
+  isItExpired,
+  getToken
 };

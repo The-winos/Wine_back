@@ -20,6 +20,7 @@ const {
   sendPasswordResetEmail,
   createToken,
   getUserByToken,
+  isItExpired,
 } = require("../db/users");
 const { requireAdmin, requireUser, requireUserOrAdmin } = require("./utils");
 
@@ -266,16 +267,15 @@ usersRouter.patch("/:id/password", requireUser, async (req, res, next) => {
 
   try {
     const currentUser = await getUserById(id);
-    console.log(currentUser, "CurrentUser");
+
     const username = currentUser.username;
     const userNameUser = await getUser({ username, password });
 
-    console.log("I'm at try");
     if (userNameUser) {
       const hashedNewPassword = await bcrypt.hash(newPassword, 10);
 
       const updatedUser = await updateUserPassword(id, hashedNewPassword);
-      console.log("I'm at updateUser", updateUser);
+
       res.send(updatedUser);
     } else {
       res.status(400).send("Current password does not match.");
@@ -359,6 +359,25 @@ usersRouter.post("/password-reset", async (req, res, next) => {
     }
   } catch (error) {
     next(error);
+  }
+});
+
+usersRouter.get("/check-reset-token/:token", async (req, res, next) => {
+
+  const { token } = req.params;
+
+  try {
+    const isTokenExpired = await isItExpired(token);
+
+
+    if (isTokenExpired) {
+      res.status(400).json({ valid: false, message: "Token is invalid or expired" });
+    } else {
+      res.status(200).json({ valid: true, message: "Token is valid" });
+    }
+  } catch (error) {
+    console.error("Error verifying reset token:", error);
+    res.status(500).json({ valid: false, message: "Internal server error" });
   }
 });
 

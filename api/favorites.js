@@ -14,9 +14,9 @@ favoritesRouter.use((req, res, next) => {
 // GET /api/favorites/:userId
 favoritesRouter.get("/:userId", async (req, res, next) => {
   const  userId  = req.params.userId;
-  console.log(userId, "userId")
+
   const user = await getUserById(userId)
-  console.log(user, "user")
+
   try {
     const favoriteWines = await getAllFavoritesByUserId({user_id:user.id});
     if(!favoriteWines.length){
@@ -39,9 +39,9 @@ favoritesRouter.get("/:userId", async (req, res, next) => {
 // GET /api/favorites/wine/:wineId
 favoritesRouter.get("/wine/:wineId", async (req, res, next) => {
   const  wineId  = req.params.wineId;
-  console.log(wineId, "wineId")
+
   const wine = await getWineById(wineId)
-  console.log(wine, "wine")
+
   try {
     const favoriteWines = await getAllFavoritesByWineId({wine_id:wine.id});
     if(!favoriteWines.length){
