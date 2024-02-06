@@ -902,7 +902,7 @@ const reviewData = [
   {
     wine_id: 34,
     user_id: 2,
-    name: "Nice aroma and good flavor",
+    name: "Really good",
     rating: 5,
     price: 1199,
     review_comment:
