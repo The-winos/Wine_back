@@ -381,6 +381,13 @@ const wineData = [
     region: "California",
     flavor: "Cabernet",
   },
+  {
+    author_id: 2,
+    name: "Josh Cellars",
+    image_url: "3-reddish-purple_wine.png",
+    region: "California",
+    flavor: "Cabernet",
+  },
 ];
 
 //////////////////
@@ -882,6 +889,26 @@ const reviewData = [
     review_comment:
       "It's a good wine but it's a bit too dry for me. It used to be one of my favorites but my taste buds have changed. It's still a good wine but no longer a favorite.",
     review_date: "2023-10-01",
+  },
+  {
+    wine_id: 34,
+    user_id: 2,
+    name: "Nice aroma and good flavor",
+    rating: 4,
+    review_comment:
+      "I really enjoyed this wine. When you first open it it has almost a sparkling flavor without bubbles but as you let it breath it gets a smooth buttery feel. Very much enjoyed it.",
+    review_date: "2024-02-06",
+  },
+  {
+    wine_id: 34,
+    user_id: 5,
+    name: "Really good",
+    rating: 5,
+    price: 1199,
+    review_comment:
+      "For under $15 this was great and just the type of wine I like to drink. It doesn't have that cheap edge many wines have. This wine does need to breath",
+    review_date: "2024-02-06",
+    location: "Costco",
   },
 ];
 
