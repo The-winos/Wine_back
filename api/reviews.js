@@ -38,6 +38,16 @@ reviewsRouter.get("/:userId", async (req, res, next)=>{
   }
 })
 
+reviewsRouter.get("/id/:reviewId", async (req, res, next)=>{
+  const { reviewId } = req.params
+  try {
+    const idReview= await getReviewById(reviewId);
+    res.send(idReview);
+  } catch ({ name, message, error }) {
+    next({ name, message, error });
+  }
+})
+
 
 //POST /api/reviews // passed create and error
 reviewsRouter.post("/", requireUser, async (req, res, next) => {
